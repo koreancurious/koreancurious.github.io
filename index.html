@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth"><head><script data-bard-client-injected="true">(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjExNjRiNzdiNDMzZDdhMDAyMWI4NjE4YjhjYTU3ZTMyZGI5MWUxMTMiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIxNzkxNzM1OTAxMzU4OTM5ODQxNSIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjX2VmMjVjMTBmYWQyNzNiNzNfaW5kZXguaHRtbC03OTgifSwiZXhwIjoxNzk0NjU2ODYxLCJpYXQiOjE3OTQ2NTMyNjEsImFsZyI6IlJTMjU2In0.mrBbiXn0bvm3EBKRb0B0RG3w_Ag1hoylKQNCyGGnuZlNxyFDT786VnZGq6dn_Aep_fP-QYAVG36Emh3oIKXupMRjN7R-q93jbSmEFS0uZVg5IpY5H8HQKbTFeBMpoT6krpgPItqdtv3m36e057gofcUfPf6X2YQwlPJzDl1vebWRjHW-dcpunrme8JVMMtUxeoRDoiY5M6kyudfCVjRH3BFEejSVQK35RlW0_ho0fQPLpCkDEz1hT3v351M1PZ8I6Qzi037bHMy2AzsQa3Y7oimfJrHusoUN_tEuT52e5fMMsqchz_Gi9ke_g7rZHBMq9l3EPGm12WZTtD34s4Rndw","c_ef25c10fad273b73_index.html-798")</script><script data-bard-client-injected="true">
+  document.addEventListener('input', (event) => {
+    if (event.target && (event.target.isContentEditable || event.target.hasAttribute('contenteditable'))) {
+      const clonedDoc = document.cloneNode(true);
+      const injectedScripts = clonedDoc.querySelectorAll('[data-bard-client-injected="true"]');
+      injectedScripts.forEach(el => el.remove());
+      window.parent.postMessage({
+        type: 'inlineEdit',
+        html: '<!DOCTYPE html>\n' + clonedDoc.documentElement.outerHTML
+      }, '*');
+    }
+  });
+</script><script data-bard-client-injected="true">(function(){'use strict';window.addEventListener("message",a=>{a.data&&a.data.type==="SUPPLEMENTAL_DATA_UPDATE"&&window.dispatchEvent(new CustomEvent("supplementaldataupdate",{detail:a.data.data}))});}).call(this);
+</script><script data-bard-client-injected="true">(function() {
+  const SCROLL_KEYS = new Set([
+    'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+    ' ', 'Spacebar', 'PageUp', 'PageDown', 'Home', 'End',
+  ]);
+  const HORIZONTAL_KEYS = new Set(['ArrowLeft', 'ArrowRight']);
+
+  function isTextEntryTarget(target) {
+    if (!target) return false;
+    const tagName = target.tagName;
+    return tagName === 'INPUT' || tagName === 'TEXTAREA' ||
+        tagName === 'SELECT' || target.isContentEditable === true;
+  }
+
+  // An element absorbs the key only if it both overflows on the axis being
+  // scrolled and is configured to scroll on that axis. The cheap dimension
+  // test runs first because getComputedStyle forces a style recalc, and this
+  // runs on every keypress. Each axis is read from its own longhand: the
+  // 'overflow' shorthand serializes as two values when the axes differ, which
+  // is the common 'overflow-x: hidden; overflow-y: auto' pane.
+  function canScroll(node, horizontal) {
+    const overflows = horizontal ? node.scrollWidth > node.clientWidth
+                                 : node.scrollHeight > node.clientHeight;
+    if (!overflows) return false;
+    const style = window.getComputedStyle(node);
+    const overflow = horizontal ? style.overflowX : style.overflowY;
+    return overflow === 'auto' || overflow === 'scroll';
+  }
+
+  // Walks up from the event target so nested scrollers keep their behavior.
+  // <body> is included because pages that pin the root height make it the
+  // scroll container.
+  function hasScrollableAncestor(target, horizontal) {
+    let node = target;
+    while (node && node !== document.documentElement) {
+      if (canScroll(node, horizontal)) return true;
+      node = node.parentElement;
+    }
+    return false;
+  }
+
+  function rootCanScroll(horizontal) {
+    const scroller = document.scrollingElement || document.documentElement;
+    if (!scroller) return false;
+    // Tolerate a pixel of rounding so subpixel layouts do not look scrollable.
+    return horizontal ? scroller.scrollWidth > window.innerWidth + 1
+                      : scroller.scrollHeight > window.innerHeight + 1;
+  }
+
+  window.addEventListener('keydown', function(event) {
+    if (!SCROLL_KEYS.has(event.key)) return;
+    if (event.defaultPrevented) return;
+    // Alt and Meta turn arrows into browser history navigation, and Ctrl is
+    // reserved for shortcuts, so none of them are scroll intent.
+    if (event.altKey || event.metaKey || event.ctrlKey) return;
+
+    const target = event.target;
+    if (isTextEntryTarget(target)) return;
+
+    // Anything that can still absorb the scroll gets to keep it.
+    const horizontal = HORIZONTAL_KEYS.has(event.key);
+    if (rootCanScroll(horizontal)) return;
+    if (hasScrollableAncestor(target, horizontal)) return;
+
+    event.preventDefault();
+  }, {capture: true, passive: false});
+})();</script><script data-bard-client-injected="true">(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script data-bard-client-injected="true">
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script ws-interception-config="{&quot;parentOrigin&quot;:&quot;https://gemini.google.com&quot;,&quot;proxiedDomains&quot;:[]}" data-bard-client-injected="true">(function(){'use strict';var u=typeof Object.defineProperties=="function"?Object.defineProperty:function(b,d,e){if(b==Array.prototype||b==Object.prototype)return b;b[d]=e.value;return b};function v(b){b=["object"==typeof globalThis&&globalThis,b,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var d=0;d<b.length;++d){var e=b[d];if(e&&e.Math==Math)return e}throw Error("Cannot find global object");}var w=v(this);
+function y(b,d){if(d)a:{var e=w;b=b.split(".");for(var h=0;h<b.length-1;h++){var k=b[h];if(!(k in e))break a;e=e[k]}b=b[b.length-1];h=e[b];d=d(h);d!=h&&d!=null&&u(e,b,{configurable:!0,writable:!0,value:d})}}function z(b){function d(h){return b.next(h)}function e(h){return b.throw(h)}return new Promise(function(h,k){function m(n){n.done?h(n.value):Promise.resolve(n.value).then(d,e).then(m,k)}m(b.next())})}y("globalThis",function(b){return b||w});/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function A(b,d){function e(){}e.prototype=d.prototype;b.j=d.prototype;b.prototype=new e;b.prototype.constructor=b;b.h=function(h,k,m){for(var n=Array(arguments.length-2),p=2;p<arguments.length;p++)n[p-2]=arguments[p];return d.prototype[k].apply(h,n)}};function B(b,d,e="*"){function h(a){if(typeof a==="string")return F.encode(a).buffer;if(a instanceof ArrayBuffer)return a.slice(0);if(ArrayBuffer.isView(a))return a.buffer.slice(a.byteOffset,a.byteOffset+a.byteLength);throw Error("Invalid data type");}function k(a){a=h(a);var f={type:"send",data:new Uint8Array(a)},g;(g=r)==null||g.postMessage(f,[a])}function m(){if(!r)throw Error("Data port not captured yet.");r.onmessage=a=>{if(a.data.type==="message"){a=new MessageEvent("message",{data:G.decode(a.data.data)});
+let f;(f=c.onmessage)==null||f.call(c,a);c.dispatchEvent(a)}}}function n(){if(!t)throw Error("Control port not captured yet.");t.onmessage=a=>{switch(a.data.type){case "open":l=1;var f=new Event("open"),g;(g=c.onopen)==null||g.call(c,f);c.dispatchEvent(f);q.forEach(H=>{k(H)});q=[];break;case "close":g=a.data;l=3;g=new CloseEvent("close",{code:g.code,reason:g.reason,wasClean:g.wasClean});(f=c.onclose)==null||f.call(c,g);c.dispatchEvent(g);break;case "error":l=3;f=new Event("error");let x;(x=c.onerror)==
+null||x.call(c,f);c.dispatchEvent(f)}}}function p(a){return z(function*(){var f=new MessageChannel;t=f.port1;var g=new MessageChannel;r=g.port1;n();m();window.parent.postMessage({type:"websocket_open",portOrdering:["control","data"],url:b,protocols:a||[],connectionId:I},e,[f.port2,g.port2])}())}var c=Reflect.construct(EventTarget,[],new.target);c.CONNECTING=0;c.OPEN=1;c.CLOSING=2;c.CLOSED=3;c.url=b;c.binaryType="arraybuffer";c.protocol="";c.i="";var l=0,t=null,r=null,q=[],F=new TextEncoder,G=new TextDecoder;
+c.onopen=null;c.onmessage=null;c.onclose=null;c.onerror=null;Object.defineProperty(c,"readyState",{get:()=>l,enumerable:!0,configurable:!0});Object.defineProperty(c,"bufferedAmount",{get:()=>{var a=0;q.forEach(f=>{a+=typeof f==="string"?f.length:f.byteLength});return a},enumerable:!0,configurable:!0});var I=function(){var a;return((a=globalThis.crypto)==null?0:a.randomUUID)?globalThis.crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,f=>{var g=Math.random()*16|0;return(f===
+"x"?g:g&3|8).toString(16)})}();c.send=a=>{if(l===1)a instanceof Blob?a.arrayBuffer().then(f=>{k(f)}):k(a);else if(l===0)if(typeof a==="string")q.push(a);else if(a instanceof ArrayBuffer||ArrayBuffer.isView(a))q.push(h(a));else throw Error("Sending Blob is not supported before the connection is open.");else console.debug("WebSocket send called in CLOSING or CLOSED state; ignored.")};c.close=(a=1E3,f="")=>{if(l!==2&&l!==3){l=2;a={type:"close",code:a,reason:f,wasClean:a===1E3};var g;(g=t)==null||g.postMessage(a)}};
+Promise.resolve().then(()=>p(d));return c}A(B,EventTarget);var C=document.currentScript,D=C==null?void 0:C.getAttribute("ws-interception-config");if(!D)throw Error("WebSocket Interceptor: Missing ws-interception-config attribute in the script tag.");var E=JSON.parse(D);if(!E.parentOrigin||typeof E.parentOrigin!=="string")throw Error("WebSocket Interceptor: Invalid parentOrigin in ws-interception-config");
+(function(b){var d=Object.getOwnPropertyDescriptor(window,"WebSocket");if(!d||d.writable||d.configurable)d=Object.assign(function(e,h){try{let k=(new URL(e)).hostname;if(b.proxiedDomains.some(m=>k===m||k.endsWith(`.${m}`)))return new B(e,h,b.parentOrigin)}catch(k){throw window.parent.postMessage({type:"websocket_blocked",url:e,reason:"blocked_invalid_url"},b.parentOrigin),new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");}window.parent.postMessage({type:"websocket_blocked",
+url:e,reason:"blocked_domain_not_allowlisted"},b.parentOrigin);throw new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");},{CONNECTING:0,OPEN:1,CLOSING:2,CLOSED:3}),Object.defineProperty(window,"WebSocket",{value:d,writable:!1,configurable:!1})})({proxiedDomains:E.proxiedDomains||[],parentOrigin:E.parentOrigin});}).call(this);
+</script><script data-bard-client-injected="true">((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+  modelInformation.deprecatedGenerateImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+  modelInformation.deprecatedImageTransformModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-3-flash-preview","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-3.1-flash-image","imageTransformModelName":"gemini-3-pro-image","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"],"deprecatedGenerateImageModelNames":["gemini-2.5-flash-image-preview","gemini-2.5-flash-image","gemini-3.1-flash-image-preview"],"deprecatedImageTransformModelNames":["gemini-3-pro-image-preview-11-2025"]})</script><script data-bard-client-injected="true">(function() {
+  function normalizeSlug(str) {
+    try {
+      return str
+        .trim()
+        .toLowerCase()
+        .replace(/[^p{L}p{N}s_-]/gu, '')
+        .replace(/s+/g, '-');
+    } catch (e) {
+      return str
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9s_-]/g, '')
+        .replace(/s+/g, '-');
+    }
+  }
+
+  function findTargetElement(hash) {
+    if (!hash || hash === '#') {
+      return null;
+    }
+    const rawId = hash.startsWith('#') ? hash.slice(1) : hash;
+    let decodedId = rawId;
+    try {
+      decodedId = decodeURIComponent(rawId);
+    } catch (e) {
+      // Ignore URI malformed errors.
+    }
+
+    // 1. Direct ID match (raw and decoded).
+    let target = document.getElementById(rawId) || document.getElementById(decodedId);
+    if (target) {
+      return target;
+    }
+
+    // 2. Name attribute match (<a name="...">).
+    try {
+      if (typeof CSS !== 'undefined' && CSS.escape) {
+        target =
+          document.querySelector('[name="' + CSS.escape(rawId) + '"]') ||
+          document.querySelector('[name="' + CSS.escape(decodedId) + '"]');
+      } else {
+        const namedElements = document.getElementsByName(rawId);
+        if (namedElements && namedElements.length > 0) {
+          return namedElements[0];
+        }
+      }
+    } catch (e) {
+      // Ignore querySelector syntax errors.
+    }
+    if (target) {
+      return target;
+    }
+
+    // 3. Match heading text by slug (for Markdown TOCs where headings lack explicit IDs).
+    const targetSlug = normalizeSlug(decodedId);
+    if (targetSlug) {
+      for (const heading of document.querySelectorAll('h1, h2, h3, h4, h5, h6')) {
+        if (normalizeSlug(heading.textContent || '') === targetSlug) {
+          return heading;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  document.addEventListener('click', function(event) {
+    const target = event.target;
+    const anchor = target && typeof target.closest === 'function' ? target.closest('a') : null;
+    if (!anchor) {
+      return;
+    }
+
+    const href = anchor.getAttribute('href');
+    if (
+      !href ||
+      href.trim().toLowerCase().startsWith('javascript:') ||
+      anchor.hasAttribute('download')
+    ) {
+      return;
+    }
+
+    // Check if the link is an in-page hash / anchor link.
+    if (href.startsWith('#')) {
+      event.preventDefault();
+      const targetElement = findTargetElement(href);
+      if (targetElement) {
+        targetElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+      return;
+    }
+
+    // Check if the URL has the same origin/pathname but with a hash.
+    try {
+      const url = new URL(anchor.href, window.location.href);
+      if (
+        url.hash &&
+        url.origin === window.location.origin &&
+        url.pathname === window.location.pathname
+      ) {
+        event.preventDefault();
+        const targetElement = findTargetElement(url.hash);
+        if (targetElement) {
+          targetElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+        return;
+      }
+    } catch (e) {
+      // Fall through if URL parsing fails.
+    }
+
+    // For all external or full navigation links, prevent iframe-level navigation
+    // (which breaks in AGSA WebView or sandboxed iframes) and ensure they open
+    // safely in a new tab/window.
+    if (anchor.target !== '_blank') {
+      event.preventDefault();
+      window.open(anchor.href, '_blank', 'noopener,noreferrer');
+    }
+  }, {capture: true});
+})();</script><script data-bard-client-injected="true">(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
+</script><script data-bard-client-injected="true">(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김도현 — Tutor, Writer &amp; Archive</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Noto+Serif+KR:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'Inter', '-apple-system', 'sans-serif'],
+                        serif: ['"Noto Serif KR"', '"Playfair Display"', 'Georgia', 'serif'],
+                        display: ['"Playfair Display"', '"Noto Serif KR"', 'serif'],
+                    },
+                    colors: {
+                        paper: '#FFF1E5',
+                        paperDark: '#F7E3D2',
+                        ink: '#111111',
+                        inkMuted: '#4A433E',
+                        hairline: '#D8C7B8',
+                        salmon: '#111111',
+                        salmonHover: '#333333',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FFF1E5;
+            background-image: radial-gradient(#D8C7B8 0.45px, transparent 0.45px);
+            background-size: 20px 20px;
+            color: #111111;
+            word-break: keep-all;
+            font-feature-settings: "kern" 1;
+        }
+        .hairline-b { border-bottom: 1px solid #D8C7B8; }
+        .hairline-t { border-top: 1px solid #D8C7B8; }
+        .hairline-all { border: 1px solid #D8C7B8; }
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .masonry-grid { column-count: 2; }
+        }
+        @media (min-width: 1024px) {
+            .masonry-grid { column-count: 3; }
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Pretendard, Inter, -apple-system, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.bottom-6{bottom:1.5rem}.right-5{right:1.25rem}.right-6{right:1.5rem}.top-0{top:0px}.top-5{top:1.25rem}.z-40{z-index:40}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.-mx-2{margin-left:-0.5rem;margin-right:-0.5rem}.mb-1{margin-bottom:0.25rem}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-16{margin-bottom:4rem}.mb-2{margin-bottom:0.5rem}.mt-2{margin-top:0.5rem}.mt-2\.5{margin-top:0.625rem}.mt-8{margin-top:2rem}.line-clamp-2{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[3\/4\]{aspect-ratio:3/4}.h-16{height:4rem}.h-2{height:0.5rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-\[1px\]{height:1px}.h-full{height:100%}.h-auto{height:auto}.max-h-\[78vh\]{max-height:78vh}.max-h-\[88vh\]{max-height:88vh}.w-10{width:2.5rem}.w-2{width:0.5rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-auto{width:auto}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.cursor-pointer{cursor:pointer}.cursor-zoom-in{cursor:zoom-in}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.items-baseline{align-items:baseline}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-10{gap:2.5rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-\[\#D8C7B8\] > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(216 199 184 / var(--tw-divide-opacity, 1))}.self-start{align-self:flex-start}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.scroll-smooth{scroll-behavior:smooth}.whitespace-pre-line{white-space:pre-line}.rounded-full{border-radius:9999px}.border{border-width:1px}.border-ink{--tw-border-opacity:1;border-color:rgb(17 17 17 / var(--tw-border-opacity, 1))}.bg-\[\#111111\]\/55{background-color:rgb(17 17 17 / 0.55)}.bg-ink{--tw-bg-opacity:1;background-color:rgb(17 17 17 / var(--tw-bg-opacity, 1))}.bg-paper{--tw-bg-opacity:1;background-color:rgb(255 241 229 / var(--tw-bg-opacity, 1))}.bg-paper\/70{background-color:rgb(255 241 229 / 0.7)}.bg-paper\/95{background-color:rgb(255 241 229 / 0.95)}.bg-paperDark{--tw-bg-opacity:1;background-color:rgb(247 227 210 / var(--tw-bg-opacity, 1))}.bg-paperDark\/50{background-color:rgb(247 227 210 / 0.5)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.object-contain{object-fit:contain}.object-cover{object-fit:cover}.p-1{padding:0.25rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pt-10{padding-top:2.5rem}.pt-2{padding-top:0.5rem}.pt-6{padding-top:1.5rem}.text-center{text-align:center}.font-display{font-family:"Playfair Display", "Noto Serif KR", serif}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.font-sans{font-family:Pretendard, Inter, -apple-system, sans-serif}.font-serif{font-family:"Noto Serif KR", "Playfair Display", Georgia, serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[11px\]{font-size:11px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-base{font-size:1rem;line-height:1.5rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-\[1\.3\]{line-height:1.3}.leading-\[1\.85\]{line-height:1.85}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.tracking-\[0\.18em\]{letter-spacing:0.18em}.tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.text-ink{--tw-text-opacity:1;color:rgb(17 17 17 / var(--tw-text-opacity, 1))}.text-inkMuted{--tw-text-opacity:1;color:rgb(74 67 62 / var(--tw-text-opacity, 1))}.text-paper{--tw-text-opacity:1;color:rgb(255 241 229 / var(--tw-text-opacity, 1))}.text-paper\/80{color:rgb(255 241 229 / 0.8)}.text-paper\/90{color:rgb(255 241 229 / 0.9)}.underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}.decoration-ink{-webkit-text-decoration-color:#111111;text-decoration-color:#111111}.underline-offset-4{text-underline-offset:4px}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-0{opacity:0}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-\[2px\]{--tw-backdrop-blur:blur(2px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.duration-500{transition-duration:500ms}.selection\:bg-\[\#111111\] *::selection{--tw-bg-opacity:1;background-color:rgb(17 17 17 / var(--tw-bg-opacity, 1))}.selection\:text-\[\#FFF1E5\] *::selection{--tw-text-opacity:1;color:rgb(255 241 229 / var(--tw-text-opacity, 1))}.selection\:bg-\[\#111111\]::selection{--tw-bg-opacity:1;background-color:rgb(17 17 17 / var(--tw-bg-opacity, 1))}.selection\:text-\[\#FFF1E5\]::selection{--tw-text-opacity:1;color:rgb(255 241 229 / var(--tw-text-opacity, 1))}.file\:mr-3::file-selector-button{margin-right:0.75rem}.file\:cursor-pointer::file-selector-button{cursor:pointer}.file\:border-0::file-selector-button{border-width:0px}.file\:bg-ink::file-selector-button{--tw-bg-opacity:1;background-color:rgb(17 17 17 / var(--tw-bg-opacity, 1))}.file\:px-3::file-selector-button{padding-left:0.75rem;padding-right:0.75rem}.file\:py-1\.5::file-selector-button{padding-top:0.375rem;padding-bottom:0.375rem}.file\:text-paper::file-selector-button{--tw-text-opacity:1;color:rgb(255 241 229 / var(--tw-text-opacity, 1))}.hover\:border-ink:hover{--tw-border-opacity:1;border-color:rgb(17 17 17 / var(--tw-border-opacity, 1))}.hover\:bg-ink:hover{--tw-bg-opacity:1;background-color:rgb(17 17 17 / var(--tw-bg-opacity, 1))}.hover\:bg-salmonHover:hover{--tw-bg-opacity:1;background-color:rgb(51 51 51 / var(--tw-bg-opacity, 1))}.hover\:bg-paperDark\/65:hover{background-color:rgb(247 227 210 / 0.65)}.hover\:text-ink:hover{--tw-text-opacity:1;color:rgb(17 17 17 / var(--tw-text-opacity, 1))}.hover\:text-paper:hover{--tw-text-opacity:1;color:rgb(255 241 229 / var(--tw-text-opacity, 1))}.hover\:opacity-60:hover{opacity:0.6}.focus\:border-ink:focus{--tw-border-opacity:1;border-color:rgb(17 17 17 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.group:hover .group-hover\:scale-\[1\.02\]{--tw-scale-x:1.02;--tw-scale-y:1.02;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:underline{-webkit-text-decoration-line:underline;text-decoration-line:underline}@media (min-width: 640px){.sm\:mb-20{margin-bottom:5rem}.sm\:inline{display:inline}.sm\:h-20{height:5rem}.sm\:w-auto{width:auto}.sm\:w-40{width:10rem}.sm\:flex-row{flex-direction:row}.sm\:flex-col{flex-direction:column}.sm\:items-start{align-items:flex-start}.sm\:items-end{align-items:flex-end}.sm\:items-baseline{align-items:baseline}.sm\:gap-7{gap:1.75rem}.sm\:gap-1{gap:0.25rem}.sm\:gap-8{gap:2rem}.sm\:self-auto{align-self:auto}.sm\:p-10{padding:2.5rem}.sm\:p-4{padding:1rem}.sm\:p-6{padding:1.5rem}.sm\:p-8{padding:2rem}.sm\:px-8{padding-left:2rem;padding-right:2rem}.sm\:py-24{padding-top:6rem;padding-bottom:6rem}.sm\:py-5{padding-top:1.25rem;padding-bottom:1.25rem}.sm\:py-8{padding-top:2rem;padding-bottom:2rem}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-5xl{font-size:3rem;line-height:1}.sm\:text-\[13px\]{font-size:13px}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 768px){.md\:flex{display:flex}.md\:hidden{display:none}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:gap-12{gap:3rem}}</style></head>
+<body class="antialiased selection:bg-[#111111] selection:text-[#FFF1E5]">
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-40 bg-paper/95 backdrop-blur-sm hairline-b">
+        <div class="max-w-5xl mx-auto px-5 sm:px-8 h-16 sm:h-20 flex items-center justify-between">
+            <a href="#" class="group flex items-baseline gap-2.5">
+                <span class="font-serif text-xl sm:text-2xl font-semibold tracking-tight text-ink" id="nav-brand-name">김도현</span>
+                <span class="font-display italic text-xs sm:text-sm text-inkMuted hidden sm:inline" data-i18n="brandSubtitle">Tutor &amp; Writer</span>
+            </a>
+
+            <!-- Right Menus, Language Switcher, Admin -->
+            <div class="flex items-center gap-4 sm:gap-7">
+                <nav class="hidden md:flex items-center gap-6 text-xs sm:text-[13px] tracking-wide text-ink font-medium">
+                    <a href="#tutoring" class="hover:opacity-60 transition-opacity" data-i18n="navTutoring">소개 &amp; 과외</a>
+                    <a href="#columns" class="hover:opacity-60 transition-opacity" data-i18n="navColumns">칼럼</a>
+                    <a href="#photos" class="hover:opacity-60 transition-opacity" data-i18n="navPhotos">사진</a>
+                    <a href="#contact" class="hover:opacity-60 transition-opacity underline underline-offset-4 decoration-ink" data-i18n="navContact">문의하기</a>
+                </nav>
+
+                <!-- Language Tabs (KO, EN, ES, PT) -->
+                <div class="flex items-center border border-ink bg-paper text-[11px] font-mono tracking-wider">
+                    <button onclick="setLanguage('ko')" id="lang-btn-ko" class="px-2 py-1 bg-ink text-paper font-bold transition">KO</button>
+                    <button onclick="setLanguage('en')" id="lang-btn-en" class="px-2 py-1 text-ink hover:bg-ink hover:text-paper transition">EN</button>
+                    <button onclick="setLanguage('es')" id="lang-btn-es" class="px-2 py-1 text-ink hover:bg-ink hover:text-paper transition">ES</button>
+                    <button onclick="setLanguage('pt')" id="lang-btn-pt" class="px-2 py-1 text-ink hover:bg-ink hover:text-paper transition">PT</button>
+                </div>
+
+                <button id="admin-btn" onclick="toggleAdmin()" class="px-3 py-1 text-[11px] tracking-wider uppercase border border-ink hover:bg-ink hover:text-paper transition-colors bg-ink text-paper" data-i18n="adminBtn">Admin ON</button>
+
+                <button onclick="document.getElementById('mobile-nav').classList.toggle('hidden')" class="md:hidden p-1 text-ink" aria-label="메뉴">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="menu" aria-hidden="true" class="lucide lucide-menu w-5 h-5"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-nav" class="hidden md:hidden bg-paper hairline-b px-5 py-4 space-y-3 text-sm font-medium text-ink">
+            <a href="#tutoring" onclick="this.parentElement.classList.add('hidden')" class="block py-1 hover:opacity-60" data-i18n="navTutoring">소개 &amp; 과외</a>
+            <a href="#columns" onclick="this.parentElement.classList.add('hidden')" class="block py-1 hover:opacity-60" data-i18n="navColumns">칼럼</a>
+            <a href="#photos" onclick="this.parentElement.classList.add('hidden')" class="block py-1 hover:opacity-60" data-i18n="navPhotos">사진</a>
+            <a href="#contact" onclick="this.parentElement.classList.add('hidden')" class="block py-1 underline underline-offset-4" data-i18n="navContact">문의하기</a>
+        </div>
+    </header>
+
+    <!-- Admin Toolbar -->
+    <div id="admin-toolbar" class="bg-paperDark hairline-b px-5 py-3 text-xs">
+        <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2 text-ink">
+                <span class="w-2 h-2 rounded-full bg-ink"></span>
+                <span class="font-medium" data-i18n="adminModeActive">관리자 편집 모드</span>
+                <span class="text-inkMuted hidden sm:inline" data-i18n="adminNotice">— 수정 내용은 브라우저에 자동 저장됩니다.</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="openEditProfileModal()" class="px-2.5 py-1 bg-paper hairline-all text-ink hover:border-ink transition" data-i18n="adminEditProfile">소개·과외 수정</button>
+                <button onclick="openGoogleFormConfigModal()" class="px-2.5 py-1 bg-paper hairline-all text-ink hover:border-ink transition" data-i18n="adminConfigForm">구글 폼 링크 설정</button>
+                <button onclick="exportStandaloneHTML()" class="px-2.5 py-1 bg-ink text-paper hover:bg-salmonHover transition" data-i18n="adminExport">HTML 파일로 내보내기</button>
+                <button onclick="resetAllData()" class="px-2.5 py-1 text-inkMuted hover:text-ink underline" data-i18n="adminReset">초기화</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-5 sm:px-8">
+
+        <!-- Section 1: Intro & Tutoring (#tutoring) -->
+        <section id="tutoring" class="py-16 sm:py-24 hairline-b">
+            <div class="max-w-3xl space-y-6 mb-16 sm:mb-20">
+                <p class="font-display italic text-sm text-inkMuted tracking-wide" id="hero-subtitle" data-i18n="heroSubtitle">Editorial Portfolio &amp; Private Tutoring</p>
+                <h1 class="font-serif text-3xl sm:text-5xl font-normal text-ink leading-[1.3] tracking-tight" id="hero-headline">생각의 구조를 세우고,<br>자신만의 문장으로 답을 찾는 시간.</h1>
+                <p class="text-sm sm:text-base text-inkMuted leading-relaxed max-w-2xl" id="hero-intro">안녕하세요, 김도현입니다. 학생과 성인을 대상으로 1:1 맞춤형 글쓰기·논술·사고력 과외를 진행하며, 배움과 일상의 단상을 칼럼과 사진으로 기록합니다.</p>
+
+                <div class="pt-2 flex flex-wrap items-center gap-4">
+                    <a href="#contact" class="px-6 py-3 bg-ink text-paper text-xs sm:text-sm tracking-wide hover:bg-salmonHover transition-colors inline-flex items-center gap-2">
+                        <span data-i18n="ctaApply">과외 및 강연 신청하기</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-down-right" aria-hidden="true" class="lucide lucide-arrow-down-right w-4 h-4"><path d="m7 7 10 10"></path><path d="M17 7v10H7"></path></svg>
+                    </a>
+                    <a href="#columns" class="px-5 py-3 border border-ink bg-paper/70 text-xs sm:text-sm text-ink hover:bg-ink hover:text-paper transition-colors" data-i18n="ctaReadColumns">최근 칼럼 읽기</a>
+                </div>
+            </div>
+
+            <!-- Tutoring Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pt-10 hairline-t items-start">
+                <div class="lg:col-span-7 space-y-8">
+                    <div>
+                        <span class="text-[11px] uppercase tracking-[0.18em] text-ink font-semibold block mb-2" data-i18n="tutorEyebrow">Tutoring Program</span>
+                        <h2 class="font-serif text-2xl font-medium text-ink" id="tutor-section-title" data-i18n="tutorTitle">1:1 맞춤형 과외 및 코칭 안내</h2>
+                    </div>
+
+                    <div class="divide-y divide-[#D8C7B8] hairline-t hairline-b" id="curriculum-list">
+                <div class="py-4 sm:py-5">
+                    <h3 class="font-serif text-base sm:text-lg font-medium text-ink mb-1">01. 대입·편입 논술 및 심층 면접 대비</h3>
+                    <p class="text-xs sm:text-sm text-inkMuted">고등학생 · N수생 대상 | 제시문 독해 구조화, 개요 작성 훈련, 주 1회 1:1 대면 첨삭</p>
+                </div>
+            
+                <div class="py-4 sm:py-5">
+                    <h3 class="font-serif text-base sm:text-lg font-medium text-ink mb-1">02. 청소년 독서·비판적 글쓰기 클래스</h3>
+                    <p class="text-xs sm:text-sm text-inkMuted">중·고등학생 대상 | 인문·사회 고전 읽기, 자기 생각 에세이 완성 및 발표 코칭</p>
+                </div>
+            
+                <div class="py-4 sm:py-5">
+                    <h3 class="font-serif text-base sm:text-lg font-medium text-ink mb-1">03. 성인 실무 기획 및 에세이 1:1 코칭</h3>
+                    <p class="text-xs sm:text-sm text-inkMuted">직장인 · 대학원생 대상 | 보고서·학업계획서 논리 교정 및 개인 칼럼 쓰기 멘토링</p>
+                </div>
+            </div>
+
+                    <div class="bg-paperDark p-5 sm:p-6 hairline-all space-y-2 text-xs sm:text-sm">
+                        <p class="font-medium text-ink" data-i18n="tutorNoticeTitle">수업 진행 방식 및 상담 안내</p>
+                        <p class="text-inkMuted leading-relaxed" id="tutor-notice">• 대면 수업(서울·경기 주요 지역) 및 비대면 실시간(Zoom) 수업 모두 가능합니다.<br>• 첫 수업 전 20분 무료 사전 진단 및 학습 방향 상담을 진행합니다.</p>
+                    </div>
+                </div>
+
+                <!-- Poster Slot -->
+                <div class="lg:col-span-5 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[11px] uppercase tracking-[0.18em] text-ink font-semibold" data-i18n="posterEyebrow">Brochure / Poster</span>
+                        <label class="admin-only cursor-pointer text-xs underline text-ink hover:opacity-60" data-i18n="changePosterBtn">이미지 교체</label>
+                    </div>
+
+                    <div class="hairline-all bg-paperDark p-3">
+                        <div class="aspect-[3/4] w-full overflow-hidden bg-white relative">
+                            <img id="tutor-poster-img" src="https://placehold.co/600x800/F7E3D2/111111?text=2026+Private+Tutoring%0A%0A1:1+%EB%A7%9E%EC%B6%A4%ED%98%95+%EA%B8%80%EC%93%B0%EA%B8%B0%C2%B7%EB%85%BC%EC%88%A0+%ED%81%B4%EB%9E%98%EC%8A%A4" onerror="this.src='https://placehold.co/600x800/F7E3D2/111111?text=Tutoring+Brochure'" alt="과외 홍보 포스터" class="w-full h-full object-cover">
+                        </div>
+                        <p class="text-[11px] text-inkMuted mt-2.5 text-center" id="tutor-poster-caption" data-i18n="posterCaptionDefault">Fig 1. 2026년 1:1 집중 과외 및 특강 안내 포스터</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Columns (#columns) -->
+        <section id="columns" class="py-16 sm:py-24 hairline-b">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+                <div>
+                    <span class="text-[11px] uppercase tracking-[0.18em] text-ink font-semibold block mb-2" data-i18n="columnEyebrow">Index of Essays &amp; Columns</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-normal text-ink" data-i18n="columnTitle">칼럼과 생각의 기록</h2>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <div id="column-filters" class="flex items-center gap-1.5 text-xs font-medium">
+                        <button onclick="setColumnFilter('전체')" data-cat="전체" class="col-filter-btn px-3 py-1.5 bg-ink text-paper transition" data-i18n="filterAll">전체</button>
+                        <button onclick="setColumnFilter('칼럼')" data-cat="칼럼" class="col-filter-btn px-3 py-1.5 border border-ink bg-paper text-ink hover:bg-ink hover:text-paper transition" data-i18n="filterColumn">칼럼</button>
+                        <button onclick="setColumnFilter('수업노트')" data-cat="수업노트" class="col-filter-btn px-3 py-1.5 border border-ink bg-paper text-ink hover:bg-ink hover:text-paper transition" data-i18n="filterNote">수업노트</button>
+                        <button onclick="setColumnFilter('단상')" data-cat="단상" class="col-filter-btn px-3 py-1.5 border border-ink bg-paper text-ink hover:bg-ink hover:text-paper transition" data-i18n="filterEssay">단상</button>
+                    </div>
+
+                    <button onclick="openNewColumnModal()" class="admin-only px-3.5 py-1.5 bg-ink text-paper text-xs tracking-wide hover:bg-salmonHover transition" data-i18n="newColumnBtn">+ 새 글</button>
+                </div>
+            </div>
+
+            <div id="columns-list" class="divide-y divide-[#D8C7B8] hairline-t hairline-b">
+                <article class="py-6 sm:py-8 px-2 -mx-2 hover:bg-paperDark/65 transition-colors group flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 sm:gap-8">
+                    <div class="sm:w-40 shrink-0 flex items-center sm:flex-col sm:items-start gap-2 sm:gap-1 text-xs text-inkMuted">
+                        <span class="font-mono text-[11px]">2026.11.04</span>
+                        <span class="uppercase tracking-wider text-[11px] text-ink font-semibold">칼럼</span>
+                    </div>
+                    <div class="flex-1 space-y-2">
+                        <div class="flex items-start justify-between gap-4">
+                            <h3 onclick="openReader(1)" class="font-serif text-lg sm:text-xl font-normal text-ink group-hover:underline underline-offset-4 cursor-pointer leading-snug">
+                                빠른 정답의 시대, 느리게 읽고 깊게 쓰는 감각에 대하여
+                            </h3>
+                            
+                                <button onclick="deleteColumn(1)" class="text-[11px] text-ink underline hover:opacity-60 shrink-0">Delete</button>
+                            
+                        </div>
+                        <p onclick="openReader(1)" class="text-xs sm:text-sm text-inkMuted leading-relaxed cursor-pointer line-clamp-2">
+                            요약본과 AI가 대신 써주는 문장들 사이에서, 끝까지 한 편의 글을 직접 밀고 나가는 경험이 한 사람의 사고력을 어떻게 바꾸는지 기록합니다.
+                        </p>
+                    </div>
+                </article>
+            
+                <article class="py-6 sm:py-8 px-2 -mx-2 hover:bg-paperDark/65 transition-colors group flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 sm:gap-8">
+                    <div class="sm:w-40 shrink-0 flex items-center sm:flex-col sm:items-start gap-2 sm:gap-1 text-xs text-inkMuted">
+                        <span class="font-mono text-[11px]">2026.10.19</span>
+                        <span class="uppercase tracking-wider text-[11px] text-ink font-semibold">수업노트</span>
+                    </div>
+                    <div class="flex-1 space-y-2">
+                        <div class="flex items-start justify-between gap-4">
+                            <h3 onclick="openReader(2)" class="font-serif text-lg sm:text-xl font-normal text-ink group-hover:underline underline-offset-4 cursor-pointer leading-snug">
+                                좋은 개요는 글쓰기의 절반이 아니라 전부다
+                            </h3>
+                            
+                                <button onclick="deleteColumn(2)" class="text-[11px] text-ink underline hover:opacity-60 shrink-0">Delete</button>
+                            
+                        </div>
+                        <p onclick="openReader(2)" class="text-xs sm:text-sm text-inkMuted leading-relaxed cursor-pointer line-clamp-2">
+                            글을 쓰다 중간에 막히는 가장 큰 이유는 문장력이 부족해서가 아니라, 출발하기 전 지도를 그리지 않았기 때문입니다.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Section 3: Photos (#photos) -->
+        <section id="photos" class="py-16 sm:py-24 hairline-b">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+                <div>
+                    <span class="text-[11px] uppercase tracking-[0.18em] text-ink font-semibold block mb-2" data-i18n="photoEyebrow">Visual Archive</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-normal text-ink" data-i18n="photoTitle">사진 기록</h2>
+                    <p class="text-xs sm:text-sm text-inkMuted mt-2" data-i18n="photoDesc">강연과 수업의 현장, 책상 위의 풍경, 계절의 기록들.</p>
+                </div>
+
+                <button onclick="openNewPhotoModal()" class="admin-only px-3.5 py-1.5 bg-ink text-paper text-xs tracking-wide hover:bg-salmonHover transition self-start sm:self-auto" data-i18n="newPhotoBtn">+ 사진 올리기</button>
+            </div>
+
+            <div id="photos-masonry" class="masonry-grid">
+                <figure class="masonry-item group relative">
+                    <div onclick="openLightbox(201)" class="overflow-hidden bg-paperDark hairline-all cursor-zoom-in">
+                        <img src="https://placehold.co/800x1000/F7E3D2/111111?text=Study+Desk+%26+Books" onerror="this.src='https://placehold.co/600x700/F7E3D2/111111?text=Archive+Photo'" alt="오후의 수업 준비 — 2026.10" class="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-500">
+                    </div>
+                    <figcaption class="mt-2 flex items-center justify-between gap-2 text-[11px] text-inkMuted">
+                        <span>오후의 수업 준비 — 2026.10</span>
+                        
+                            <button onclick="deletePhoto(201)" class="text-ink underline hover:opacity-60 shrink-0">Delete</button>
+                        
+                    </figcaption>
+                </figure>
+            
+                <figure class="masonry-item group relative">
+                    <div onclick="openLightbox(202)" class="overflow-hidden bg-paperDark hairline-all cursor-zoom-in">
+                        <img src="https://placehold.co/900x650/EED7C3/111111?text=Lecture+Hall+Notes" onerror="this.src='https://placehold.co/600x700/F7E3D2/111111?text=Archive+Photo'" alt="글쓰기 워크숍 현장 기록 — 2026.09" class="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-500">
+                    </div>
+                    <figcaption class="mt-2 flex items-center justify-between gap-2 text-[11px] text-inkMuted">
+                        <span>글쓰기 워크숍 현장 기록 — 2026.09</span>
+                        
+                            <button onclick="deletePhoto(202)" class="text-ink underline hover:opacity-60 shrink-0">Delete</button>
+                        
+                    </figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Section 4: Inquiry & Google Forms (#contact) -->
+        <section id="contact" class="py-16 sm:py-24">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-[11px] uppercase tracking-[0.18em] text-ink font-semibold block mb-2" data-i18n="contactEyebrow">Inquiry &amp; Application</span>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-normal text-ink" data-i18n="contactTitle">과외 지원 및 강연 문의</h2>
+                    </div>
+
+                    <p class="text-sm text-inkMuted leading-relaxed" data-i18n="contactDesc">과외 수강 신청, 커리큘럼 상담, 기업·학교 특강 및 원고 청탁은 아래 구글 폼(Google Forms)을 통해 접수해 주시면 확인 후 24시간 이내에 회신드립니다.</p>
+
+                    <div class="pt-2 space-y-3">
+                        <a id="google-form-direct-link" href="https://docs.google.com/forms" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-3.5 bg-ink text-paper text-xs sm:text-sm tracking-wide hover:bg-salmonHover transition-colors inline-flex items-center justify-center gap-2">
+                            <span data-i18n="openGFormBtn">새 창에서 구글 폼 열기</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="external-link" aria-hidden="true" class="lucide lucide-external-link w-4 h-4"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+                        </a>
+                        <p class="text-[11px] text-inkMuted" data-i18n="gformHint">* 모바일 환경에서 아래 임베드 화면이 작게 보일 경우 '새 창에서 열기'를 이용해 주세요.</p>
+                    </div>
+
+                    <div class="pt-6 hairline-t space-y-2 text-xs text-inkMuted">
+                        <p><strong class="text-ink font-medium" data-i18n="labelEmail">Direct Email:</strong> <span id="contact-email-display">contact@yourdomain.kr</span></p>
+                        <p><strong class="text-ink font-medium" data-i18n="labelResponse">Response Time:</strong> <span data-i18n="responseTimeVal">평일 기준 24시간 이내 답변</span></p>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 hairline-all bg-paperDark/50 p-2 sm:p-4">
+                    <div id="google-form-embed-wrapper" class="w-full">
+                    <div class="py-16 px-6 text-center bg-paper space-y-4">
+                        <p class="font-display italic text-base text-ink">Google Forms Application Area</p>
+                        <p class="text-xs sm:text-sm text-inkMuted max-w-md mx-auto leading-relaxed">
+                            Google Form is not connected yet.<br>
+                            Click <strong>[Admin] → [Google Form Link]</strong> at the top right to link your form.
+                        </p>
+                        <button onclick="openGoogleFormConfigModal()" class="px-4 py-2 border border-ink bg-paper text-xs text-ink hover:bg-ink hover:text-paper transition">
+                            Connect Google Form
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="hairline-t py-10 mt-8">
+        <div class="max-w-5xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-inkMuted">
+            <p class="font-serif text-ink" id="footer-brand">김도현 — Tutor &amp; Writer</p>
+            <p data-i18n="footerRights">© 2026 All rights reserved. Built as a single-file archive.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Reader Modal -->
+    <div id="reader-modal" class="fixed inset-0 z-50 hidden bg-[#111111]/55 backdrop-blur-[2px] flex items-center justify-center p-4 sm:p-6">
+        <div class="bg-paper hairline-all max-w-2xl w-full max-h-[88vh] flex flex-col shadow-2xl">
+            <div class="px-6 py-4 hairline-b flex items-center justify-between">
+                <span id="reader-meta" class="text-xs tracking-wider text-ink font-medium uppercase">칼럼 · 2026.11.01</span>
+                <button onclick="closeModal('reader-modal')" class="p-1 text-inkMuted hover:text-ink">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-5 h-5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-6 sm:p-10 overflow-y-auto space-y-6">
+                <h3 id="reader-title" class="font-serif text-2xl sm:text-3xl font-normal text-ink leading-snug"></h3>
+                <div class="w-10 h-[1px] bg-ink"></div>
+                <div id="reader-body" class="text-sm sm:text-base text-ink leading-[1.85] whitespace-pre-line font-sans"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" onclick="if(event.target===this) closeModal('lightbox-modal')" class="fixed inset-0 z-50 hidden bg-[#111111]/92 flex items-center justify-center p-4 sm:p-8">
+        <button onclick="closeModal('lightbox-modal')" class="fixed top-5 right-5 text-paper/80 hover:text-paper p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-6 h-6"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+        <div class="max-w-4xl w-full flex flex-col items-center space-y-4">
+            <img id="lightbox-img" src="" alt="확대 사진" class="max-h-[78vh] w-auto object-contain shadow-2xl">
+            <p id="lightbox-caption" class="text-xs sm:text-sm text-paper/90 font-serif tracking-wide text-center"></p>
+        </div>
+    </div>
+
+    <!-- New Column Modal -->
+    <div id="new-column-modal" class="fixed inset-0 z-50 hidden bg-[#111111]/55 flex items-center justify-center p-4">
+        <div class="bg-paper hairline-all max-w-xl w-full shadow-2xl">
+            <div class="px-6 py-4 hairline-b flex items-center justify-between">
+                <h3 class="font-serif text-lg text-ink" data-i18n="modalNewColTitle">새 칼럼 작성</h3>
+                <button onclick="closeModal('new-column-modal')" class="text-inkMuted hover:text-ink"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-5 h-5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+            </div>
+            <form onsubmit="addNewColumn(event)" class="p-6 space-y-4 text-sm">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-inkMuted mb-1" data-i18n="modalCatLabel">카테고리</label>
+                        <select id="col-input-cat" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink">
+                            <option value="칼럼" data-i18n="optColumn">칼럼</option>
+                            <option value="수업노트" data-i18n="optNote">수업노트</option>
+                            <option value="단상" data-i18n="optEssay">단상</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-inkMuted mb-1" data-i18n="modalDateLabel">작성일</label>
+                        <input type="text" id="col-input-date" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalTitleLabel">제목 *</label>
+                    <input type="text" id="col-input-title" required="" placeholder="칼럼 제목을 입력하세요" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink">
+                </div>
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalBodyLabel">본문 *</label>
+                    <textarea id="col-input-content" rows="8" required="" placeholder="내용을 입력하세요..." class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeModal('new-column-modal')" class="px-4 py-2 border border-ink text-ink text-xs" data-i18n="btnCancel">취소</button>
+                    <button type="submit" class="px-5 py-2 bg-ink text-paper text-xs hover:bg-salmonHover" data-i18n="btnPublish">게시하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- New Photo Modal -->
+    <div id="new-photo-modal" class="fixed inset-0 z-50 hidden bg-[#111111]/55 flex items-center justify-center p-4">
+        <div class="bg-paper hairline-all max-w-md w-full shadow-2xl">
+            <div class="px-6 py-4 hairline-b flex items-center justify-between">
+                <h3 class="font-serif text-lg text-ink" data-i18n="modalNewPhotoTitle">사진 아카이브 추가</h3>
+                <button onclick="closeModal('new-photo-modal')" class="text-inkMuted hover:text-ink"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-5 h-5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+            </div>
+            <form onsubmit="addNewPhoto(event)" class="p-6 space-y-4 text-sm">
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalPhotoFileLabel">방법 1: 내 기기에서 사진 파일 선택</label>
+                    <input type="file" id="photo-input-file" accept="image/*" class="w-full text-xs file:mr-3 file:py-1.5 file:px-3 file:border-0 file:bg-ink file:text-paper file:cursor-pointer">
+                </div>
+                <div class="text-center text-[11px] text-inkMuted">— 또는 —</div>
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalPhotoUrlLabel">방법 2: 이미지 주소(URL) 직접 입력</label>
+                    <input type="url" id="photo-input-url" placeholder="https://..." class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink">
+                </div>
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalPhotoCaptionLabel">사진 캡션 (설명 및 날짜) *</label>
+                    <input type="text" id="photo-input-caption" required="" placeholder="예: 2026 가을, 오후의 서재에서" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeModal('new-photo-modal')" class="px-4 py-2 border border-ink text-ink text-xs" data-i18n="btnCancel">취소</button>
+                    <button type="submit" class="px-5 py-2 bg-ink text-paper text-xs hover:bg-salmonHover" data-i18n="btnRegister">등록하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="fixed inset-0 z-50 hidden bg-[#111111]/55 flex items-center justify-center p-4">
+        <div class="bg-paper hairline-all max-w-2xl w-full max-h-[88vh] flex flex-col shadow-2xl">
+            <div class="px-6 py-4 hairline-b flex items-center justify-between">
+                <h3 class="font-serif text-lg text-ink" data-i18n="modalEditProfileTitle">소개 및 과외 커리큘럼 수정</h3>
+                <button onclick="closeModal('edit-profile-modal')" class="text-inkMuted hover:text-ink"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-5 h-5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+            </div>
+            <form onsubmit="saveProfileChanges(event)" class="p-6 overflow-y-auto space-y-4 text-sm">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-inkMuted mb-1" data-i18n="modalNameLabel">이름 / 로고명</label>
+                        <input type="text" id="edit-name" required="" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-inkMuted mb-1" data-i18n="modalEmailLabel">이메일 주소</label>
+                        <input type="email" id="edit-email" required="" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalHeadlineLabel">메인 헤드라인</label>
+                    <textarea id="edit-headline" rows="2" required="" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalIntroLabel">자기소개 본문</label>
+                    <textarea id="edit-intro" rows="3" required="" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalCurriculumLabel">과외 커리큘럼 항목 ('제목 | 설명' 형식)</label>
+                    <textarea id="edit-curriculum" rows="4" required="" class="w-full px-3 py-2 bg-white hairline-all font-mono text-xs focus:outline-none focus:border-ink"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalNoticeLabel">수업 방식 안내</label>
+                    <textarea id="edit-notice" rows="2" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalPosterCaptionLabel">홍보 포스터 캡션</label>
+                    <input type="text" id="edit-poster-caption" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeModal('edit-profile-modal')" class="px-4 py-2 border border-ink text-ink text-xs" data-i18n="btnCancel">취소</button>
+                    <button type="submit" class="px-5 py-2 bg-ink text-paper text-xs hover:bg-salmonHover" data-i18n="btnSave">저장하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Google Form Config Modal -->
+    <div id="gform-config-modal" class="fixed inset-0 z-50 hidden bg-[#111111]/55 flex items-center justify-center p-4">
+        <div class="bg-paper hairline-all max-w-lg w-full shadow-2xl">
+            <div class="px-6 py-4 hairline-b flex items-center justify-between">
+                <h3 class="font-serif text-lg text-ink" data-i18n="modalGFormTitle">구글 폼(Google Forms) 연결 설정</h3>
+                <button onclick="closeModal('gform-config-modal')" class="text-inkMuted hover:text-ink"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x w-5 h-5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+            </div>
+            <form onsubmit="saveGoogleFormUrl(event)" class="p-6 space-y-4 text-sm">
+                <p class="text-xs text-inkMuted leading-relaxed" data-i18n="modalGFormDesc">Google Forms [보내기] → [링크]에서 복사한 URL을 입력하세요. 하단 문의 섹션에 임베드됩니다.</p>
+                <div>
+                    <label class="block text-xs text-inkMuted mb-1" data-i18n="modalGFormUrlLabel">Google Forms 공유 URL</label>
+                    <input type="url" id="input-gform-url" placeholder="https://docs.google.com/forms/d/e/.../viewform" class="w-full px-3 py-2 bg-white hairline-all focus:outline-none focus:border-ink">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeModal('gform-config-modal')" class="px-4 py-2 border border-ink text-ink text-xs" data-i18n="btnCancel">취소</button>
+                    <button type="submit" class="px-5 py-2 bg-ink text-paper text-xs hover:bg-salmonHover" data-i18n="btnConnect">연결 저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // Multilingual Dictionaries (KO, EN, ES, PT)
+        // ==========================================
+        const I18N = {
+            ko: {
+                brandSubtitle: "Tutor & Writer",
+                navTutoring: "소개 & 과외",
+                navColumns: "칼럼",
+                navPhotos: "사진",
+                navContact: "문의하기",
+                adminBtn: "관리자",
+                adminModeActive: "관리자 편집 모드",
+                adminNotice: "— 수정 내용은 브라우저에 자동 저장됩니다.",
+                adminEditProfile: "소개·과외 수정",
+                adminConfigForm: "구글 폼 링크 설정",
+                adminExport: "HTML 파일로 내보내기",
+                adminReset: "초기화",
+                heroSubtitle: "Editorial Portfolio & Private Tutoring",
+                ctaApply: "과외 및 강연 신청하기",
+                ctaReadColumns: "최근 칼럼 읽기",
+                tutorEyebrow: "Tutoring Program",
+                tutorTitle: "1:1 맞춤형 과외 및 코칭 안내",
+                tutorNoticeTitle: "수업 진행 방식 및 상담 안내",
+                posterEyebrow: "Brochure / Poster",
+                changePosterBtn: "이미지 교체",
+                posterCaptionDefault: "Fig 1. 2026년 1:1 집중 과외 및 특강 안내 포스터",
+                columnEyebrow: "Index of Essays & Columns",
+                columnTitle: "칼럼과 생각의 기록",
+                filterAll: "전체",
+                filterColumn: "칼럼",
+                filterNote: "수업노트",
+                filterEssay: "단상",
+                newColumnBtn: "+ 새 글",
+                photoEyebrow: "Visual Archive",
+                photoTitle: "사진 기록",
+                photoDesc: "강연과 수업의 현장, 책상 위의 풍경, 계절의 기록들.",
+                newPhotoBtn: "+ 사진 올리기",
+                contactEyebrow: "Inquiry & Application",
+                contactTitle: "과외 지원 및 강연 문의",
+                contactDesc: "과외 수강 신청, 커리큘럼 상담, 기업·학교 특강 및 원고 청탁은 아래 구글 폼(Google Forms)을 통해 접수해 주시면 확인 후 24시간 이내에 회신드립니다.",
+                openGFormBtn: "새 창에서 구글 폼 열기",
+                gformHint: "* 모바일 환경에서 아래 임베드 화면이 작게 보일 경우 '새 창에서 열기'를 이용해 주세요.",
+                labelEmail: "Direct Email:",
+                labelResponse: "Response Time:",
+                responseTimeVal: "평일 기준 24시간 이내 답변",
+                footerRights: "© 2026 All rights reserved. Built as a single-file archive.",
+                modalNewColTitle: "새 칼럼 작성",
+                modalCatLabel: "카테고리",
+                optColumn: "칼럼",
+                optNote: "수업노트",
+                optEssay: "단상",
+                modalDateLabel: "작성일",
+                modalTitleLabel: "제목 *",
+                modalBodyLabel: "본문 *",
+                btnCancel: "취소",
+                btnPublish: "게시하기",
+                modalNewPhotoTitle: "사진 아카이브 추가",
+                modalPhotoFileLabel: "방법 1: 내 기기에서 사진 파일 선택",
+                modalPhotoUrlLabel: "방법 2: 이미지 주소(URL) 직접 입력",
+                modalPhotoCaptionLabel: "사진 캡션 (설명 및 날짜) *",
+                btnRegister: "등록하기",
+                modalEditProfileTitle: "소개 및 과외 커리큘럼 수정",
+                modalNameLabel: "이름 / 로고명",
+                modalEmailLabel: "이메일 주소",
+                modalHeadlineLabel: "메인 헤드라인",
+                modalIntroLabel: "자기소개 본문",
+                modalCurriculumLabel: "과외 커리큘럼 항목 ('제목 | 설명' 형식)",
+                modalNoticeLabel: "수업 방식 안내",
+                modalPosterCaptionLabel: "홍보 포스터 캡션",
+                btnSave: "저장하기",
+                modalGFormTitle: "구글 폼(Google Forms) 연결 설정",
+                modalGFormDesc: "Google Forms [보내기] → [링크]에서 복사한 URL을 입력하세요. 하단 문의 섹션에 임베드됩니다.",
+                modalGFormUrlLabel: "Google Forms 공유 URL",
+                btnConnect: "연결 저장"
+            },
+            en: {
+                brandSubtitle: "Tutor & Writer",
+                navTutoring: "About & Tutoring",
+                navColumns: "Columns",
+                navPhotos: "Photos",
+                navContact: "Inquiry",
+                adminBtn: "Admin",
+                adminModeActive: "Admin Edit Mode",
+                adminNotice: "— Changes are saved in your browser automatically.",
+                adminEditProfile: "Edit Profile & Tutoring",
+                adminConfigForm: "Google Form Link",
+                adminExport: "Export HTML",
+                adminReset: "Reset",
+                heroSubtitle: "Editorial Portfolio & Private Tutoring",
+                ctaApply: "Apply for Tutoring / Lecture",
+                ctaReadColumns: "Read Recent Columns",
+                tutorEyebrow: "Tutoring Program",
+                tutorTitle: "1:1 Tailored Tutoring & Coaching",
+                tutorNoticeTitle: "Session Guidelines & Consultation",
+                posterEyebrow: "Brochure / Poster",
+                changePosterBtn: "Change Image",
+                posterCaptionDefault: "Fig 1. 2026 1:1 Intensive Tutoring & Lecture Brochure",
+                columnEyebrow: "Index of Essays & Columns",
+                columnTitle: "Columns & Writings",
+                filterAll: "All",
+                filterColumn: "Column",
+                filterNote: "Notes",
+                filterEssay: "Essay",
+                newColumnBtn: "+ New Post",
+                photoEyebrow: "Visual Archive",
+                photoTitle: "Photo Archive",
+                photoDesc: "Glimpses from lectures, study desks, and seasonal records.",
+                newPhotoBtn: "+ Add Photo",
+                contactEyebrow: "Inquiry & Application",
+                contactTitle: "Tutoring & Lecture Inquiry",
+                contactDesc: "For tutoring applications, curriculum consultations, or corporate/school lectures, please submit your request via the Google Form below.",
+                openGFormBtn: "Open Google Form in New Window",
+                gformHint: "* If the embedded form appears small on mobile, please use 'Open in New Window'.",
+                labelEmail: "Direct Email:",
+                labelResponse: "Response Time:",
+                responseTimeVal: "Within 24 hours on weekdays",
+                footerRights: "© 2026 All rights reserved. Built as a single-file archive.",
+                modalNewColTitle: "Write New Column",
+                modalCatLabel: "Category",
+                optColumn: "Column",
+                optNote: "Notes",
+                optEssay: "Essay",
+                modalDateLabel: "Date",
+                modalTitleLabel: "Title *",
+                modalBodyLabel: "Content *",
+                btnCancel: "Cancel",
+                btnPublish: "Publish",
+                modalNewPhotoTitle: "Add Archive Photo",
+                modalPhotoFileLabel: "Method 1: Choose image file",
+                modalPhotoUrlLabel: "Method 2: Enter Image URL",
+                modalPhotoCaptionLabel: "Caption *",
+                btnRegister: "Register",
+                modalEditProfileTitle: "Edit Profile & Tutoring",
+                modalNameLabel: "Name / Brand",
+                modalEmailLabel: "Email Address",
+                modalHeadlineLabel: "Main Headline",
+                modalIntroLabel: "Introduction",
+                modalCurriculumLabel: "Curriculum Items ('Title | Description')",
+                modalNoticeLabel: "Session Guidelines",
+                modalPosterCaptionLabel: "Poster Caption",
+                btnSave: "Save Changes",
+                modalGFormTitle: "Google Forms Connection",
+                modalGFormDesc: "Paste the shareable URL from Google Forms [Send] → [Link].",
+                modalGFormUrlLabel: "Google Forms Share URL",
+                btnConnect: "Save Link"
+            },
+            es: {
+                brandSubtitle: "Tutor y Escritor",
+                navTutoring: "Acerca de y Tutorías",
+                navColumns: "Columnas",
+                navPhotos: "Fotos",
+                navContact: "Contacto",
+                adminBtn: "Admin",
+                adminModeActive: "Modo de Edición",
+                adminNotice: "— Los cambios se guardan automáticamente.",
+                adminEditProfile: "Editar Perfil y Tutoría",
+                adminConfigForm: "Enlace de Google Form",
+                adminExport: "Exportar HTML",
+                adminReset: "Restablecer",
+                heroSubtitle: "Portafolio Editorial y Tutorías Privadas",
+                ctaApply: "Solicitar Tutoría / Conferencia",
+                ctaReadColumns: "Leer Columnas Recientes",
+                tutorEyebrow: "Programa de Tutoría",
+                tutorTitle: "Tutoría y Asesoría Personalizada 1:1",
+                tutorNoticeTitle: "Pautas de Sesión y Consulta",
+                posterEyebrow: "Folleto / Póster",
+                changePosterBtn: "Cambiar Imagen",
+                posterCaptionDefault: "Fig 1. Folleto de Tutoría 2026",
+                columnEyebrow: "Índice de Ensayos y Columnas",
+                columnTitle: "Columnas y Escritos",
+                filterAll: "Todo",
+                filterColumn: "Columna",
+                filterNote: "Notas",
+                filterEssay: "Ensayo",
+                newColumnBtn: "+ Nueva Entrada",
+                photoEyebrow: "Archivo Visual",
+                photoTitle: "Archivo Fotográfico",
+                photoDesc: "Instantes de conferencias, escritorios y registros estacionales.",
+                newPhotoBtn: "+ Añadir Foto",
+                contactEyebrow: "Consulta y Solicitud",
+                contactTitle: "Solicitud de Tutoría y Conferencias",
+                contactDesc: "Para solicitudes de tutoría, consultas de planes de estudio o conferencias, envíe su solicitud a través de Google Forms.",
+                openGFormBtn: "Abrir Google Form en Nueva Ventana",
+                gformHint: "* Si el formulario se ve pequeño en móviles, use 'Abrir en Nueva Ventana'.",
+                labelEmail: "Correo Directo:",
+                labelResponse: "Tiempo de Respuesta:",
+                responseTimeVal: "Dentro de 24 horas en días hábiles",
+                footerRights: "© 2026 Todos los derechos reservados.",
+                modalNewColTitle: "Escribir Nueva Columna",
+                modalCatLabel: "Categoría",
+                optColumn: "Columna",
+                optNote: "Notas",
+                optEssay: "Ensayo",
+                modalDateLabel: "Fecha",
+                modalTitleLabel: "Título *",
+                modalBodyLabel: "Contenido *",
+                btnCancel: "Cancelar",
+                btnPublish: "Publicar",
+                modalNewPhotoTitle: "Añadir Foto al Archivo",
+                modalPhotoFileLabel: "Método 1: Elegir archivo",
+                modalPhotoUrlLabel: "Método 2: URL de imagen",
+                modalPhotoCaptionLabel: "Título / Leyenda *",
+                btnRegister: "Registrar",
+                modalEditProfileTitle: "Editar Perfil y Tutoría",
+                modalNameLabel: "Nombre / Marca",
+                modalEmailLabel: "Correo Electrónico",
+                modalHeadlineLabel: "Titular Principal",
+                modalIntroLabel: "Introducción",
+                modalCurriculumLabel: "Currículo ('Título | Descripción')",
+                modalNoticeLabel: "Pautas de Sesión",
+                modalPosterCaptionLabel: "Leyenda del Póster",
+                btnSave: "Guardar Cambios",
+                modalGFormTitle: "Configurar Google Forms",
+                modalGFormDesc: "Pegue el enlace URL compartido de Google Forms.",
+                modalGFormUrlLabel: "URL de Google Forms",
+                btnConnect: "Guardar Enlace"
+            },
+            pt: {
+                brandSubtitle: "Tutor & Escritor",
+                navTutoring: "Sobre & Aulas",
+                navColumns: "Colunas",
+                navPhotos: "Fotos",
+                navContact: "Contato",
+                adminBtn: "Admin",
+                adminModeActive: "Modo de Edição",
+                adminNotice: "— As alterações são salvas automaticamente.",
+                adminEditProfile: "Editar Perfil e Aulas",
+                adminConfigForm: "Link do Google Forms",
+                adminExport: "Exportar HTML",
+                adminReset: "Redefinir",
+                heroSubtitle: "Portfólio Editorial & Aulas Particulares",
+                ctaApply: "Inscrever-se para Aulas / Palestras",
+                ctaReadColumns: "Ler Colunas Recentes",
+                tutorEyebrow: "Programa de Aulas",
+                tutorTitle: "Tutoria e Coaching Personalizado 1:1",
+                tutorNoticeTitle: "Diretrizes e Consulta",
+                posterEyebrow: "Panfleto / Pôster",
+                changePosterBtn: "Alterar Imagem",
+                posterCaptionDefault: "Fig 1. Panfleto de Aulas 2026",
+                columnEyebrow: "Índice de Ensaios & Colunas",
+                columnTitle: "Colunas & Escritos",
+                filterAll: "Todos",
+                filterColumn: "Coluna",
+                filterNote: "Notas",
+                filterEssay: "Ensaio",
+                newColumnBtn: "+ Nova Postagem",
+                photoEyebrow: "Arquivo Visual",
+                photoTitle: "Arquivo de Fotos",
+                photoDesc: "Momentos de palestras, mesas de estudo e registros.",
+                newPhotoBtn: "+ Adicionar Foto",
+                contactEyebrow: "Consulta & Inscrição",
+                contactTitle: "Inscrição para Aulas e Palestras",
+                contactDesc: "Para inscrições em aulas, consultoria de currículo ou palestras, envie sua solicitação através do Google Forms abaixo.",
+                openGFormBtn: "Abrir Google Form em Nova Janela",
+                gformHint: "* Se o formulário parecer pequeno no celular, use 'Abrir em Nova Janela'.",
+                labelEmail: "E-mail Direto:",
+                labelResponse: "Tempo de Resposta:",
+                responseTimeVal: "Em até 24 horas em dias úteis",
+                footerRights: "© 2026 Todos os direitos reservados.",
+                modalNewColTitle: "Escrever Nova Coluna",
+                modalCatLabel: "Categoria",
+                optColumn: "Coluna",
+                optNote: "Notas",
+                optEssay: "Ensaio",
+                modalDateLabel: "Data",
+                modalTitleLabel: "Título *",
+                modalBodyLabel: "Conteúdo *",
+                btnCancel: "Cancelar",
+                btnPublish: "Publicar",
+                modalNewPhotoTitle: "Adicionar Foto ao Arquivo",
+                modalPhotoFileLabel: "Método 1: Escolher arquivo de imagem",
+                modalPhotoUrlLabel: "Método 2: Inserir URL da imagem",
+                modalPhotoCaptionLabel: "Legenda *",
+                btnRegister: "Registrar",
+                modalEditProfileTitle: "Editar Perfil e Aulas",
+                modalNameLabel: "Nome / Marca",
+                modalEmailLabel: "Endereço de E-mail",
+                modalHeadlineLabel: "Manchete Principal",
+                modalIntroLabel: "Introdução",
+                modalCurriculumLabel: "Itens do Currículo ('Título | Descrição')",
+                modalNoticeLabel: "Diretrizes das Aulas",
+                modalPosterCaptionLabel: "Legenda do Pôster",
+                btnSave: "Salvar Alterações",
+                modalGFormTitle: "Configurar Google Forms",
+                modalGFormDesc: "Cole a URL compartilhada do Google Forms.",
+                modalGFormUrlLabel: "URL do Google Forms",
+                btnConnect: "Salvar Link"
+            }
+        };
+
+        const INITIAL_DATA = {
+            lang: 'ko',
+            profile: {
+                name: "김도현",
+                email: "contact@yourdomain.kr",
+                headline: "생각의 구조를 세우고,\n자신만의 문장으로 답을 찾는 시간.",
+                intro: "안녕하세요, 김도현입니다. 학생과 성인을 대상으로 1:1 맞춤형 글쓰기·논술·사고력 과외를 진행하며, 배움과 일상의 단상을 칼럼과 사진으로 기록합니다.",
+                curriculum: [
+                    { title: "01. 대입·편입 논술 및 심층 면접 대비", desc: "고등학생 · N수생 대상 | 제시문 독해 구조화, 개요 작성 훈련, 주 1회 1:1 대면 첨삭" },
+                    { title: "02. 청소년 독서·비판적 글쓰기 클래스", desc: "중·고등학생 대상 | 인문·사회 고전 읽기, 자기 생각 에세이 완성 및 발표 코칭" },
+                    { title: "03. 성인 실무 기획 및 에세이 1:1 코칭", desc: "직장인 · 대학원생 대상 | 보고서·학업계획서 논리 교정 및 개인 칼럼 쓰기 멘토링" }
+                ],
+                notice: "• 대면 수업(서울·경기 주요 지역) 및 비대면 실시간(Zoom) 수업 모두 가능합니다.\n• 첫 수업 전 20분 무료 사전 진단 및 학습 방향 상담을 진행합니다.",
+                posterUrl: "https://placehold.co/600x800/F7E3D2/111111?text=2026+Private+Tutoring%0A%0A1:1+%EB%A7%9E%EC%B6%A4%ED%98%95+%EA%B8%80%EC%93%B0%EA%B8%B0%C2%B7%EB%85%BC%EC%88%A0+%ED%81%B4%EB%9E%98%EC%8A%A4",
+                posterCaption: "Fig 1. 2026년 1:1 집중 과외 및 특강 안내 포스터",
+                googleFormUrl: ""
+            },
+            columns: [
+                {
+                    id: 1,
+                    category: "칼럼",
+                    date: "2026.11.04",
+                    title: "빠른 정답의 시대, 느리게 읽고 깊게 쓰는 감각에 대하여",
+                    summary: "요약본과 AI가 대신 써주는 문장들 사이에서, 끝까지 한 편의 글을 직접 밀고 나가는 경험이 한 사람의 사고력을 어떻게 바꾸는지 기록합니다.",
+                    content: "검색창에 질문 몇 단어만 입력하면 매끄러운 요약문이 즉시 출력되는 시대입니다. 효율성이라는 측면에서 분명 놀라운 진보이지만, 가르치는 현장에서 만나는 학생들의 글은 점점 더 닮아가고 있습니다.\n\n좋은 글은 정답을 빠르게 베껴 적는 과정에서 나오지 않습니다. 풀리지 않는 문장 앞에서 잠시 멈춰 서고, 내가 왜 이 단어를 선택했는지 스스로에게 되묻는 '느린 시간'을 통과해야 비로소 자기만의 목소리가 생깁니다."
+                },
+                {
+                    id: 2,
+                    category: "수업노트",
+                    date: "2026.10.19",
+                    title: "좋은 개요는 글쓰기의 절반이 아니라 전부다",
+                    summary: "글을 쓰다 중간에 막히는 가장 큰 이유는 문장력이 부족해서가 아니라, 출발하기 전 지도를 그리지 않았기 때문입니다.",
+                    content: "수업 첫 시간에 학생들에게 가장 먼저 요구하는 것은 '문장을 쓰지 않는 것'입니다. 대신 A4 용지 한 장에 핵심 주장과 근거 세 가지, 그리고 예상되는 반론을 짧은 키워드로 배치하게 합니다."
+                }
+            ],
+            photos: [
+                {
+                    id: 201,
+                    url: "https://placehold.co/800x1000/F7E3D2/111111?text=Study+Desk+%26+Books",
+                    caption: "오후의 수업 준비 — 2026.10"
+                },
+                {
+                    id: 202,
+                    url: "https://placehold.co/900x650/EED7C3/111111?text=Lecture+Hall+Notes",
+                    caption: "글쓰기 워크숍 현장 기록 — 2026.09"
+                }
+            ]
+        };
+
+        let appState = JSON.parse(localStorage.getItem('enuma_editorial_multilang_v2')) || {"lang":"ko","profile":{"name":"김도현","email":"contact@yourdomain.kr","headline":"생각의 구조를 세우고,\n자신만의 문장으로 답을 찾는 시간.","intro":"안녕하세요, 김도현입니다. 학생과 성인을 대상으로 1:1 맞춤형 글쓰기·논술·사고력 과외를 진행하며, 배움과 일상의 단상을 칼럼과 사진으로 기록합니다.","curriculum":[{"title":"01. 대입·편입 논술 및 심층 면접 대비","desc":"고등학생 · N수생 대상 | 제시문 독해 구조화, 개요 작성 훈련, 주 1회 1:1 대면 첨삭"},{"title":"02. 청소년 독서·비판적 글쓰기 클래스","desc":"중·고등학생 대상 | 인문·사회 고전 읽기, 자기 생각 에세이 완성 및 발표 코칭"},{"title":"03. 성인 실무 기획 및 에세이 1:1 코칭","desc":"직장인 · 대학원생 대상 | 보고서·학업계획서 논리 교정 및 개인 칼럼 쓰기 멘토링"}],"notice":"• 대면 수업(서울·경기 주요 지역) 및 비대면 실시간(Zoom) 수업 모두 가능합니다.\n• 첫 수업 전 20분 무료 사전 진단 및 학습 방향 상담을 진행합니다.","posterUrl":"https://placehold.co/600x800/F7E3D2/111111?text=2026+Private+Tutoring%0A%0A1:1+%EB%A7%9E%EC%B6%A4%ED%98%95+%EA%B8%80%EC%93%B0%EA%B8%B0%C2%B7%EB%85%BC%EC%88%A0+%ED%81%B4%EB%9E%98%EC%8A%A4","posterCaption":"Fig 1. 2026년 1:1 집중 과외 및 특강 안내 포스터","googleFormUrl":""},"columns":[{"id":1,"category":"칼럼","date":"2026.11.04","title":"빠른 정답의 시대, 느리게 읽고 깊게 쓰는 감각에 대하여","summary":"요약본과 AI가 대신 써주는 문장들 사이에서, 끝까지 한 편의 글을 직접 밀고 나가는 경험이 한 사람의 사고력을 어떻게 바꾸는지 기록합니다.","content":"검색창에 질문 몇 단어만 입력하면 매끄러운 요약문이 즉시 출력되는 시대입니다. 효율성이라는 측면에서 분명 놀라운 진보이지만, 가르치는 현장에서 만나는 학생들의 글은 점점 더 닮아가고 있습니다.\n\n좋은 글은 정답을 빠르게 베껴 적는 과정에서 나오지 않습니다. 풀리지 않는 문장 앞에서 잠시 멈춰 서고, 내가 왜 이 단어를 선택했는지 스스로에게 되묻는 '느린 시간'을 통과해야 비로소 자기만의 목소리가 생깁니다."},{"id":2,"category":"수업노트","date":"2026.10.19","title":"좋은 개요는 글쓰기의 절반이 아니라 전부다","summary":"글을 쓰다 중간에 막히는 가장 큰 이유는 문장력이 부족해서가 아니라, 출발하기 전 지도를 그리지 않았기 때문입니다.","content":"수업 첫 시간에 학생들에게 가장 먼저 요구하는 것은 '문장을 쓰지 않는 것'입니다. 대신 A4 용지 한 장에 핵심 주장과 근거 세 가지, 그리고 예상되는 반론을 짧은 키워드로 배치하게 합니다."}],"photos":[{"id":201,"url":"https://placehold.co/800x1000/F7E3D2/111111?text=Study+Desk+%26+Books","caption":"오후의 수업 준비 — 2026.10"},{"id":202,"url":"https://placehold.co/900x650/EED7C3/111111?text=Lecture+Hall+Notes","caption":"글쓰기 워크숍 현장 기록 — 2026.09"}]};
+        let isAdmin = false;
+        let currentColumnFilter = '전체';
+
+        function saveState() {
+            try {
+                localStorage.setItem('enuma_editorial_multilang_v2', JSON.stringify(appState));
+            } catch (err) {
+                showToast('Storage capacity exceeded.');
+            }
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const el = document.createElement('div');
+            el.className = 'bg-ink text-paper px-4 py-2.5 text-xs tracking-wide shadow-lg transition-opacity duration-300';
+            el.textContent = msg;
+            container.appendChild(el);
+            setTimeout(() => {
+                el.classList.add('opacity-0');
+                setTimeout(() => el.remove(), 300);
+            }, 2800);
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function setLanguage(lang) {
+            appState.lang = lang;
+            saveState();
+
+            // Highlight language tab buttons
+            ['ko', 'en', 'es', 'pt'].forEach(l => {
+                const btn = document.getElementById(`lang-btn-${l}`);
+                if (l === lang) {
+                    btn.className = "px-2 py-1 bg-ink text-paper font-bold transition";
+                } else {
+                    btn.className = "px-2 py-1 text-ink hover:bg-ink hover:text-paper transition";
+                }
+            });
+
+            updateStaticTexts();
+            showToast(`Language switched to: ${lang.toUpperCase()}`);
+        }
+
+        function updateStaticTexts() {
+            const dict = I18N[appState.lang] || I18N.ko;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) {
+                    el.textContent = dict[key];
+                }
+            });
+        }
+
+        function toggleAdmin() {
+            isAdmin = !isAdmin;
+            const btn = document.getElementById('admin-btn');
+            const toolbar = document.getElementById('admin-toolbar');
+            const adminOnlyEls = document.querySelectorAll('.admin-only');
+
+            if (isAdmin) {
+                btn.classList.add('bg-ink', 'text-paper');
+                btn.classList.remove('text-ink');
+                btn.textContent = 'Admin ON';
+                toolbar.classList.remove('hidden');
+                adminOnlyEls.forEach(el => el.classList.remove('hidden'));
+                showToast('Admin edit mode enabled.');
+            } else {
+                btn.classList.remove('bg-ink', 'text-paper');
+                btn.classList.add('text-ink');
+                btn.textContent = I18N[appState.lang].adminBtn || '관리자';
+                toolbar.classList.add('hidden');
+                adminOnlyEls.forEach(el => el.classList.add('hidden'));
+                showToast('Admin mode disabled.');
+            }
+
+            renderColumns();
+            renderPhotos();
+        }
+
+        function renderProfileAndTutoring() {
+            const p = appState.profile;
+            document.getElementById('nav-brand-name').textContent = p.name;
+            document.getElementById('footer-brand').textContent = `${p.name} — ${I18N[appState.lang].brandSubtitle || 'Tutor & Writer'}`;
+            document.getElementById('contact-email-display').textContent = p.email;
+            document.getElementById('hero-headline').innerHTML = p.headline.replace(/\n/g, '<br>');
+            document.getElementById('hero-intro').textContent = p.intro;
+            document.getElementById('tutor-notice').innerHTML = p.notice.replace(/\n/g, '<br>');
+            document.getElementById('tutor-poster-img').src = p.posterUrl;
+            document.getElementById('tutor-poster-caption').textContent = p.posterCaption;
+
+            const curList = document.getElementById('curriculum-list');
+            curList.innerHTML = p.curriculum.map(item => `
+                <div class="py-4 sm:py-5">
+                    <h3 class="font-serif text-base sm:text-lg font-medium text-ink mb-1">${item.title}</h3>
+                    <p class="text-xs sm:text-sm text-inkMuted">${item.desc}</p>
+                </div>
+            `).join('');
+
+            renderGoogleFormSection();
+        }
+
+        function handlePosterUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                appState.profile.posterUrl = evt.target.result;
+                saveState();
+                renderProfileAndTutoring();
+                showToast('Poster image updated.');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function openEditProfileModal() {
+            const p = appState.profile;
+            document.getElementById('edit-name').value = p.name;
+            document.getElementById('edit-email').value = p.email;
+            document.getElementById('edit-headline').value = p.headline;
+            document.getElementById('edit-intro').value = p.intro;
+            document.getElementById('edit-curriculum').value = p.curriculum.map(c => `${c.title} | ${c.desc}`).join('\n');
+            document.getElementById('edit-notice').value = p.notice;
+            document.getElementById('edit-poster-caption').value = p.posterCaption;
+            openModal('edit-profile-modal');
+        }
+
+        function saveProfileChanges(e) {
+            e.preventDefault();
+            const curLines = document.getElementById('edit-curriculum').value.split('\n').filter(l => l.trim());
+            const parsedCurriculum = curLines.map(line => {
+                const parts = line.split('|');
+                return {
+                    title: (parts[0] || '').trim(),
+                    desc: (parts[1] || '').trim()
+                };
+            });
+
+            appState.profile.name = document.getElementById('edit-name').value.trim();
+            appState.profile.email = document.getElementById('edit-email').value.trim();
+            appState.profile.headline = document.getElementById('edit-headline').value.trim();
+            appState.profile.intro = document.getElementById('edit-intro').value.trim();
+            appState.profile.curriculum = parsedCurriculum;
+            appState.profile.notice = document.getElementById('edit-notice').value.trim();
+            appState.profile.posterCaption = document.getElementById('edit-poster-caption').value.trim();
+
+            saveState();
+            renderProfileAndTutoring();
+            closeModal('edit-profile-modal');
+            showToast('Profile and tutoring info updated.');
+        }
+
+        function setColumnFilter(cat) {
+            currentColumnFilter = cat;
+            document.querySelectorAll('.col-filter-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.classList.add('bg-ink', 'text-paper');
+                    btn.classList.remove('border', 'border-ink', 'bg-paper', 'text-ink');
+                } else {
+                    btn.classList.remove('bg-ink', 'text-paper');
+                    btn.classList.add('border', 'border-ink', 'bg-paper', 'text-ink');
+                }
+            });
+            renderColumns();
+        }
+
+        function renderColumns() {
+            const list = document.getElementById('columns-list');
+            const filtered = appState.columns.filter(c => currentColumnFilter === '전체' || c.category === currentColumnFilter);
+
+            if (filtered.length === 0) {
+                list.innerHTML = `<div class="py-12 text-center text-xs text-inkMuted">No articles found.</div>`;
+                return;
+            }
+
+            list.innerHTML = filtered.map(col => `
+                <article class="py-6 sm:py-8 px-2 -mx-2 hover:bg-paperDark/65 transition-colors group flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 sm:gap-8">
+                    <div class="sm:w-40 shrink-0 flex items-center sm:flex-col sm:items-start gap-2 sm:gap-1 text-xs text-inkMuted">
+                        <span class="font-mono text-[11px]">${col.date}</span>
+                        <span class="uppercase tracking-wider text-[11px] text-ink font-semibold">${col.category}</span>
+                    </div>
+                    <div class="flex-1 space-y-2">
+                        <div class="flex items-start justify-between gap-4">
+                            <h3 onclick="openReader(${col.id})" class="font-serif text-lg sm:text-xl font-normal text-ink group-hover:underline underline-offset-4 cursor-pointer leading-snug">
+                                ${col.title}
+                            </h3>
+                            ${isAdmin ? `
+                                <button onclick="deleteColumn(${col.id})" class="text-[11px] text-ink underline hover:opacity-60 shrink-0">Delete</button>
+                            ` : ''}
+                        </div>
+                        <p onclick="openReader(${col.id})" class="text-xs sm:text-sm text-inkMuted leading-relaxed cursor-pointer line-clamp-2">
+                            ${col.summary || col.content.slice(0, 110) + '...'}
+                        </p>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function openReader(id) {
+            const col = appState.columns.find(c => c.id === id);
+            if (!col) return;
+            document.getElementById('reader-meta').textContent = `${col.category} · ${col.date}`;
+            document.getElementById('reader-title').textContent = col.title;
+            document.getElementById('reader-body').textContent = col.content;
+            openModal('reader-modal');
+        }
+
+        function openNewColumnModal() {
+            const today = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+            document.getElementById('col-input-date').value = today;
+            document.getElementById('col-input-title').value = '';
+            document.getElementById('col-input-content').value = '';
+            openModal('new-column-modal');
+        }
+
+        function addNewColumn(e) {
+            e.preventDefault();
+            const content = document.getElementById('col-input-content').value.trim();
+            const newCol = {
+                id: Date.now(),
+                category: document.getElementById('col-input-cat').value,
+                date: document.getElementById('col-input-date').value.trim(),
+                title: document.getElementById('col-input-title').value.trim(),
+                summary: content.slice(0, 115) + (content.length > 115 ? '...' : ''),
+                content
+            };
+            appState.columns.unshift(newCol);
+            saveState();
+            renderColumns();
+            closeModal('new-column-modal');
+            showToast('New column published.');
+        }
+
+        function deleteColumn(id) {
+            appState.columns = appState.columns.filter(c => c.id !== id);
+            saveState();
+            renderColumns();
+            showToast('Column deleted.');
+        }
+
+        function renderPhotos() {
+            const grid = document.getElementById('photos-masonry');
+            if (appState.photos.length === 0) {
+                grid.innerHTML = `<div class="py-12 text-center text-xs text-inkMuted">No photos found.</div>`;
+                return;
+            }
+
+            grid.innerHTML = appState.photos.map(photo => `
+                <figure class="masonry-item group relative">
+                    <div onclick="openLightbox(${photo.id})" class="overflow-hidden bg-paperDark hairline-all cursor-zoom-in">
+                        <img src="${photo.url}" 
+                             onerror="this.src='https://placehold.co/600x700/F7E3D2/111111?text=Archive+Photo'"
+                             alt="${photo.caption}" 
+                             class="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-500">
+                    </div>
+                    <figcaption class="mt-2 flex items-center justify-between gap-2 text-[11px] text-inkMuted">
+                        <span>${photo.caption}</span>
+                        ${isAdmin ? `
+                            <button onclick="deletePhoto(${photo.id})" class="text-ink underline hover:opacity-60 shrink-0">Delete</button>
+                        ` : ''}
+                    </figcaption>
+                </figure>
+            `).join('');
+        }
+
+        function openLightbox(id) {
+            const photo = appState.photos.find(p => p.id === id);
+            if (!photo) return;
+            document.getElementById('lightbox-img').src = photo.url;
+            document.getElementById('lightbox-caption').textContent = photo.caption;
+            openModal('lightbox-modal');
+        }
+
+        function openNewPhotoModal() {
+            document.getElementById('photo-input-file').value = '';
+            document.getElementById('photo-input-url').value = '';
+            document.getElementById('photo-input-caption').value = '';
+            openModal('new-photo-modal');
+        }
+
+        function addNewPhoto(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('photo-input-file');
+            const urlInput = document.getElementById('photo-input-url').value.trim();
+            const caption = document.getElementById('photo-input-caption').value.trim();
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    appState.photos.unshift({
+                        id: Date.now(),
+                        url: evt.target.result,
+                        caption
+                    });
+                    saveState();
+                    renderPhotos();
+                    closeModal('new-photo-modal');
+                    showToast('Photo added to archive.');
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else if (urlInput) {
+                appState.photos.unshift({
+                    id: Date.now(),
+                    url: urlInput,
+                    caption
+                });
+                saveState();
+                renderPhotos();
+                closeModal('new-photo-modal');
+                showToast('Photo added to archive.');
+            } else {
+                showToast('Please select a file or enter an image URL.');
+            }
+        }
+
+        function deletePhoto(id) {
+            appState.photos = appState.photos.filter(p => p.id !== id);
+            saveState();
+            renderPhotos();
+            showToast('Photo deleted.');
+        }
+
+        function renderGoogleFormSection() {
+            const wrapper = document.getElementById('google-form-embed-wrapper');
+            const directLink = document.getElementById('google-form-direct-link');
+            const rawUrl = appState.profile.googleFormUrl;
+
+            if (rawUrl) {
+                directLink.href = rawUrl;
+                const embedUrl = rawUrl.includes('?') 
+                    ? (rawUrl.includes('embedded=true') ? rawUrl : rawUrl + '&embedded=true')
+                    : rawUrl + '?embedded=true';
+
+                wrapper.innerHTML = `
+                    <iframe src="${embedUrl}" class="w-full h-[640px] border-0" loading="lazy">Loading...</iframe>
+                `;
+            } else {
+                directLink.href = "https://docs.google.com/forms";
+                wrapper.innerHTML = `
+                    <div class="py-16 px-6 text-center bg-paper space-y-4">
+                        <p class="font-display italic text-base text-ink">Google Forms Application Area</p>
+                        <p class="text-xs sm:text-sm text-inkMuted max-w-md mx-auto leading-relaxed">
+                            Google Form is not connected yet.<br>
+                            Click <strong>[Admin] → [Google Form Link]</strong> at the top right to link your form.
+                        </p>
+                        <button onclick="openGoogleFormConfigModal()" class="px-4 py-2 border border-ink bg-paper text-xs text-ink hover:bg-ink hover:text-paper transition">
+                            Connect Google Form
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function openGoogleFormConfigModal() {
+            document.getElementById('input-gform-url').value = appState.profile.googleFormUrl || '';
+            openModal('gform-config-modal');
+        }
+
+        function saveGoogleFormUrl(e) {
+            e.preventDefault();
+            appState.profile.googleFormUrl = document.getElementById('input-gform-url').value.trim();
+            saveState();
+            renderGoogleFormSection();
+            closeModal('gform-config-modal');
+            showToast('Google Form link saved.');
+        }
+
+        function exportStandaloneHTML() {
+            const currentDocHTML = document.documentElement.outerHTML;
+            const serializedState = JSON.stringify(appState);
+            const updatedHTML = '<!DOCTYPE html>\n' + currentDocHTML.replace(
+                /let appState = JSON\.parse\(localStorage\.getItem\('enuma_editorial_multilang_v2'\)\) \|\| INITIAL_DATA;/,
+                `let appState = JSON.parse(localStorage.getItem('enuma_editorial_multilang_v2')) || ${serializedState};`
+            );
+
+            const blob = new Blob([updatedHTML], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index.html';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('index.html downloaded successfully.');
+        }
+
+        function resetAllData() {
+            localStorage.removeItem('enuma_editorial_multilang_v2');
+            appState = JSON.parse(JSON.stringify(INITIAL_DATA));
+            setLanguage('ko');
+            renderProfileAndTutoring();
+            renderColumns();
+            renderPhotos();
+            showToast('Reset to default sample data.');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setLanguage(appState.lang || 'ko');
+            renderProfileAndTutoring();
+            renderColumns();
+            renderPhotos();
+            lucide.createIcons();
+        });
+    </script>
+
+</body></html>
