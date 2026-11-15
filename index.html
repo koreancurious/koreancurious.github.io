@@ -3,1407 +3,320 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HoonQ — Freethinker &amp; Writer | Editorial Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>HoonQ — Editorial Portfolio &amp; Private Tutoring</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+KR:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ft-bg: #FFE3CE;
-      --ft-ink: #111111;
-      --ft-muted: #4A4038;
-      --ft-sepia: #6B442A;
-      --ft-accent: #8B2626;
+      --bg-salmon: #FFE3CE;
+      --ink-black: #141210;
+      --ink-muted: #4A423C;
+      --rule-color: rgba(20, 18, 16, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     html {
       scroll-behavior: smooth;
     }
 
-    /* Bright FT Salmon (#FFE3CE) + Repeating Dejima Dot-Grid & 4-Leaf / S-Curve Filigree Pattern */
     body {
-      background-color: var(--ft-bg);
-      color: var(--ft-ink);
-      font-family: "Noto Serif KR", "Libre Baskerville", Georgia, serif;
       margin: 0;
-      padding: 0;
-      -webkit-font-smoothing: antialiased;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='112' viewBox='0 0 112 112'%3E%3Cg fill='none' stroke='%236B442A' stroke-opacity='0.13' stroke-width='0.85' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M 0 56 C 18 36, 38 76, 56 56 C 74 36, 94 76, 112 56'/%3E%3Cpath d='M 56 0 C 36 18, 76 38, 56 56 C 36 74, 76 94, 56 112'/%3E%3Cpath d='M 0 0 C 18 20, 38 -12, 56 0 C 74 12, 94 -12, 112 0'/%3E%3Cpath d='M 0 112 C 18 92, 38 124, 56 112 C 74 100, 94 124, 112 112'/%3E%3Cpath d='M 56 56 C 50 44, 62 44, 56 56 C 68 50, 68 62, 56 56 C 62 68, 50 68, 56 56 C 44 62, 44 50, 56 56 Z'/%3E%3Cpath d='M 0 0 C -6 -12, 6 -12, 0 0 C 12 -6, 12 6, 0 0 C 6 12, -6 12, 0 0 C -12 6, -12 -6, 0 0 Z'/%3E%3Cpath d='M 112 0 C 106 -12, 118 -12, 112 0 C 124 -6, 124 6, 112 0 C 118 12, 106 12, 112 0 C 100 6, 100 -6, 112 0 Z'/%3E%3Cpath d='M 0 112 C -6 100, 6 100, 0 112 C 12 106, 12 118, 0 112 C 6 124, -6 124, 0 112 C -12 118, -12 106, 0 112 Z'/%3E%3Cpath d='M 112 112 C 106 100, 118 100, 112 112 C 124 106, 124 118, 112 112 C 118 124, 106 124, 112 112 C 100 118, 100 106, 112 112 Z'/%3E%3Cpath d='M 28 28 C 24 20, 32 20, 28 28 C 36 24, 36 32, 28 28 C 32 36, 24 36, 28 28 C 20 32, 20 24, 28 28 Z'/%3E%3Cpath d='M 84 84 C 80 76, 88 76, 84 84 C 92 80, 92 88, 84 84 C 88 92, 80 92, 84 84 C 76 88, 76 80, 84 84 Z'/%3E%3C/g%3E%3Cg fill='%236B442A' fill-opacity='0.13'%3E%3Ccircle cx='14' cy='14' r='1.0'/%3E%3Ccircle cx='42' cy='14' r='1.0'/%3E%3Ccircle cx='70' cy='14' r='1.0'/%3E%3Ccircle cx='98' cy='14' r='1.0'/%3E%3Ccircle cx='14' cy='42' r='1.0'/%3E%3Ccircle cx='42' cy='42' r='1.0'/%3E%3Ccircle cx='70' cy='42' r='1.0'/%3E%3Ccircle cx='98' cy='42' r='1.0'/%3E%3Ccircle cx='14' cy='70' r='1.0'/%3E%3Ccircle cx='42' cy='70' r='1.0'/%3E%3Ccircle cx='70' cy='70' r='1.0'/%3E%3Ccircle cx='98' cy='70' r='1.0'/%3E%3Ccircle cx='14' cy='98' r='1.0'/%3E%3Ccircle cx='42' cy='98' r='1.0'/%3E%3Ccircle cx='70' cy='98' r='1.0'/%3E%3Ccircle cx='98' cy='98' r='1.0'/%3E%3Ccircle cx='56' cy='56' r='1.25'/%3E%3C/g%3E%3C/svg%3E");
+      color: var(--ink-black);
+      background-color: var(--bg-salmon);
+      font-family: 'Noto Serif KR', 'Playfair Display', Georgia, serif;
+      line-height: 1.75;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23141210' stroke-opacity='0.065' stroke-width='0.8'%3E%3Ccircle cx='15' cy='15' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='45' cy='15' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='75' cy='15' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='105' cy='15' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='15' cy='45' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='75' cy='45' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='15' cy='75' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='45' cy='75' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='105' cy='75' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='45' cy='105' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='75' cy='105' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Ccircle cx='105' cy='105' r='1.1' fill='%23141210' fill-opacity='0.07'/%3E%3Cpath d='M45 37 C42 42, 42 48, 45 53 C48 48, 48 42, 45 37 Z'/%3E%3Cpath d='M37 45 C42 42, 48 42, 53 45 C48 48, 42 48, 37 45 Z'/%3E%3Cpath d='M82 95 C88 90, 96 92, 98 98 C100 104, 93 109, 88 106'/%3E%3Cpath d='M22 92 C28 88, 34 92, 32 98 C30 103, 24 104, 21 100'/%3E%3C/g%3E%3C/svg%3E");
       background-repeat: repeat;
-      background-size: 112px 112px;
+      background-size: 120px 120px;
     }
 
-    /* Standard non-cursive editorial serif typography */
-    .font-editorial {
-      font-family: "Playfair Display", "Noto Serif KR", Georgia, serif;
+    .page-shell {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 28px 64px;
     }
 
-    .font-ui {
-      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px 0 18px;
+      border-bottom: 1px solid var(--rule-color);
+      flex-wrap: wrap;
     }
 
-    /* Side-by-side horizontal alignment for TUTORING PROGRAM and BROCHURE / POSTER directly below Hero */
-    .tutoring-poster-grid {
+    .brand-lockup {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-name {
+      margin: 0;
+      font-family: 'Playfair Display', 'Noto Serif KR', Georgia, serif;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+      color: var(--ink-black);
+    }
+
+    .brand-tagline {
+      font-family: 'Instrument Serif', 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 17px;
+      color: var(--ink-muted);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 14px;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      color: var(--ink-black);
+      text-decoration: none;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--ink-black);
+      color: var(--bg-salmon);
+      text-decoration: none;
+      padding: 8px 14px;
+      font-size: 13px;
+      border: 1px solid var(--ink-black);
+    }
+
+    .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      color: var(--ink-black);
+      text-decoration: none;
+      padding: 8px 14px;
+      font-size: 13px;
+      border: 1px solid var(--ink-black);
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid var(--ink-black);
+    }
+
+    .lang-switch button {
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--ink-black);
+      padding: 6px 9px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--ink-black);
+    }
+
+    .lang-switch button:last-child {
+      border-right: none;
+    }
+
+    .lang-switch button.active {
+      background: var(--ink-black);
+      color: var(--bg-salmon);
+    }
+
+    .hero-section {
+      padding: 36px 0 34px;
+      border-bottom: 1px solid var(--rule-color);
+    }
+
+    .edition-strip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .edition-tag {
+      background: var(--ink-black);
+      color: var(--bg-salmon);
+      padding: 3px 8px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .edition-sub {
+      font-family: 'Instrument Serif', 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 17px;
+      color: var(--ink-muted);
+    }
+
+    .hero-headline {
+      margin: 0 0 20px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.26;
+      font-weight: 700;
+      max-width: 920px;
+    }
+
+    .hero-body,
+    .hero-secondary-body,
+    .featured-quote {
+      max-width: 820px;
+      font-size: 16px;
+      line-height: 1.84;
+      margin: 0 0 18px;
+      white-space: pre-line;
+    }
+
+    .featured-quote {
+      font-weight: 600;
+      padding-left: 14px;
+      border-left: 2px solid var(--ink-black);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .mid-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-      gap: 36px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 44px;
+      padding: 38px 0;
+      border-bottom: 1px solid var(--rule-color);
       align-items: start;
     }
 
+    .section-kicker {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+
+    .section-heading {
+      margin: 0 0 22px;
+      font-size: 25px;
+      line-height: 1.3;
+      font-weight: 700;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule-color);
+    }
+
+    .tutoring-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .tutoring-item {
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--rule-color);
+    }
+
+    .tutoring-item:last-child {
+      border-bottom: none;
+    }
+
+    .tutoring-item-title {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .tutoring-item-desc {
+      margin: 0;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    .poster-frame {
+      border: 1px solid var(--ink-black);
+      padding: 12px;
+      background: rgba(255, 246, 238, 0.45);
+    }
+
+    .poster-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: cover;
+      border: 1px solid var(--rule-color);
+    }
+
+    .site-footer {
+      padding-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
     @media (max-width: 860px) {
-      .tutoring-poster-grid {
+      .mid-grid {
         grid-template-columns: 1fr;
       }
     }
-
-    /* Direct inline editing highlight when ADMIN EDITOR is active */
-    .admin-editable {
-      outline: 1px dashed rgba(139, 38, 38, 0.55);
-      outline-offset: 4px;
-      border-radius: 2px;
-      background-color: rgba(255, 255, 255, 0.28);
-      cursor: text;
-    }
-
-    .admin-editable:focus {
-      outline: 2px solid #8B2626;
-      background-color: rgba(255, 255, 255, 0.48);
-    }
   </style>
 </head>
-<body class="min-h-screen antialiased selection:bg-[#111111] selection:text-[#FFE3CE]">
-
-  <!-- ADMIN EDITOR Top Bar (Matches screenshot structure + editable fields for previously locked secondary intro & quote) -->
-  <aside id="adminPanel" class="bg-[#141110] text-[#FFE3CE] border-b border-[#342B25] font-ui">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 space-y-4">
-      <!-- Header Row of ADMIN EDITOR -->
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <div class="flex flex-wrap items-center gap-2.5">
-          <span class="inline-flex items-center gap-2 text-[12px] font-bold tracking-[0.08em] uppercase text-[#FFE3CE]">
-            <span class="w-2 h-2 rounded-full bg-[#D93829] inline-block"></span>
-            ADMIN EDITOR
-          </span>
-          <span
-            id="adminLangBadge"
-            class="px-2 py-0.5 rounded-[2px] bg-[#26201C] border border-[#3E352F] text-[11px] font-bold text-[#FFE3CE]"
-          >KO</span>
-          <span class="text-[12px] text-[#C9B6A6]">
-            현재 언어 전용 데이터로 저장됩니다 · 본문 텍스트를 직접 클릭해도 수정 가능
-          </span>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-2 text-[12px]">
-          <label class="cursor-pointer px-3 py-1.5 rounded-[2px] bg-[#26201C] hover:bg-[#352C26] border border-[#453931] text-[#FFE3CE] font-medium transition">
-            <span>기존 index.html 불러오기</span>
-            <input id="importHtmlInput" type="file" accept=".html,text/html" class="hidden" />
-          </label>
-          <button
-            id="exportHtmlBtn"
-            type="button"
-            class="px-3.5 py-1.5 rounded-[2px] bg-[#8B2626] hover:bg-[#A32F2F] text-white font-semibold transition cursor-pointer"
-          >HTML 파일로 내보내기</button>
-          <button
-            id="closeAdminBtn"
-            type="button"
-            class="px-3 py-1.5 rounded-[2px] bg-[#FFE3CE] hover:bg-[#F5D2B8] text-[#111111] font-semibold transition cursor-pointer"
-          >관리자 닫기</button>
-        </div>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand-lockup">
+        <h1 class="brand-name">HoonQ</h1>
+        <span class="brand-tagline">Freethinker &amp; Writer</span>
       </div>
-
-      <!-- Row 1: 상단 이름 / 상단 직함·태그라인 / 브로슈어·포스터 사진 교체 / Google Forms 문의 링크 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 text-xs">
-        <div class="lg:col-span-2">
-          <label for="adminNameInput" class="block text-[11px] text-[#C9B6A6] mb-1">상단 이름 (Name)</label>
-          <input
-            id="adminNameInput"
-            type="text"
-            class="w-full px-2.5 py-2 rounded-[2px] bg-[#1E1916] text-[#FFE3CE] border border-[#382F29] focus:outline-none focus:border-[#FFE3CE]"
-          />
-        </div>
-
-        <div class="lg:col-span-3">
-          <label for="adminTaglineInput" class="block text-[11px] text-[#C9B6A6] mb-1">상단 직함/태그라인</label>
-          <input
-            id="adminTaglineInput"
-            type="text"
-            class="w-full px-2.5 py-2 rounded-[2px] bg-[#1E1916] text-[#FFE3CE] border border-[#382F29] focus:outline-none focus:border-[#FFE3CE]"
-          />
-        </div>
-
-        <div class="lg:col-span-4">
-          <label class="block text-[11px] text-[#C9B6A6] mb-1">브로슈어/포스터 사진 교체</label>
-          <div class="flex items-center gap-2">
-            <label class="cursor-pointer shrink-0 px-3 py-2 rounded-[2px] bg-[#26201C] hover:bg-[#352C26] border border-[#453931] text-[#FFE3CE] font-medium transition">
-              <span>사진 선택</span>
-              <input id="adminPosterFileInput" type="file" accept="image/*" class="hidden" />
-            </label>
-            <input
-              id="adminPosterUrlInput"
-              type="text"
-              placeholder="https://..."
-              class="w-full min-w-0 px-2.5 py-2 rounded-[2px] bg-[#1E1916] text-[#FFE3CE] border border-[#382F29] focus:outline-none focus:border-[#FFE3CE]"
-            />
-          </div>
-        </div>
-
-        <div class="lg:col-span-3">
-          <label for="adminFormUrlInput" class="block text-[11px] text-[#C9B6A6] mb-1">Google Forms 문의 링크</label>
-          <div class="space-y-1.5">
-            <input
-              id="adminFormUrlInput"
-              type="url"
-              placeholder="https://docs.google.com/forms/..."
-              class="w-full px-2.5 py-2 rounded-[2px] bg-[#1E1916] text-[#FFE3CE] border border-[#382F29] focus:outline-none focus:border-[#FFE3CE]"
-            />
-            <div class="grid grid-cols-2 gap-1.5">
-              <button
-                id="applyFormUrlCurrentBtn"
-                type="button"
-                class="px-2 py-1 rounded-[2px] bg-[#26201C] hover:bg-[#352C26] border border-[#453931] text-[11px] text-[#FFE3CE] transition cursor-pointer"
-              >현재 언어만 적용</button>
-              <button
-                id="applyFormUrlAllBtn"
-                type="button"
-                class="px-2 py-1 rounded-[2px] bg-[#26201C] hover:bg-[#352C26] border border-[#453931] text-[11px] text-[#FFE3CE] transition cursor-pointer"
-              >4개 언어 모두 적용</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Row 2 & Row 3: Hero Intro, Secondary Intro (Yellow-Highlighted), Quote (Yellow-Highlighted), Tutoring Items -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 text-xs">
-        <div class="lg:col-span-3">
-          <label for="adminHeroBodyInput" class="block text-[11px] text-[#C9B6A6] mb-1">히어로 본문 소개글 (현재 언어 전용)</label>
-          <textarea
-            id="adminHeroBodyInput"
-            rows="4"
-            class="w-full px-2.5 py-2 rounded-[2px] bg-[#1E1916] text-[#FFE3CE] border border-[#382F29] focus:outline-none focus:border-[#FFE3CE] leading-relaxed"
-          ></textarea>
-        </div>
-
-        <div class="lg:col-span-3">
-          <label for="adminHeroSecondaryInput" class="block text-[11px] text-[#FFE3CE] font-semibold mb-1">
-            소개글 추가 문단 (현재 언어 전용)
-          </label>
-          <textarea
-            id="adminHeroSecondaryInput"
-            rows="4"
-            class="w-full px-2.5 py-2 rounded-[2px] bg-[#1E1916] text-[#FFE3CE] border border-[#6E5638] focus:outline-none focus:border-[#FFE3CE] leading-relaxed"
-          ></textarea>
-        </div>
-
-        <div class="lg:col-span-2">
-          <label for="adminQuoteInput" class="block text-[11px] text-[#FFE3CE] font-semibold mb-1">
-            인용문 (현재 언어 전용)
-          </label>
-          <textarea
-            id="adminQuoteInput"
-            rows="4"
-            class="w-full px-2.5 py-2 rounded-[2px] bg-[#1E1916] text-[#FFE3CE] border border-[#6E5638] focus:outline-none focus:border-[#FFE3CE] leading-relaxed"
-          ></textarea>
-        </div>
-
-        <div class="lg:col-span-4">
-          <label class="block text-[11px] text-[#C9B6A6] mb-1">과외 프로그램 항목 수정 (현재 언어 전용)</label>
-          <div id="adminTutoringInputs" class="space-y-1.5"></div>
-        </div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Non-blocking Status Toast -->
-  <div
-    id="toastBanner"
-    role="status"
-    aria-live="polite"
-    class="hidden fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-[2px] shadow-lg bg-[#111111] text-[#FFE3CE] text-xs font-ui border border-[#3A322C]"
-  ></div>
-
-  <!-- Top Single-Row Brand & Navigation Bar -->
-  <header class="w-full">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-4 flex flex-wrap items-center justify-between gap-4">
-      <!-- Top-Left Brand Name (Standard Non-Cursive Editorial Serif) + Subtitle -->
-      <div class="flex items-baseline gap-3">
-        <a
-          href="#top"
-          id="headerBrandName"
-          class="font-editorial text-[26px] sm:text-[30px] font-bold tracking-tight text-[#111111] leading-none no-underline"
-        >HoonQ</a>
-        <span
-          id="headerBrandTagline"
-          class="font-editorial text-[14px] sm:text-[15px] text-[#111111]/85 tracking-normal"
-        >Freethinker &amp; Writer</span>
-      </div>
-
-      <!-- Right Navigation + Inquiry CTA + 4-Language Segmented Switcher + Admin Trigger -->
-      <div class="flex flex-wrap items-center gap-3 sm:gap-5 font-ui text-[13px]">
-        <nav class="flex items-center gap-4 sm:gap-5 text-[#111111]">
-          <a href="#tutoring-section" id="navAboutLink" class="hover:underline underline-offset-4">소개 &amp; 과외</a>
-          <a href="#columns-section" id="navColumnsLink" class="hover:underline underline-offset-4">칼럼</a>
-          <a href="#photos-section" id="navPhotosLink" class="hover:underline underline-offset-4">사진</a>
+      <div class="header-right">
+        <nav class="nav-links" aria-label="Primary Navigation">
+          <a href="#tutoringSection">소개 &amp; 과외</a>
+          <a href="#brochureSection">브로슈어</a>
         </nav>
-
-        <a
-          href="#inquiry-section"
-          id="headerInquiryBtn"
-          class="px-3.5 py-1.5 rounded-[2px] bg-[#111111] text-[#FFE3CE] font-medium text-[12.5px] hover:bg-[#2B2521] transition"
-        >문의하기</a>
-
-        <!-- 4-Language Segmented Switcher -->
-        <div role="group" aria-label="Language Switcher" class="inline-flex rounded-[2px] border border-[#111111]/45 overflow-hidden bg-transparent">
-          <button type="button" data-lang="ko" class="lang-seg-btn px-2.5 py-1.5 text-[11px] font-bold tracking-wide transition cursor-pointer">KO</button>
-          <button type="button" data-lang="en" class="lang-seg-btn px-2.5 py-1.5 text-[11px] font-bold tracking-wide transition cursor-pointer border-l border-[#111111]/45">EN</button>
-          <button type="button" data-lang="es" class="lang-seg-btn px-2.5 py-1.5 text-[11px] font-bold tracking-wide transition cursor-pointer border-l border-[#111111]/45">ES</button>
-          <button type="button" data-lang="pt" class="lang-seg-btn px-2.5 py-1.5 text-[11px] font-bold tracking-wide transition cursor-pointer border-l border-[#111111]/45">PT</button>
-        </div>
-
-        <!-- Admin Trigger Button -->
-        <button
-          id="headerAdminToggleBtn"
-          type="button"
-          class="px-3 py-1.5 rounded-[2px] border border-[#111111]/65 text-[#111111] text-[12px] font-medium hover:bg-[#111111]/10 transition cursor-pointer"
-        >관리자</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Editorial Content -->
-  <main id="top" class="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
-    <!-- Edition Strip -->
-    <div class="pt-4 pb-6 border-t border-[#111111]/25 flex flex-wrap items-center gap-3 font-ui">
-      <span
-        id="editionPill"
-        class="px-2.5 py-1 bg-[#111111] text-[#FFE3CE] text-[10.5px] font-bold tracking-[0.12em] uppercase rounded-[2px]"
-      >EDITION 2026</span>
-      <span
-        id="editionSubtitle"
-        class="font-editorial italic text-[14px] text-[#111111]"
-      >Editorial Portfolio &amp; Private Tutoring</span>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="pb-10 border-b border-[#111111]/25">
-      <h1
-        id="heroHeadline"
-        class="font-editorial text-[34px] sm:text-[46px] lg:text-[52px] font-bold leading-[1.18] tracking-[-0.02em] text-[#111111] max-w-4xl whitespace-pre-line"
-      >생각의 구조를 세우고,
-자신만의 문장으로 답을 찾는 시간.</h1>
-
-      <!-- Primary Intro Paragraph (Editable per language & inline) -->
-      <p
-        id="heroBody"
-        class="mt-6 font-editorial text-[15px] sm:text-[16px] leading-[1.9] text-[#111111] max-w-4xl whitespace-pre-line"
-      ></p>
-
-      <!-- Secondary Intro Paragraph (Previously locked yellow-highlighted block — now editable in ADMIN EDITOR & inline) -->
-      <p
-        id="heroSecondaryBody"
-        class="mt-4 font-editorial text-[15px] sm:text-[16px] leading-[1.9] text-[#111111] max-w-4xl whitespace-pre-line"
-      ></p>
-
-      <!-- Featured Quote (Previously locked yellow-highlighted block — now editable in ADMIN EDITOR & inline) -->
-      <blockquote
-        id="featuredQuote"
-        class="mt-4 font-editorial text-[15px] sm:text-[16px] leading-[1.85] text-[#111111] max-w-4xl whitespace-pre-line"
-      ></blockquote>
-
-      <div class="mt-7 flex flex-wrap items-center gap-3 font-ui">
-        <a
-          href="#inquiry-section"
-          id="heroPrimaryCta"
-          class="px-5 py-3 rounded-[2px] bg-[#111111] text-[#FFE3CE] text-[13px] font-medium hover:bg-[#2B2521] transition"
-        >1:1 과외 및 특강 문의하기 ↗</a>
-        <a
-          href="#columns-section"
-          id="heroSecondaryCta"
-          class="px-5 py-3 rounded-[2px] border border-[#111111]/65 text-[#111111] text-[13px] font-medium hover:bg-[#111111]/8 transition"
-        >최근 칼럼 읽기</a>
-      </div>
-    </section>
-
-    <!-- Side-by-Side Horizontal Alignment directly below Hero: TUTORING PROGRAM (Left) & BROCHURE / POSTER (Right) -->
-    <section id="tutoring-section" class="py-12 border-b border-[#111111]/25 tutoring-poster-grid">
-      <div>
-        <p id="tutoringEyebrow" class="font-ui text-[11px] font-bold tracking-[0.14em] uppercase text-[#4A4038]">
-          TUTORING PROGRAM
-        </p>
-        <h2 id="tutoringSectionTitle" class="mt-2 font-editorial text-[24px] sm:text-[28px] font-bold text-[#111111]">
-          1:1 맞춤형 과외 및 코칭 안내
-        </h2>
-        <div id="tutoringListContainer" class="mt-6 divide-y divide-[#111111]/20 border-t border-[#111111]/20"></div>
-      </div>
-
-      <div>
-        <p id="posterEyebrow" class="font-ui text-[11px] font-bold tracking-[0.14em] uppercase text-[#4A4038]">
-          BROCHURE / POSTER
-        </p>
-        <figure class="mt-2 p-3 rounded-[2px] border border-[#111111]/25 bg-[#FFE3CE]/75">
-          <div class="overflow-hidden rounded-[2px] bg-[#2D3A2E] aspect-[4/3]">
-            <img
-              id="posterImg"
-              src="https://placehold.co/900x675/2D3A2E/FFE3CE?text=BROCHURE+%2F+POSTER"
-              alt="Brochure Poster"
-              class="w-full h-full object-cover block"
-            />
-          </div>
-          <figcaption id="brochurePosterCaption" class="mt-2.5 font-ui text-[12px] text-[#4A4038]">
-            Serene Window &amp; Greenery — Private Tutoring Brochure
-          </figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- Columns Section -->
-    <section id="columns-section" class="py-12 border-b border-[#111111]/25">
-      <p id="columnsEyebrow" class="font-ui text-[11px] font-bold tracking-[0.14em] uppercase text-[#4A4038]">
-        COLUMNS &amp; ESSAYS
-      </p>
-      <h2 id="columnsHeading" class="mt-2 font-editorial text-[24px] sm:text-[28px] font-bold text-[#111111]">
-        최근 칼럼 및 사유의 기록
-      </h2>
-      <div id="columnsGrid" class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-    </section>
-
-    <!-- Photos Section -->
-    <section id="photos-section" class="py-12 border-b border-[#111111]/25">
-      <p id="photosEyebrow" class="font-ui text-[11px] font-bold tracking-[0.14em] uppercase text-[#4A4038]">
-        PHOTOGRAPHS
-      </p>
-      <h2 id="photosHeading" class="mt-2 font-editorial text-[24px] sm:text-[28px] font-bold text-[#111111]">
-        일상의 장면과 시선
-      </h2>
-      <div id="photosGrid" class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6"></div>
-    </section>
-
-    <!-- Inquiry Section -->
-    <section id="inquiry-section" class="pt-12">
-      <div class="max-w-2xl">
-        <p id="inquiryEyebrow" class="font-ui text-[11px] font-bold tracking-[0.14em] uppercase text-[#4A4038]">
-          INQUIRY
-        </p>
-        <h2 id="inquiryHeading" class="mt-2 font-editorial text-[24px] sm:text-[28px] font-bold text-[#111111]">
-          1:1 과외 및 강연·기고 문의
-        </h2>
-        <p id="inquiryDesc" class="mt-3 font-editorial text-[15px] leading-[1.85] text-[#111111]">
-          수업 희망 과정이나 기고·강연 주제를 남겨주시면 확인 후 회신드립니다.
-        </p>
-        <div class="mt-5">
-          <a
-            id="googleFormLink"
-            href="https://docs.google.com/forms/d/1HZp5UO"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-[2px] bg-[#111111] text-[#FFE3CE] font-ui text-[13px] font-medium hover:bg-[#2B2521] transition"
-          >
-            <span id="googleFormBtnText">Google Forms 문의서 열기 ↗</span>
-          </a>
+        <a class="cta-btn" href="https://docs.google.com/forms/d/1HZp5UO" target="_blank" rel="noopener noreferrer">문의하기</a>
+        <div class="lang-switch" role="group" aria-label="Language Selector">
+          <button type="button" data-lang="ko" class="active">KO</button>
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="es">ES</button>
+          <button type="button" data-lang="pt">PT</button>
         </div>
       </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="max-w-6xl mx-auto px-4 sm:px-6 pb-10 pt-4 flex flex-wrap items-center justify-between gap-3 font-ui text-[12px] text-[#4A4038]">
-    <span id="footerCopyrightBtn" class="cursor-pointer select-none">
-      © 2026 HoonQ. All rights reserved.
-    </span>
-    <span>Editorial Portfolio &amp; Private Tutoring</span>
-  </footer>
-
-  <!-- Embedded Siloed Data Store (Top-level posterImage + per-language text silos: ko, en, es, pt) -->
-  <script id="embeddedSiteData" type="application/json">
-    {
-      "activeLang": "ko",
-      "posterImage": "https://placehold.co/900x675/2D3A2E/FFE3CE?text=BROCHURE+%2F+POSTER",
-      "siteData": {
-        "ko": {
-          "brandName": "HoonQ",
-          "brandTagline": "Freethinker & Writer",
-          "navAbout": "소개 & 과외",
-          "navColumns": "칼럼",
-          "navPhotos": "사진",
-          "navInquiry": "문의하기",
-          "editionPill": "EDITION 2026",
-          "editionSubtitle": "Editorial Portfolio & Private Tutoring",
-          "heroHeadline": "생각의 구조를 세우고,\n자신만의 문장으로 답을 찾는 시간.",
-          "heroBody": "안녕하세요, HoonQ입니다. 학생과 성인을 대상으로 1:1 맞춤형 과외를 진행하며, 저의 배움과 일상의 단상을 칼럼과 사진으로 기록합니다. 획일화된 암기가 아닌, 스스로 질문하고 논리적으로 풀어내는 힘을 기릅니다.",
-          "heroSecondaryBody": "AI가 대체할 수 없는 교육이 무엇인가? 저의 생동감과 3개 문화권에서 자란 경험입니다. AI는 밝은 목소리를 흉내내고 경험이 있는 것처럼 꾸밀 뿐, <실제성>이 (아직은) 결여되어 있습니다. 저는 문화를 가지고 인간의 실제성을 탐구하고 재현합니다.",
-          "featuredQuote": "\"문화가 없는 삶은 야만이며, 활력이 없는 문화는 비잔틴주의다.\"",
-          "heroPrimaryCta": "1:1 과외 및 특강 문의하기 ↗",
-          "heroSecondaryCta": "최근 칼럼 읽기",
-          "tutoringEyebrow": "TUTORING PROGRAM",
-          "tutoringSectionTitle": "1:1 맞춤형 과외 및 코칭 안내",
-          "tutoringItems": [
-            {
-              "title": "01. 대입·편입 논술 및 심층 면접 대비",
-              "desc": "고등학생 · N수생 대상 | 제시문 독해 구조화, 개요 작성 훈련, 주 1회 1:1 대면 첨삭"
-            },
-            {
-              "title": "02. 청소년 독서·비판적 글쓰기 클래스",
-              "desc": "중·고등학생 대상 | 텍스트 분석, 에세이 구성, 자기만의 논리 전개"
-            },
-            {
-              "title": "03. 성인 인문 독서·에세이 워크숍",
-              "desc": "직장인·일반 대상 | 시사·철학 텍스트 강독, 단상 칼럼 집필 코칭"
-            }
-          ],
-          "posterEyebrow": "BROCHURE / POSTER",
-          "posterCaption": "Serene Window & Greenery — Private Tutoring Brochure",
-          "columnsEyebrow": "COLUMNS & ESSAYS",
-          "columnsHeading": "최근 칼럼 및 사유의 기록",
-          "columns": [
-            {
-              "date": "2026.10",
-              "title": "왜 다시 문장의 뼈대를 세워야 하는가",
-              "excerpt": "정보가 넘쳐나는 시대일수록 스스로의 전제를 점검하고 문단을 세우는 훈련이 결정적입니다."
-            },
-            {
-              "date": "2026.09",
-              "title": "세 개의 문화권 사이에서 배운 질문법",
-              "excerpt": "서로 다른 언어와 관습을 건너며 발견한 인간 실제성의 단면들을 기록합니다."
-            },
-            {
-              "date": "2026.08",
-              "title": "활력을 잃은 문화와 살아 있는 사유",
-              "excerpt": "형식만 남은 지식 소비를 넘어, 삶과 맞닿은 문화를 어떻게 회복할 것인가."
-            }
-          ],
-          "photosEyebrow": "PHOTOGRAPHS",
-          "photosHeading": "일상의 장면과 시선",
-          "photos": [
-            {
-              "url": "https://placehold.co/800x600/3A2E25/FFE3CE?text=Study+Afternoon",
-              "caption": "서재의 오후와 읽기의 호흡"
-            },
-            {
-              "url": "https://placehold.co/800x600/2B343B/FFE3CE?text=Quiet+Ridge",
-              "caption": "고요한 산줄기와 빛의 경계"
-            },
-            {
-              "url": "https://placehold.co/800x600/4A3525/FFE3CE?text=First+Sentence",
-              "caption": "빈 노트 위 첫 문장을 고르는 시간"
-            }
-          ],
-          "inquiryEyebrow": "INQUIRY",
-          "inquiryHeading": "1:1 과외 및 강연·기고 문의",
-          "inquiryDesc": "수업 희망 과정이나 기고·강연 주제를 남겨주시면 확인 후 회신드립니다.",
-          "googleFormBtnText": "Google Forms 문의서 열기 ↗",
-          "formUrl": "https://docs.google.com/forms/d/1HZp5UO"
-        },
-        "en": {
-          "brandName": "HoonQ",
-          "brandTagline": "Freethinker & Writer",
-          "navAbout": "About & Tutoring",
-          "navColumns": "Columns",
-          "navPhotos": "Photos",
-          "navInquiry": "Inquire",
-          "editionPill": "EDITION 2026",
-          "editionSubtitle": "Editorial Portfolio & Private Tutoring",
-          "heroHeadline": "Building structures of thought,\nfinding answers in your own sentences.",
-          "heroBody": "Hello, I am HoonQ. I conduct 1:1 tailored private tutoring for students and adults, while recording my learning and daily reflections through columns and photography. Rather than uniform memorization, I cultivate the strength to question independently and reason logically.",
-          "heroSecondaryBody": "What education cannot be replaced by AI? My liveliness and lived experience across three cultural spheres. AI mimics a bright voice and stages the appearance of experience, yet lacks <actuality> (for now). I inquire into and recreate human actuality through culture.",
-          "featuredQuote": "\"Life without culture is barbarism, and culture without vitality is Byzantinism.\"",
-          "heroPrimaryCta": "Inquire for 1:1 Tutoring & Lectures ↗",
-          "heroSecondaryCta": "Read Recent Columns",
-          "tutoringEyebrow": "TUTORING PROGRAM",
-          "tutoringSectionTitle": "1:1 Tailored Tutoring & Coaching",
-          "tutoringItems": [
-            {
-              "title": "01. University Essay & Interview Preparation",
-              "desc": "High school & repeat applicants | Passage structuring, outline drills, weekly 1:1 feedback"
-            },
-            {
-              "title": "02. Youth Reading & Critical Writing Class",
-              "desc": "Middle & high school students | Text analysis, essay architecture, independent argument"
-            },
-            {
-              "title": "03. Adult Humanities Reading & Essay Workshop",
-              "desc": "Professionals & general public | Current affairs & philosophy reading, column coaching"
-            }
-          ],
-          "posterEyebrow": "BROCHURE / POSTER",
-          "posterCaption": "Serene Window & Greenery — Private Tutoring Brochure",
-          "columnsEyebrow": "COLUMNS & ESSAYS",
-          "columnsHeading": "Recent Columns & Notes on Thought",
-          "columns": [
-            {
-              "date": "2026.10",
-              "title": "Why We Must Rebuild the Skeleton of Sentences",
-              "excerpt": "In an age of abundant information, examining premises and structuring paragraphs is decisive."
-            },
-            {
-              "date": "2026.09",
-              "title": "Questions Learned Across Three Cultural Spheres",
-              "excerpt": "Notes on human actuality discovered across distinct languages and everyday customs."
-            },
-            {
-              "date": "2026.08",
-              "title": "Culture Without Vitality and Living Thought",
-              "excerpt": "Moving beyond formal consumption of knowledge toward culture rooted in lived life."
-            }
-          ],
-          "photosEyebrow": "PHOTOGRAPHS",
-          "photosHeading": "Scenes & Gazes of Everyday Life",
-          "photos": [
-            {
-              "url": "https://placehold.co/800x600/3A2E25/FFE3CE?text=Study+Afternoon",
-              "caption": "Afternoon in the study and the rhythm of reading"
-            },
-            {
-              "url": "https://placehold.co/800x600/2B343B/FFE3CE?text=Quiet+Ridge",
-              "caption": "Quiet ridge lines and the edge of light"
-            },
-            {
-              "url": "https://placehold.co/800x600/4A3525/FFE3CE?text=First+Sentence",
-              "caption": "Choosing the first sentence on a blank page"
-            }
-          ],
-          "inquiryEyebrow": "INQUIRY",
-          "inquiryHeading": "1:1 Tutoring, Lecture & Editorial Inquiries",
-          "inquiryDesc": "Share your preferred program or topic for lectures and columns, and I will reply promptly.",
-          "googleFormBtnText": "Open Google Forms Inquiry ↗",
-          "formUrl": "https://docs.google.com/forms/d/1HZp5UO"
-        },
-        "es": {
-          "brandName": "HoonQ",
-          "brandTagline": "Freethinker & Writer",
-          "navAbout": "Perfil y Tutoría",
-          "navColumns": "Columnas",
-          "navPhotos": "Fotografía",
-          "navInquiry": "Contacto",
-          "editionPill": "EDITION 2026",
-          "editionSubtitle": "Editorial Portfolio & Private Tutoring",
-          "heroHeadline": "Construir la estructura del pensamiento,\ny hallar respuestas con frases propias.",
-          "heroBody": "Hola, soy HoonQ. Imparto tutorías privadas personalizadas 1:1 para estudiantes y adultos, y registro mi aprendizaje y reflexiones cotidianas mediante columnas y fotografía. Más allá de la memorización uniforme, cultivo la capacidad de preguntar por cuenta propia y razonar con lógica.",
-          "heroSecondaryBody": "¿Qué educación no puede sustituir la IA? Mi vitalidad y experiencia vivida en tres ámbitos culturales. La IA imita una voz amable y finge experiencia, pero carece de <actualidad> (por ahora). Investigo y recreo la actualidad humana mediante la cultura.",
-          "featuredQuote": "\"La vida sin cultura es barbarie, y la cultura sin vitalidad es bizantinismo.\"",
-          "heroPrimaryCta": "Consultar Tutoría 1:1 y Conferencias ↗",
-          "heroSecondaryCta": "Leer Columnas Recientes",
-          "tutoringEyebrow": "TUTORING PROGRAM",
-          "tutoringSectionTitle": "Tutoría Personalizada 1:1 y Coaching",
-          "tutoringItems": [
-            {
-              "title": "01. Preparación de Ensayo Universitario y Entrevista",
-              "desc": "Estudiantes de secundaria y postulantes | Estructuración de textos, esquemas y corrección 1:1"
-            },
-            {
-              "title": "02. Clase de Lectura y Escritura Crítica Juvenil",
-              "desc": "Estudiantes de secundaria | Análisis textual, composición de ensayos y argumento propio"
-            },
-            {
-              "title": "03. Taller de Lectura Humanística y Ensayo para Adultos",
-              "desc": "Profesionales y público general | Lectura de filosofía y actualidad, coaching de columnas"
-            }
-          ],
-          "posterEyebrow": "BROCHURE / POSTER",
-          "posterCaption": "Serene Window & Greenery — Private Tutoring Brochure",
-          "columnsEyebrow": "COLUMNS & ESSAYS",
-          "columnsHeading": "Columnas Recientes y Notas de Pensamiento",
-          "columns": [
-            {
-              "date": "2026.10",
-              "title": "Por qué debemos reconstruir el esqueleto de la frase",
-              "excerpt": "En una era saturada de información, revisar premisas y estructurar párrafos resulta decisivo."
-            },
-            {
-              "date": "2026.09",
-              "title": "Preguntas aprendidas entre tres ámbitos culturales",
-              "excerpt": "Notas sobre la actualidad humana descubierta a través de lenguas y costumbres distintas."
-            },
-            {
-              "date": "2026.08",
-              "title": "Cultura sin vitalidad y pensamiento vivo",
-              "excerpt": "Más allá del consumo formal de conocimiento, hacia una cultura arraigada en la vida."
-            }
-          ],
-          "photosEyebrow": "PHOTOGRAPHS",
-          "photosHeading": "Escenas y Miradas de lo Cotidiano",
-          "photos": [
-            {
-              "url": "https://placehold.co/800x600/3A2E25/FFE3CE?text=Study+Afternoon",
-              "caption": "Tarde en el estudio y el ritmo de la lectura"
-            },
-            {
-              "url": "https://placehold.co/800x600/2B343B/FFE3CE?text=Quiet+Ridge",
-              "caption": "Líneas serenas de montaña y el borde de la luz"
-            },
-            {
-              "url": "https://placehold.co/800x600/4A3525/FFE3CE?text=First+Sentence",
-              "caption": "Elegir la primera frase sobre una página en blanco"
-            }
-          ],
-          "inquiryEyebrow": "INQUIRY",
-          "inquiryHeading": "Consultas de Tutoría 1:1, Conferencias y Colaboración",
-          "inquiryDesc": "Indique el programa deseado o el tema de conferencia y columna para responderle.",
-          "googleFormBtnText": "Abrir Formulario de Google ↗",
-          "formUrl": "https://docs.google.com/forms/d/1HZp5UO"
-        },
-        "pt": {
-          "brandName": "HoonQ",
-          "brandTagline": "Freethinker & Writer",
-          "navAbout": "Sobre & Tutoria",
-          "navColumns": "Colunas",
-          "navPhotos": "Fotos",
-          "navInquiry": "Contato",
-          "editionPill": "EDITION 2026",
-          "editionSubtitle": "Editorial Portfolio & Private Tutoring",
-          "heroHeadline": "Estruturar o pensamento,\nencontrar respostas com frases próprias.",
-          "heroBody": "Olá, eu sou HoonQ. Conduzo tutoria particular personalizada 1:1 para estudantes e adultos, registrando meus estudos e reflexões diárias em colunas e fotografias. Em vez de memorização uniforme, cultivo a capacidade de perguntar por conta própria e argumentar com lógica.",
-          "heroSecondaryBody": "Qual educação não pode ser substituída pela IA? Minha vivacidade e experiência vivida em três esferas culturais. A IA imita uma voz animada e aparenta experiência, mas carece de <atualidade> (por enquanto). Investigo e recrio a atualidade humana por meio da cultura.",
-          "featuredQuote": "\"A vida sem cultura é barbárie, e a cultura sem vitalidade é bizantinismo.\"",
-          "heroPrimaryCta": "Consultar Tutoria 1:1 e Palestras ↗",
-          "heroSecondaryCta": "Ler Colunas Recentes",
-          "tutoringEyebrow": "TUTORING PROGRAM",
-          "tutoringSectionTitle": "Tutoria Personalizada 1:1 e Coaching",
-          "tutoringItems": [
-            {
-              "title": "01. Preparação para Redação Universitária e Entrevista",
-              "desc": "Estudantes do ensino médio e vestibulandos | Estruturação de textos, roteiros e revisão 1:1"
-            },
-            {
-              "title": "02. Aula de Leitura e Escrita Crítica Juvenil",
-              "desc": "Estudantes do ensino fundamental e médio | Análise de texto, arquitetura de ensaio e argumento próprio"
-            },
-            {
-              "title": "03. Oficina de Leitura Humanística e Ensaio para Adultos",
-              "desc": "Profissionais e público geral | Leitura de filosofia e atualidades, coaching de colunas"
-            }
-          ],
-          "posterEyebrow": "BROCHURE / POSTER",
-          "posterCaption": "Serene Window & Greenery — Private Tutoring Brochure",
-          "columnsEyebrow": "COLUMNS & ESSAYS",
-          "columnsHeading": "Colunas Recentes e Notas de Pensamento",
-          "columns": [
-            {
-              "date": "2026.10",
-              "title": "Por que precisamos reconstruir o esqueleto das frases",
-              "excerpt": "Em uma era de abundância informacional, examinar premissas e estruturar parágrafos é decisivo."
-            },
-            {
-              "date": "2026.09",
-              "title": "Perguntas aprendidas entre três esferas culturais",
-              "excerpt": "Notas sobre a atualidade humana descoberta por meio de diferentes idiomas e costumes."
-            },
-            {
-              "date": "2026.08",
-              "title": "Cultura sem vitalidade e pensamento vivo",
-              "excerpt": "Para além do consumo formal de conhecimento, rumo a uma cultura enraizada na vida."
-            }
-          ],
-          "photosEyebrow": "PHOTOGRAPHS",
-          "photosHeading": "Cenas e Olhares do Cotidiano",
-          "photos": [
-            {
-              "url": "https://placehold.co/800x600/3A2E25/FFE3CE?text=Study+Afternoon",
-              "caption": "Tarde no escritório e o ritmo da leitura"
-            },
-            {
-              "url": "https://placehold.co/800x600/2B343B/FFE3CE?text=Quiet+Ridge",
-              "caption": "Linhas serenas de serra e a borda da luz"
-            },
-            {
-              "url": "https://placehold.co/800x600/4A3525/FFE3CE?text=First+Sentence",
-              "caption": "Escolher a primeira frase em uma página em branco"
-            }
-          ],
-          "inquiryEyebrow": "INQUIRY",
-          "inquiryHeading": "Consultas de Tutoria 1:1, Palestras e Colaboração",
-          "inquiryDesc": "Informe o programa desejado ou o tema de palestra e coluna para que eu responda.",
-          "googleFormBtnText": "Abrir Formulário do Google ↗",
-          "formUrl": "https://docs.google.com/forms/d/1HZp5UO"
-        }
-      }
-    }
-  </script>
-
-  <script>
-    (function () {
-      const STORAGE_KEY = 'hoonq_editorial_portfolio_v4';
-      const PREV_KEYS = ['hoonq_editorial_portfolio_v3', 'hoonq_editorial_portfolio_v2', 'hoonq_editorial_portfolio_v1'];
-      const LANGS = ['ko', 'en', 'es', 'pt'];
-      const FALLBACK_POSTER = 'https://placehold.co/900x675/2D3A2E/FFE3CE?text=BROCHURE+%2F+POSTER';
-      const FALLBACK_PHOTO = 'https://placehold.co/800x600/3A2E25/FFE3CE?text=PHOTO';
-
-      const embeddedScript = document.getElementById('embeddedSiteData');
-      const defaultPayload = JSON.parse(embeddedScript.textContent);
-      const DEFAULT_POSTER_URL = defaultPayload.posterImage || FALLBACK_POSTER;
-
-      /**
-       * Normalizes raw state so posterImage lives at the top level and each language (ko, en, es, pt)
-       * has an isolated text silo including heroSecondaryBody and featuredQuote.
-       */
-      function normalizePayload(raw) {
-        const normalized = {
-          activeLang: 'ko',
-          posterImage: DEFAULT_POSTER_URL,
-          siteData: {}
-        };
-
-        const rawSiteData = (raw && raw.siteData) || {};
-        LANGS.forEach((lang) => {
-          const base = JSON.parse(JSON.stringify(defaultPayload.siteData[lang]));
-          const incoming = rawSiteData[lang] && typeof rawSiteData[lang] === 'object' ? rawSiteData[lang] : {};
-          Object.assign(base, incoming);
-
-          if (Array.isArray(incoming.tutoringItems)) {
-            base.tutoringItems = incoming.tutoringItems.map((it, idx) => ({
-              title: (it && it.title) || (base.tutoringItems[idx] && base.tutoringItems[idx].title) || '',
-              desc: (it && it.desc) || (base.tutoringItems[idx] && base.tutoringItems[idx].desc) || ''
-            }));
-          }
-          if (Array.isArray(incoming.columns)) {
-            base.columns = incoming.columns.map((c, idx) => ({
-              date: (c && c.date) || (base.columns[idx] && base.columns[idx].date) || '',
-              title: (c && c.title) || (base.columns[idx] && base.columns[idx].title) || '',
-              excerpt: (c && c.excerpt) || (base.columns[idx] && base.columns[idx].excerpt) || ''
-            }));
-          }
-          if (Array.isArray(incoming.photos)) {
-            base.photos = incoming.photos.map((p, idx) => ({
-              url: (p && p.url) || (base.photos[idx] && base.photos[idx].url) || FALLBACK_PHOTO,
-              caption: (p && p.caption) || (base.photos[idx] && base.photos[idx].caption) || ''
-            }));
-          }
-
-          delete base.posterImage;
-          normalized.siteData[lang] = base;
-        });
-
-        if (raw && LANGS.includes(raw.activeLang)) {
-          normalized.activeLang = raw.activeLang;
-        }
-
-        if (raw && typeof raw.posterImage === 'string' && raw.posterImage.trim().length > 0) {
-          normalized.posterImage = raw.posterImage.trim();
-        } else {
-          for (const lang of LANGS) {
-            const legacyPoster = rawSiteData[lang] && rawSiteData[lang].posterImage;
-            if (typeof legacyPoster === 'string' && legacyPoster.trim().length > 0) {
-              normalized.posterImage = legacyPoster.trim();
-              break;
-            }
-          }
-        }
-
-        return normalized;
-      }
-
-      function loadState() {
-        try {
-          const saved = localStorage.getItem(STORAGE_KEY);
-          if (saved) {
-            return normalizePayload(JSON.parse(saved));
-          }
-          for (const key of PREV_KEYS) {
-            const prev = localStorage.getItem(key);
-            if (prev) {
-              const migrated = normalizePayload(JSON.parse(prev));
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
-              return migrated;
-            }
-          }
-        } catch (err) {
-          console.warn('Failed to load saved portfolio state:', err);
-        }
-        return normalizePayload(defaultPayload);
-      }
-
-      let state = loadState();
-      let isAdminOpen = true;
-      let copyrightClickCount = 0;
-      let copyrightClickTimer = null;
-
-      function getLangSlice() {
-        if (!state.siteData[state.activeLang]) {
-          state.siteData[state.activeLang] = JSON.parse(JSON.stringify(defaultPayload.siteData.ko));
-        }
-        return state.siteData[state.activeLang];
-      }
-
-      function showToast(message, isError = false) {
-        const toast = document.getElementById('toastBanner');
-        if (!toast) return;
-        toast.textContent = message;
-        toast.classList.toggle('border-[#8B2626]', isError);
-        toast.classList.remove('hidden');
-        clearTimeout(showToast._timer);
-        showToast._timer = setTimeout(() => {
-          toast.classList.add('hidden');
-        }, 3000);
-      }
-
-      function saveState() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-          return true;
-        } catch (err) {
-          console.error('Failed to persist state to localStorage:', err);
-          showToast('저장 공간 한도로 인해 localStorage 저장에 실패했습니다.', true);
-          return false;
-        }
-      }
-
-      function syncPosterDom() {
-        const src = state.posterImage || DEFAULT_POSTER_URL;
-        const posterImg = document.getElementById('posterImg');
-        const urlInput = document.getElementById('adminPosterUrlInput');
-
-        if (posterImg) {
-          posterImg.onerror = function () {
-            this.onerror = null;
-            this.src = FALLBACK_POSTER;
-          };
-          if (posterImg.getAttribute('src') !== src) {
-            posterImg.src = src;
-          }
-        }
-
-        if (urlInput && document.activeElement !== urlInput) {
-          urlInput.value = src.startsWith('data:') ? '' : src;
-        }
-      }
-
-      function renderTutoringList(data) {
-        const container = document.getElementById('tutoringListContainer');
-        const adminContainer = document.getElementById('adminTutoringInputs');
-        if (!container) return;
-
-        container.innerHTML = '';
-        if (adminContainer) adminContainer.innerHTML = '';
-
-        (data.tutoringItems || []).forEach((item, idx) => {
-          const row = document.createElement('div');
-          row.className = 'py-4';
-
-          const h3 = document.createElement('h3');
-          h3.className = 'font-editorial text-[16px] font-bold text-[#111111]';
-          h3.textContent = item.title || '';
-          h3.contentEditable = isAdminOpen ? 'true' : 'false';
-          if (isAdminOpen) h3.classList.add('admin-editable');
-          h3.addEventListener('input', () => {
-            data.tutoringItems[idx].title = h3.textContent;
-            saveState();
-            syncAdminInputsFromSlice(data);
-          });
-
-          const p = document.createElement('p');
-          p.className = 'mt-1 font-ui text-[12.5px] text-[#4A4038]';
-          p.textContent = item.desc || '';
-          p.contentEditable = isAdminOpen ? 'true' : 'false';
-          if (isAdminOpen) p.classList.add('admin-editable');
-          p.addEventListener('input', () => {
-            data.tutoringItems[idx].desc = p.textContent;
-            saveState();
-            syncAdminInputsFromSlice(data);
-          });
-
-          row.appendChild(h3);
-          row.appendChild(p);
-          container.appendChild(row);
-
-          if (adminContainer) {
-            const inputRow = document.createElement('div');
-            inputRow.className = 'grid grid-cols-2 gap-1.5';
-
-            const titleIn = document.createElement('input');
-            titleIn.type = 'text';
-            titleIn.value = item.title || '';
-            titleIn.setAttribute('aria-label', `과외 항목 ${idx + 1} 제목`);
-            titleIn.className = 'px-2 py-1.5 rounded-[2px] bg-[#1E1916] text-[#FFE3CE] border border-[#382F29] text-[11px] focus:outline-none focus:border-[#FFE3CE]';
-            titleIn.addEventListener('input', (e) => {
-              data.tutoringItems[idx].title = e.target.value;
-              saveState();
-              if (document.activeElement !== h3) {
-                h3.textContent = e.target.value;
-              }
-            });
-
-            const descIn = document.createElement('input');
-            descIn.type = 'text';
-            descIn.value = item.desc || '';
-            descIn.setAttribute('aria-label', `과외 항목 ${idx + 1} 설명`);
-            descIn.className = 'px-2 py-1.5 rounded-[2px] bg-[#1E1916] text-[#FFE3CE] border border-[#382F29] text-[11px] focus:outline-none focus:border-[#FFE3CE]';
-            descIn.addEventListener('input', (e) => {
-              data.tutoringItems[idx].desc = e.target.value;
-              saveState();
-              if (document.activeElement !== p) {
-                p.textContent = e.target.value;
-              }
-            });
-
-            inputRow.appendChild(titleIn);
-            inputRow.appendChild(descIn);
-            adminContainer.appendChild(inputRow);
-          }
-        });
-      }
-
-      function renderColumnsAndPhotos(data) {
-        const columnsGrid = document.getElementById('columnsGrid');
-        if (columnsGrid) {
-          columnsGrid.innerHTML = '';
-          (data.columns || []).forEach((col, idx) => {
-            const card = document.createElement('article');
-            card.className = 'p-5 rounded-[2px] border border-[#111111]/20 bg-[#FFE3CE]/65';
-
-            const dateEl = document.createElement('p');
-            dateEl.className = 'font-ui text-[11px] text-[#4A4038]';
-            dateEl.textContent = col.date || '';
-
-            const titleEl = document.createElement('h3');
-            titleEl.className = 'mt-1.5 font-editorial text-[17px] font-bold text-[#111111] leading-snug';
-            titleEl.textContent = col.title || '';
-
-            const excerptEl = document.createElement('p');
-            excerptEl.className = 'mt-2 font-editorial text-[13.5px] leading-[1.75] text-[#111111]';
-            excerptEl.textContent = col.excerpt || '';
-
-            [
-              [dateEl, 'date'],
-              [titleEl, 'title'],
-              [excerptEl, 'excerpt']
-            ].forEach(([el, key]) => {
-              el.contentEditable = isAdminOpen ? 'true' : 'false';
-              if (isAdminOpen) el.classList.add('admin-editable');
-              el.addEventListener('input', () => {
-                data.columns[idx][key] = el.textContent;
-                saveState();
-              });
-            });
-
-            card.appendChild(dateEl);
-            card.appendChild(titleEl);
-            card.appendChild(excerptEl);
-            columnsGrid.appendChild(card);
-          });
-        }
-
-        const photosGrid = document.getElementById('photosGrid');
-        if (photosGrid) {
-          photosGrid.innerHTML = '';
-          (data.photos || []).forEach((ph, idx) => {
-            const fig = document.createElement('figure');
-            fig.className = 'p-3 rounded-[2px] border border-[#111111]/20 bg-[#FFE3CE]/65';
-
-            const wrap = document.createElement('div');
-            wrap.className = 'overflow-hidden rounded-[2px] aspect-[4/3] bg-[#2B241F]';
-
-            const imgEl = document.createElement('img');
-            imgEl.className = 'w-full h-full object-cover block';
-            imgEl.alt = ph.caption || '';
-            imgEl.onerror = function () {
-              this.onerror = null;
-              this.src = FALLBACK_PHOTO;
-            };
-            imgEl.src = ph.url || FALLBACK_PHOTO;
-
-            const capEl = document.createElement('figcaption');
-            capEl.className = 'mt-2 font-ui text-[12px] text-[#4A4038]';
-            capEl.textContent = ph.caption || '';
-            capEl.contentEditable = isAdminOpen ? 'true' : 'false';
-            if (isAdminOpen) capEl.classList.add('admin-editable');
-            capEl.addEventListener('input', () => {
-              data.photos[idx].caption = capEl.textContent;
-              saveState();
-            });
-
-            wrap.appendChild(imgEl);
-            fig.appendChild(wrap);
-            fig.appendChild(capEl);
-            photosGrid.appendChild(fig);
-          });
-        }
-      }
-
-      function syncAdminInputsFromSlice(data) {
-        const setIfNotFocused = (id, val) => {
-          const el = document.getElementById(id);
-          if (el && document.activeElement !== el) {
-            el.value = val || '';
-          }
-        };
-        const badge = document.getElementById('adminLangBadge');
-        if (badge) badge.textContent = state.activeLang.toUpperCase();
-
-        setIfNotFocused('adminNameInput', data.brandName);
-        setIfNotFocused('adminTaglineInput', data.brandTagline);
-        setIfNotFocused('adminFormUrlInput', data.formUrl);
-        setIfNotFocused('adminHeroBodyInput', data.heroBody);
-        setIfNotFocused('adminHeroSecondaryInput', data.heroSecondaryBody);
-        setIfNotFocused('adminQuoteInput', data.featuredQuote);
-      }
-
-      function renderPage() {
-        const lang = LANGS.includes(state.activeLang) ? state.activeLang : 'ko';
-        state.activeLang = lang;
-        document.documentElement.lang = lang;
-        const data = getLangSlice();
-
-        document.querySelectorAll('.lang-seg-btn').forEach((btn) => {
-          const btnLang = btn.getAttribute('data-lang');
-          const borderClass = btnLang === 'ko' ? '' : 'border-l border-[#111111]/45';
-          if (btnLang === lang) {
-            btn.className = `lang-seg-btn px-2.5 py-1.5 text-[11px] font-bold tracking-wide transition cursor-pointer bg-[#111111] text-[#FFE3CE] ${borderClass}`;
-          } else {
-            btn.className = `lang-seg-btn px-2.5 py-1.5 text-[11px] font-bold tracking-wide transition cursor-pointer text-[#111111] hover:bg-[#111111]/10 ${borderClass}`;
-          }
-        });
-
-        const textBindings = {
-          brandName: 'headerBrandName',
-          brandTagline: 'headerBrandTagline',
-          navAbout: 'navAboutLink',
-          navColumns: 'navColumnsLink',
-          navPhotos: 'navPhotosLink',
-          navInquiry: 'headerInquiryBtn',
-          editionPill: 'editionPill',
-          editionSubtitle: 'editionSubtitle',
-          heroHeadline: 'heroHeadline',
-          heroBody: 'heroBody',
-          heroSecondaryBody: 'heroSecondaryBody',
-          featuredQuote: 'featuredQuote',
-          heroPrimaryCta: 'heroPrimaryCta',
-          heroSecondaryCta: 'heroSecondaryCta',
-          tutoringEyebrow: 'tutoringEyebrow',
-          tutoringSectionTitle: 'tutoringSectionTitle',
-          posterEyebrow: 'posterEyebrow',
-          posterCaption: 'brochurePosterCaption',
-          columnsEyebrow: 'columnsEyebrow',
-          columnsHeading: 'columnsHeading',
-          photosEyebrow: 'photosEyebrow',
-          photosHeading: 'photosHeading',
-          inquiryEyebrow: 'inquiryEyebrow',
-          inquiryHeading: 'inquiryHeading',
-          inquiryDesc: 'inquiryDesc',
-          googleFormBtnText: 'googleFormBtnText'
-        };
-
-        const nonInlineEditableIds = ['headerBrandName', 'headerInquiryBtn', 'heroPrimaryCta', 'heroSecondaryCta'];
-
-        Object.entries(textBindings).forEach(([key, domId]) => {
-          const el = document.getElementById(domId);
-          if (!el) return;
-          if (document.activeElement !== el) {
-            el.textContent = data[key] || '';
-          }
-          if (!nonInlineEditableIds.includes(domId)) {
-            el.contentEditable = isAdminOpen ? 'true' : 'false';
-            el.classList.toggle('admin-editable', isAdminOpen);
-          }
-        });
-
-        const googleFormLink = document.getElementById('googleFormLink');
-        if (googleFormLink && data.formUrl) {
-          googleFormLink.href = data.formUrl;
-        }
-
-        syncPosterDom();
-        renderTutoringList(data);
-        renderColumnsAndPhotos(data);
-        syncAdminInputsFromSlice(data);
-      }
-
-      // Language Switcher
-      document.querySelectorAll('.lang-seg-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const nextLang = btn.getAttribute('data-lang');
-          if (LANGS.includes(nextLang)) {
-            state.activeLang = nextLang;
-            saveState();
-            renderPage();
-          }
-        });
-      });
-
-      // Direct inline contenteditable real-time sync (including heroSecondaryBody & featuredQuote)
-      const inlineFieldMap = [
-        ['headerBrandTagline', 'brandTagline', 'adminTaglineInput'],
-        ['editionPill', 'editionPill', null],
-        ['editionSubtitle', 'editionSubtitle', null],
-        ['heroHeadline', 'heroHeadline', null],
-        ['heroBody', 'heroBody', 'adminHeroBodyInput'],
-        ['heroSecondaryBody', 'heroSecondaryBody', 'adminHeroSecondaryInput'],
-        ['featuredQuote', 'featuredQuote', 'adminQuoteInput'],
-        ['tutoringEyebrow', 'tutoringEyebrow', null],
-        ['tutoringSectionTitle', 'tutoringSectionTitle', null],
-        ['posterEyebrow', 'posterEyebrow', null],
-        ['brochurePosterCaption', 'posterCaption', null],
-        ['columnsEyebrow', 'columnsEyebrow', null],
-        ['columnsHeading', 'columnsHeading', null],
-        ['photosEyebrow', 'photosEyebrow', null],
-        ['photosHeading', 'photosHeading', null],
-        ['inquiryEyebrow', 'inquiryEyebrow', null],
-        ['inquiryHeading', 'inquiryHeading', null],
-        ['inquiryDesc', 'inquiryDesc', null],
-        ['googleFormBtnText', 'googleFormBtnText', null]
-      ];
-
-      inlineFieldMap.forEach(([domId, dataKey, adminInputId]) => {
-        const el = document.getElementById(domId);
-        if (!el) return;
-        el.addEventListener('input', () => {
-          const data = getLangSlice();
-          data[dataKey] = el.textContent;
-          saveState();
-          if (adminInputId) {
-            const inputEl = document.getElementById(adminInputId);
-            if (inputEl && document.activeElement !== inputEl) {
-              inputEl.value = data[dataKey];
-            }
-          }
-        });
-      });
-
-      // ADMIN EDITOR Input Listeners
-      function bindAdminInput(inputId, dataKey, domId) {
-        const inputEl = document.getElementById(inputId);
-        if (!inputEl) return;
-        inputEl.addEventListener('input', (e) => {
-          const data = getLangSlice();
-          data[dataKey] = e.target.value;
-          saveState();
-          if (domId) {
-            const domEl = document.getElementById(domId);
-            if (domEl && document.activeElement !== domEl) {
-              domEl.textContent = data[dataKey];
-            }
-          }
-        });
-      }
-
-      bindAdminInput('adminNameInput', 'brandName', 'headerBrandName');
-      bindAdminInput('adminTaglineInput', 'brandTagline', 'headerBrandTagline');
-      bindAdminInput('adminHeroBodyInput', 'heroBody', 'heroBody');
-      bindAdminInput('adminHeroSecondaryInput', 'heroSecondaryBody', 'heroSecondaryBody');
-      bindAdminInput('adminQuoteInput', 'featuredQuote', 'featuredQuote');
-
-      // Google Forms URL controls ("현재 언어만 적용" / "4개 언어 모두 적용")
-      document.getElementById('adminFormUrlInput').addEventListener('input', (e) => {
-        const data = getLangSlice();
-        data.formUrl = e.target.value.trim();
-        saveState();
-        const linkEl = document.getElementById('googleFormLink');
-        if (linkEl && data.formUrl) {
-          linkEl.href = data.formUrl;
-        }
-      });
-
-      document.getElementById('applyFormUrlCurrentBtn').addEventListener('click', () => {
-        const val = document.getElementById('adminFormUrlInput').value.trim();
-        if (!val) return;
-        const data = getLangSlice();
-        data.formUrl = val;
-        saveState();
-        document.getElementById('googleFormLink').href = val;
-        showToast(`Google Forms 링크가 ${state.activeLang.toUpperCase()}에 적용되었습니다.`);
-      });
-
-      document.getElementById('applyFormUrlAllBtn').addEventListener('click', () => {
-        const val = document.getElementById('adminFormUrlInput').value.trim();
-        if (!val) return;
-        LANGS.forEach((lang) => {
-          state.siteData[lang].formUrl = val;
-        });
-        saveState();
-        document.getElementById('googleFormLink').href = val;
-        showToast('Google Forms 링크가 4개 언어(KO/EN/ES/PT)에 모두 적용되었습니다.');
-      });
-
-      // Poster Image File Upload (Data URL conversion + dimension normalization + persists across languages)
-      function normalizePosterFile(file, maxSide = 1400, quality = 0.85) {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onerror = () => reject(new Error('파일을 읽을 수 없습니다.'));
-          reader.onload = (evt) => {
-            const rawDataUrl = evt.target && evt.target.result;
-            if (typeof rawDataUrl !== 'string') {
-              reject(new Error('이미지 데이터를 확인할 수 없습니다.'));
-              return;
-            }
-            const img = new Image();
-            img.onload = () => {
-              try {
-                let { width, height } = img;
-                if (!width || !height) {
-                  resolve(rawDataUrl);
-                  return;
-                }
-                const longest = Math.max(width, height);
-                if (longest > maxSide) {
-                  const scale = maxSide / longest;
-                  width = Math.round(width * scale);
-                  height = Math.round(height * scale);
-                }
-                const canvas = document.createElement('canvas');
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-                const mime = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
-                resolve(canvas.toDataURL(mime, quality));
-              } catch (_) {
-                resolve(rawDataUrl);
-              }
-            };
-            img.onerror = () => resolve(rawDataUrl);
-            img.src = rawDataUrl;
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-
-      document.getElementById('adminPosterFileInput').addEventListener('change', async (e) => {
-        const file = e.target.files && e.target.files[0];
-        if (!file) return;
-        try {
-          const dataUrl = await normalizePosterFile(file);
-          state.posterImage = dataUrl;
-          syncPosterDom();
-          saveState();
-          showToast('BROCHURE / POSTER 사진이 반영되었습니다.');
-        } catch (err) {
-          console.error('Poster upload error:', err);
-          showToast('사진을 불러오는 중 오류가 발생했습니다.', true);
-        } finally {
-          e.target.value = '';
-        }
-      });
-
-      document.getElementById('adminPosterUrlInput').addEventListener('input', (e) => {
-        const val = e.target.value.trim();
-        if (!val) return;
-        state.posterImage = val;
-        syncPosterDom();
-        saveState();
-      });
-
-      // Admin Mode Visibility (?admin, Ctrl/Cmd+Shift+E, 5 copyright clicks, 관리자 / 관리자 닫기 buttons)
-      function syncAdminVisibility() {
-        const panel = document.getElementById('adminPanel');
-        if (panel) {
-          panel.classList.toggle('hidden', !isAdminOpen);
-        }
-        renderPage();
-      }
-
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.has('admin')) {
-        isAdminOpen = true;
-      }
-
-      document.getElementById('headerAdminToggleBtn').addEventListener('click', () => {
-        isAdminOpen = !isAdminOpen;
-        syncAdminVisibility();
-      });
-
-      document.getElementById('closeAdminBtn').addEventListener('click', () => {
-        isAdminOpen = false;
-        syncAdminVisibility();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'e') {
-          e.preventDefault();
-          isAdminOpen = !isAdminOpen;
-          syncAdminVisibility();
-        }
-      });
-
-      document.getElementById('footerCopyrightBtn').addEventListener('click', () => {
-        copyrightClickCount += 1;
-        clearTimeout(copyrightClickTimer);
-        copyrightClickTimer = setTimeout(() => {
-          copyrightClickCount = 0;
-        }, 2500);
-        if (copyrightClickCount >= 5) {
-          copyrightClickCount = 0;
-          isAdminOpen = true;
-          syncAdminVisibility();
-          showToast('ADMIN EDITOR가 활성화되었습니다.');
-        }
-      });
-
-      // Export Standalone Clean HTML
-      document.getElementById('exportHtmlBtn').addEventListener('click', () => {
-        try {
-          const cloneDoc = document.documentElement.cloneNode(true);
-          const clonePanel = cloneDoc.getElementById('adminPanel');
-          if (clonePanel) clonePanel.classList.add('hidden');
-
-          const cloneDataScript = cloneDoc.getElementById('embeddedSiteData');
-          if (cloneDataScript) {
-            cloneDataScript.textContent = JSON.stringify(state, null, 2);
-          }
-
-          const clonePosterImg = cloneDoc.getElementById('posterImg');
-          if (clonePosterImg && state.posterImage) {
-            clonePosterImg.setAttribute('src', state.posterImage);
-          }
-
-          cloneDoc.querySelectorAll('[contenteditable]').forEach((el) => {
-            el.removeAttribute('contenteditable');
-            el.classList.remove('admin-editable');
-          });
-
-          const htmlString = '<!DOCTYPE html>\n' + cloneDoc.outerHTML;
-          const blob = new Blob([htmlString], { type: 'text/html;charset=utf-8' });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'index.html';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
-          showToast('index.html 파일로 내보냈습니다.');
-        } catch (err) {
-          console.error('Export failed:', err);
-          showToast('HTML 내보내기 중 오류가 발생했습니다.', true);
-        }
-      });
-
-      // Import Existing HTML File
-      document.getElementById('importHtmlInput').addEventListener('change', (e) => {
-        const file = e.target.files && e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          try {
-            const parser = new DOMParser();
-            const parsedDoc = parser.parseFromString(String(evt.target.result || ''), 'text/html');
-            const importedScript = parsedDoc.getElementById('embeddedSiteData');
-            if (importedScript && importedScript.textContent) {
-              state = normalizePayload(JSON.parse(importedScript.textContent));
-            } else {
-              const data = getLangSlice();
-              const secEl = parsedDoc.getElementById('heroSecondaryBody');
-              const quoteEl = parsedDoc.getElementById('featuredQuote');
-              const posterEl = parsedDoc.getElementById('posterImg');
-              if (secEl) data.heroSecondaryBody = secEl.textContent;
-              if (quoteEl) data.featuredQuote = quoteEl.textContent;
-              if (posterEl && posterEl.getAttribute('src')) {
-                state.posterImage = posterEl.getAttribute('src').trim() || DEFAULT_POSTER_URL;
-              }
-            }
-            saveState();
-            renderPage();
-            showToast('기존 index.html 데이터를 불러왔습니다.');
-          } catch (err) {
-            console.error('Import failed:', err);
-            showToast('기존 HTML 파일을 불러오는 중 오류가 발생했습니다.', true);
-          } finally {
-            e.target.value = '';
-          }
-        };
-        reader.readAsText(file);
-      });
-
-      // Initial Render
-      syncAdminVisibility();
-      renderPage();
-    })();
-  </script>
-</body>
-</html>
+    </header>
+
+    <main>
+      <section class="hero-section">
+        <div class="edition-strip">
+          <span class="edition-tag">EDITION 2026</span>
+          <span class="edition-sub">Editorial Portfolio &amp; Private Tutoring</span>
+        </div>
+        <h2 class="hero-headline" id="heroHeadline">스스로 질문하고 논리적으로 풀어내는 힘</h2>
+        <p class="hero-body" id="heroBody">안녕하세요, HoonQ입니다. 학생과 성인을 대상으로 1:1 맞춤형 과외를 진행하며, 저의 배움과 일상의 단상을 칼럼과 사진으로 기록합니다. 획일화된 암기가 아닌, 스스로 질문하고 논리적으로 풀어내는 힘을 기릅니다.</p>
+        <p class="hero-secondary-body" id="heroSecondaryBody">AI가 대체할 수 없는 교육이 무엇인가? 저의 생동감과 3개 문화권에서 자란 경험입니다. AI는 밝은 목소리를 흉내내고 경험이 있는 것처럼 꾸밀 뿐, &lt;실제성&gt;이 (아직은) 결여되어 있습니다. 저는 문화를 가지고 인간의 실제성을 탐구하고 재현합니다.</p>
+        <blockquote class="featured-quote" id="featuredQuote">"문화가 없는 삶은 야만이며, 활력이 없는 문화는 비
