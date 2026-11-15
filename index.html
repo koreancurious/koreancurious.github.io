@@ -297,10 +297,10 @@
       </div>
       <div class="header-right">
         <nav class="nav-links" aria-label="Primary Navigation">
-          <a href="#tutoringSection">소개 &amp; 과외</a>
-          <a href="#brochureSection">브로슈어</a>
+          <a href="#tutoringSection" id="navTutoring">소개 &amp; 과외</a>
+          <a href="#brochureSection" id="navBrochure">브로슈어</a>
         </nav>
-        <a class="cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSe433JjqxLsH7xV-aWVX0wzbI-fZKngA6Lw9DokhvhPoJgTrg/viewform?usp=header" target="_blank" rel="noopener noreferrer">문의하기</a>
+        <a class="cta-btn" id="headerContactBtn" href="https://docs.google.com/forms/d/e/1FAIpQLSe433JjqxLsH7xV-aWVX0wzbI-fZKngA6Lw9DokhvhPoJgTrg/viewform?usp=header" target="_blank" rel="noopener noreferrer">문의하기</a>
         <div class="lang-switch" role="group" aria-label="Language Selector">
           <button type="button" data-lang="ko" class="active">KO</button>
           <button type="button" data-lang="en">EN</button>
@@ -321,16 +321,16 @@
         <p class="hero-secondary-body" id="heroSecondaryBody">AI가 대체할 수 없는 교육이 무엇인가? 저의 생동감과 3개 문화권에서 자란 경험입니다. AI는 밝은 목소리를 흉내내고 경험이 있는 것처럼 꾸밀 뿐, &lt;실제성&gt;이 (아직은) 결여되어 있습니다. 저는 문화를 가지고 인간의 실제성을 탐구하고 재현합니다.</p>
         <blockquote class="featured-quote" id="featuredQuote">"문화가 없는 삶은 야만이며, 활력이 없는 문화는 비잔틴주의다."</blockquote>
         <div class="hero-cta-row">
-          <a class="cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSe433JjqxLsH7xV-aWVX0wzbI-fZKngA6Lw9DokhvhPoJgTrg/viewform?usp=header" target="_blank" rel="noopener noreferrer">1:1 과외 및 특강 문의하기 ↗</a>
-          <a href="#tutoringSection" class="secondary-btn">1:1 맞춤형 과외 및 코칭 안내</a>
+          <a class="cta-btn" id="heroContactBtn" href="https://docs.google.com/forms/d/e/1FAIpQLSe433JjqxLsH7xV-aWVX0wzbI-fZKngA6Lw9DokhvhPoJgTrg/viewform?usp=header" target="_blank" rel="noopener noreferrer">1:1 과외 및 특강 문의하기 ↗</a>
+          <a href="#tutoringSection" class="secondary-btn" id="heroSecondaryBtn">1:1 맞춤형 과외 및 코칭 안내</a>
         </div>
       </section>
 
       <section class="mid-grid" id="tutoringSection">
         <div>
           <p class="section-kicker">TUTORING PROGRAM</p>
-          <h2 class="section-heading">1:1 맞춤형 과외 및 코칭 안내</h2>
-          <div class="tutoring-list">
+          <h2 class="section-heading" id="tutoringHeading">1:1 맞춤형 과외 및 코칭 안내</h2>
+          <div class="tutoring-list" id="tutoringList">
             <article class="tutoring-item">
               <h3 class="tutoring-item-title">01. 대입·편입 논술 및 심층 면접 대비</h3>
               <p class="tutoring-item-desc">고등학생·N수생 대상 | 제시문 독해 구조화, 개요 작성</p>
@@ -373,41 +373,132 @@
 
       const contentByLang = {
         ko: {
+          navTutoring: '소개 & 과외',
+          navBrochure: '브로슈어',
+          headerContact: '문의하기',
+          heroContact: '1:1 과외 및 특강 문의하기 ↗',
+          heroSecondary: '1:1 맞춤형 과외 및 코칭 안내',
+          tutoringHeading: '1:1 맞춤형 과외 및 코칭 안내',
           heading: 'Program Brochure (KO)',
           headline: '스스로 질문하고 논리적으로 풀어내는 힘',
           body: '안녕하세요, HoonQ입니다. 학생과 성인을 대상으로 1:1 맞춤형 과외를 진행하며, 저의 배움과 일상의 단상을 칼럼과 사진으로 기록합니다. 획일화된 암기가 아닌, 스스로 질문하고 논리적으로 풀어내는 힘을 기릅니다.',
           secondary: 'AI가 대체할 수 없는 교육이 무엇인가? 저의 생동감과 3개 문화권에서 자란 경험입니다. AI는 밝은 목소리를 흉내내고 경험이 있는 것처럼 꾸밀 뿐, <실제성>이 (아직은) 결여되어 있습니다. 저는 문화를 가지고 인간의 실제성을 탐구하고 재현합니다.',
-          quote: '"문화가 없는 삶은 야만이며, 활력이 없는 문화는 비잔틴주의다."'
+          quote: '"문화가 없는 삶은 야만이며, 활력이 없는 문화는 비잔틴주의다."',
+          programs: [
+            { title: '01. 대입·편입 논술 및 심층 면접 대비', desc: '고등학생·N수생 대상 | 제시문 독해 구조화, 개요 작성' },
+            { title: '02. 청소년 독서·비판적 글쓰기 클래스', desc: '중·고등학생 대상 | 텍스트 분석, 에세이 구성, 자기만의 관점 정립' },
+            { title: '03. 성인 인문 독서·에세이 워크숍', desc: '직장인·일반 대상 | 시사·철학 텍스트 강독, 단상 칼럼 집필' }
+          ]
         },
         en: {
+          navTutoring: 'About & Tutoring',
+          navBrochure: 'Brochure',
+          headerContact: 'Inquire',
+          heroContact: 'Inquire About 1:1 Tutoring & Lectures ↗',
+          heroSecondary: '1:1 Customized Tutoring & Coaching',
+          tutoringHeading: '1:1 Customized Tutoring & Coaching',
           heading: 'Program Brochure (EN)',
           headline: 'The Power to Question and Reason Independently',
           body: 'Hello, I am HoonQ. I offer 1:1 customized tutoring for students and adults while recording reflections through columns and photography.',
           secondary: 'What kind of education can AI not replace? My vitality and lived experience across three cultural spheres.',
-          quote: '"A life without culture is barbarism, and a culture without vitality is Byzantinism."'
+          quote: '"A life without culture is barbarism, and a culture without vitality is Byzantinism."',
+          programs: [
+            { title: '01. University Essay & In-Depth Interview Prep', desc: 'High school & exam candidates | Passage structuring, outline drafting' },
+            { title: '02. Youth Reading & Critical Writing Class', desc: 'Middle & high school students | Text analysis, essay structure, independent perspective' },
+            { title: '03. Adult Humanities Reading & Essay Workshop', desc: 'Professionals & general public | Current affairs & philosophy texts, column writing' }
+          ]
         },
         es: {
+          navTutoring: 'Perfil y Clases',
+          navBrochure: 'Folleto',
+          headerContact: 'Contacto',
+          heroContact: 'Consultar Tutorías 1:1 y Conferencias ↗',
+          heroSecondary: 'Tutoría Personalizada 1:1 y Coaching',
+          tutoringHeading: 'Tutoría Personalizada 1:1 y Coaching',
           heading: 'Program Brochure (ES)',
           headline: 'La capacidad de cuestionar y razonar con lógica',
           body: 'Hola, soy HoonQ. Ofrezco tutorías personalizadas 1:1 para estudiantes y adultos, además de ensayos y fotografía.',
           secondary: '¿Qué educación no puede sustituir la IA? Mi vitalidad y experiencia vivida en tres ámbitos culturales.',
-          quote: '"Una vida sin cultura es barbarie, y una cultura sin vitalidad es bizantinismo."'
+          quote: '"Una vida sin cultura es barbarie, y una cultura sin vitalidad es bizantinismo."',
+          programs: [
+            { title: '01. Preparación de Ensayo y Entrevista Profunda', desc: 'Estudiantes universitarios y preuniversitarios | Estructuración de textos, esquemas' },
+            { title: '02. Lectura Juvenil y Escritura Crítica', desc: 'Secundaria y bachillerato | Análisis textual, estructura de ensayo, criterio propio' },
+            { title: '03. Taller de Lectura Humanística y Ensayo para Adultos', desc: 'Profesionales y público general | Textos de actualidad y filosofía, redacción de columnas' }
+          ]
         },
         pt: {
+          navTutoring: 'Sobre e Aulas',
+          navBrochure: 'Brochura',
+          headerContact: 'Contato',
+          heroContact: 'Consultar Aulas 1:1 e Palestras ↗',
+          heroSecondary: 'Tutoria Personalizada 1:1 e Coaching',
+          tutoringHeading: 'Tutoria Personalizada 1:1 e Coaching',
           heading: 'Program Brochure (PT)',
           headline: 'A capacidade de questionar e raciocinar com lógica',
           body: 'Olá, sou HoonQ. Ofereço aulas particulares 1:1 personalizadas para estudantes e adultos, além de colunas e fotografia.',
           secondary: 'Que educação a IA não pode substituir? Minha vitalidade e vivência em três esferas culturais.',
-          quote: '"Uma vida sem cultura é barbárie, e uma cultura sem vitalidade é bizantinismo."'
+          quote: '"Uma vida sem cultura é barbárie, e uma cultura sem vitalidade é bizantinismo."',
+          programs: [
+            { title: '01. Preparação para Redação e Entrevista Aprofundada', desc: 'Vestibulandos e universitários | Estruturação de textos, esboços' },
+            { title: '02. Leitura Juvenil e Escrita Crítica', desc: 'Ensino fundamental II e médio | Análise de texto, estrutura de ensaio, ponto de vista próprio' },
+            { title: '03. Oficina de Leitura Humanística e Ensaio para Adultos', desc: 'Profissionais e público geral | Textos de atualidades e filosofia, escrita de colunas' }
+          ]
         }
       };
 
+      function setText(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      }
+
+      function renderPrograms(programs) {
+        const container = document.getElementById('tutoringList');
+        if (!container || !Array.isArray(programs)) return;
+        container.innerHTML = programs.map((item) => `
+          <article class="tutoring-item">
+            <h3 class="tutoring-item-title">${item.title}</h3>
+            <p class="tutoring-item-desc">${item.desc}</p>
+          </article>
+        `).join('');
+      }
+
       function applyLang(lang) {
-        const cur = contentByLang[lang] || contentByLang.ko;
-        document.documentElement.lang = lang;
-        document.getElementById('heroHeadline').textContent = cur.headline;
-        document.getElementById('heroBody').textContent = cur.body;
-        document.getElementById('heroSecondaryBody').textContent = cur.secondary;
-        document.getElementById('featuredQuote').textContent = cur.quote;
-        document.getElementById('posterHeading').textContent = cur.heading;
-        document.get
+        const normalized = contentByLang[lang] ? lang : 'ko';
+        const cur = contentByLang[normalized];
+
+        document.documentElement.lang = normalized;
+        setText('navTutoring', cur.navTutoring);
+        setText('navBrochure', cur.navBrochure);
+        setText('headerContactBtn', cur.headerContact);
+        setText('heroContactBtn', cur.heroContact);
+        setText('heroSecondaryBtn', cur.heroSecondary);
+        setText('tutoringHeading', cur.tutoringHeading);
+        setText('heroHeadline', cur.headline);
+        setText('heroBody', cur.body);
+        setText('heroSecondaryBody', cur.secondary);
+        setText('featuredQuote', cur.quote);
+        setText('posterHeading', cur.heading);
+        renderPrograms(cur.programs);
+
+        const img = document.getElementById('posterImg');
+        if (img) {
+          img.src = posterByLang[normalized];
+        }
+
+        document.querySelectorAll('.lang-switch button').forEach((btn) => {
+          btn.classList.toggle('active', btn.getAttribute('data-lang') === normalized);
+        });
+      }
+
+      document.addEventListener('click', function (event) {
+        const btn = event.target.closest('.lang-switch button[data-lang]');
+        if (!btn) return;
+        event.preventDefault();
+        applyLang(btn.getAttribute('data-lang'));
+      });
+
+      applyLang('ko');
+    })();
+  </script>
+</body>
+</html>
