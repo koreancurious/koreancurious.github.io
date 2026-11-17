@@ -405,14 +405,14 @@
         <strong>Admin Editor</strong>
         <button type="button" class="secondary-btn" id="admCloseBtn">닫기</button>
       </div>
-      <div class="admin-status" id="adminStatus">현재 선택된 언어 탭의 문구·사진·에세이를 수정한 뒤, "화면에 즉시 적용" 후 "index.html 다운로드"로 내려받아 GitHub에 덮어쓰세요.</div>
+      <div class="admin-status" id="adminStatus">현재 언어 탭의 내용을 수정한 뒤 "화면에 즉시 적용" → "index.html 다운로드"로 내려받아 GitHub에 덮어쓰세요.</div>
       <div class="admin-grid">
         <div class="admin-field">
           <label for="admFormUrl">Google Form 링크</label>
           <input type="text" id="admFormUrl" />
         </div>
         <div class="admin-field">
-          <label for="admPosterSrc">현재 탭 브로슈어 이미지 파일명/경로</label>
+          <label for="admPosterSrc">현재 탭 브로슈어 이미지 파일명</label>
           <input type="text" id="admPosterSrc" />
         </div>
         <div class="admin-field">
@@ -424,7 +424,7 @@
           <input type="text" id="admQuote" />
         </div>
         <div class="admin-field full">
-          <label for="admBody">본문 소개글 (한 박스 안에서 줄바꿈으로 문단 구분)</label>
+          <label for="admBody">본문 소개글 (줄바꿈으로 문단 구분)</label>
           <textarea id="admBody"></textarea>
         </div>
         <div class="admin-field full">
@@ -483,20 +483,7 @@ AI가 대체할 수 없는 교육이 무엇인가? 저의 생동감과 3개 문�
         <div>
           <p class="section-kicker">TUTORING PROGRAM</p>
           <h2 class="section-heading" id="tutoringHeading">1:1 맞춤형 과외 및 코칭 안내</h2>
-          <div class="tutoring-list" id="tutoringList">
-            <article class="tutoring-item">
-              <h3 class="tutoring-item-title">01. 대입·편입 논술 및 심층 면접 대비</h3>
-              <p class="tutoring-item-desc">고등학생·N수생 대상 | 제시문 독해 구조화, 개요 작성</p>
-            </article>
-            <article class="tutoring-item">
-              <h3 class="tutoring-item-title">02. 청소년 독서·비판적 글쓰기 클래스</h3>
-              <p class="tutoring-item-desc">중·고등학생 대상 | 텍스트 분석, 에세이 구성, 자기만의 관점 정립</p>
-            </article>
-            <article class="tutoring-item">
-              <h3 class="tutoring-item-title">03. 성인 인문 독서·에세이 워크숍</h3>
-              <p class="tutoring-item-desc">직장인·일반 대상 | 시사·철학 텍스트 강독, 단상 칼럼 집필</p>
-            </article>
-          </div>
+          <div class="tutoring-list" id="tutoringList"></div>
         </div>
 
         <div id="brochureSection">
@@ -540,4 +527,376 @@ AI가 대체할 수 없는 교육이 무엇인가? 저의 생동감과 3개 문�
       "posterByLang": {
         "ko": "./20260418_143409.jpg",
         "en": "./20250717_092256_2.jpg",
-        "es": "./2
+        "es": "./20260927_155715.jpg",
+        "pt": "./20260416_083119.jpg"
+      },
+      "contentByLang": {
+        "ko": {
+          "navTutoring": "소개 & 과외",
+          "navBrochure": "브로슈어",
+          "navEssay": "에세이",
+          "navContact": "문의",
+          "headerContact": "문의하기",
+          "heroContact": "1:1 과외 및 특강 문의하기 ↗",
+          "heroSecondary": "1:1 맞춤형 과외 및 코칭 안내",
+          "tutoringHeading": "1:1 맞춤형 과외 및 코칭 안내",
+          "essayHeading": "에세이 및 기록",
+          "contactHeading": "문의 양식",
+          "heading": "Program Brochure (KO)",
+          "headline": "스스로 질문하고 논리적으로 풀어내는 힘",
+          "body": "안녕하세요, HoonQ입니다. 학생과 성인을 대상으로 1:1 맞춤형 과외를 진행하며, 저의 배움과 일상의 단상을 칼럼과 사진으로 기록합니다. 획일화된 암기가 아닌, 스스로 질문하고 논리적으로 풀어내는 힘을 기릅니다.\n\nAI가 대체할 수 없는 교육이 무엇인가? 저의 생동감과 3개 문화권에서 자란 경험입니다. AI는 밝은 목소리를 흉내내고 경험이 있는 것처럼 꾸밀 뿐, <실제성>이 (아직은) 결여되어 있습니다. 저는 문화를 가지고 인간의 실제성을 탐구하고 재현합니다.",
+          "quote": "\"문화가 없는 삶은 야만이며, 활력이 없는 문화는 비잔틴주의다.\"",
+          "programs": [
+            { "title": "01. 대입·편입 논술 및 심층 면접 대비", "desc": "고등학생·N수생 대상 | 제시문 독해 구조화, 개요 작성" },
+            { "title": "02. 청소년 독서·비판적 글쓰기 클래스", "desc": "중·고등학생 대상 | 텍스트 분석, 에세이 구성, 자기만의 관점 정립" },
+            { "title": "03. 성인 인문 독서·에세이 워크숍", "desc": "직장인·일반 대상 | 시사·철학 텍스트 강독, 단상 칼럼 집필" }
+          ],
+          "essays": [
+            {
+              "date": "2026-11-17",
+              "title": "첫 기록 — 질문에서 시작하는 배움",
+              "body": "여기에 에세이를 한 편씩 추가해 주세요. Admin 패널의 에세이 칸에 항목을 넣고 적용한 뒤 index.html을 내려받아 GitHub에 올리면 페이지에 반영됩니다."
+            }
+          ]
+        },
+        "en": {
+          "navTutoring": "About & Tutoring",
+          "navBrochure": "Brochure",
+          "navEssay": "Essays",
+          "navContact": "Contact",
+          "headerContact": "Inquire",
+          "heroContact": "Inquire About 1:1 Tutoring & Lectures ↗",
+          "heroSecondary": "1:1 Customized Tutoring & Coaching",
+          "tutoringHeading": "1:1 Customized Tutoring & Coaching",
+          "essayHeading": "Essays & Notes",
+          "contactHeading": "Inquiry Form",
+          "heading": "Program Brochure (EN)",
+          "headline": "The Power to Question and Reason Independently",
+          "body": "Hello, I am HoonQ. I offer 1:1 customized tutoring for students and adults while recording reflections through columns and photography.\n\nWhat kind of education can AI not replace? My vitality and lived experience across three cultural spheres.",
+          "quote": "\"A life without culture is barbarism, and a culture without vitality is Byzantinism.\"",
+          "programs": [
+            { "title": "01. University Essay & In-Depth Interview Prep", "desc": "High school & exam candidates | Passage structuring, outline drafting" },
+            { "title": "02. Youth Reading & Critical Writing Class", "desc": "Middle & high school students | Text analysis, essay structure, independent perspective" },
+            { "title": "03. Adult Humanities Reading & Essay Workshop", "desc": "Professionals & general public | Current affairs & philosophy texts, column writing" }
+          ],
+          "essays": [
+            {
+              "date": "2026-11-17",
+              "title": "First Note — Learning That Begins with a Question",
+              "body": "Add essays one by one here. Update the essays field in the Admin Editor, apply, download index.html, and commit it to GitHub."
+            }
+          ]
+        },
+        "es": {
+          "navTutoring": "Perfil y Clases",
+          "navBrochure": "Folleto",
+          "navEssay": "Ensayos",
+          "navContact": "Contacto",
+          "headerContact": "Contacto",
+          "heroContact": "Consultar Tutorías 1:1 y Conferencias ↗",
+          "heroSecondary": "Tutoría Personalizada 1:1 y Coaching",
+          "tutoringHeading": "Tutoría Personalizada 1:1 y Coaching",
+          "essayHeading": "Ensayos y Notas",
+          "contactHeading": "Formulario de Contacto",
+          "heading": "Program Brochure (ES)",
+          "headline": "La capacidad de cuestionar y razonar con lógica",
+          "body": "Hola, soy HoonQ. Ofrezco tutorías personalizadas 1:1 para estudiantes y adultos, además de ensayos y fotografía.\n\n¿Qué educación no puede sustituir la IA? Mi vitalidad y experiencia vivida en tres ámbitos culturales.",
+          "quote": "\"Una vida sin cultura es barbarie, y una cultura sin vitalidad es bizantinismo.\"",
+          "programs": [
+            { "title": "01. Preparación de Ensayo y Entrevista Profunda", "desc": "Estudiantes universitarios y preuniversitarios | Estructuración de textos, esquemas" },
+            { "title": "02. Lectura Juvenil y Escritura Crítica", "desc": "Secundaria y bachillerato | Análisis textual, estructura de ensayo, criterio propio" },
+            { "title": "03. Taller de Lectura Humanística y Ensayo para Adultos", "desc": "Profesionales y público general | Textos de actualidad y filosofía, redacción de columnas" }
+          ],
+          "essays": [
+            {
+              "date": "2026-11-17",
+              "title": "Primera nota — Aprender desde la pregunta",
+              "body": "Añade ensayos poco a poco aquí."
+            }
+          ]
+        },
+        "pt": {
+          "navTutoring": "Sobre e Aulas",
+          "navBrochure": "Brochura",
+          "navEssay": "Ensaios",
+          "navContact": "Contato",
+          "headerContact": "Contato",
+          "heroContact": "Consultar Aulas 1:1 e Palestras ↗",
+          "heroSecondary": "Tutoria Personalizada 1:1 e Coaching",
+          "tutoringHeading": "Tutoria Personalizada 1:1 e Coaching",
+          "essayHeading": "Ensaios e Notas",
+          "contactHeading": "Formulário de Contato",
+          "heading": "Program Brochure (PT)",
+          "headline": "A capacidade de questionar e raciocinar com lógica",
+          "body": "Olá, sou HoonQ. Ofereço aulas particulares 1:1 personalizadas para estudantes e adultos, além de colunas e fotografia.\n\nQue educação a IA não pode substituir? Minha vitalidade e vivência em três esferas culturais.",
+          "quote": "\"Uma vida sem cultura é barbárie, e uma cultura sem vitalidade é bizantinismo.\"",
+          "programs": [
+            { "title": "01. Preparação para Redação e Entrevista Aprofundada", "desc": "Vestibulandos e universitários | Estruturação de textos, esboços" },
+            { "title": "02. Leitura Juvenil e Escrita Crítica", "desc": "Ensino fundamental II e médio | Análise de texto, estrutura de ensaio, ponto de vista próprio" },
+            { "title": "03. Oficina de Leitura Humanística e Ensaio para Adultos", "desc": "Profissionais e público geral | Textos de atualidades e filosofia, escrita de colunas" }
+          ],
+          "essays": [
+            {
+              "date": "2026-11-17",
+              "title": "Primeira nota — Aprender a partir da pergunta",
+              "body": "Adicione ensaios aos poucos aqui."
+            }
+          ]
+        }
+      }
+    }
+  </script>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = 'hoonq_site_config_v3';
+      const defaultConfig = JSON.parse(document.getElementById('siteConfigData').textContent);
+      let config = JSON.parse(JSON.stringify(defaultConfig));
+      let currentLang = 'ko';
+
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && typeof parsed === 'object') {
+            config.formUrl = parsed.formUrl || defaultConfig.formUrl;
+            config.posterByLang = Object.assign({}, defaultConfig.posterByLang, parsed.posterByLang || {});
+            if (parsed.contentByLang && typeof parsed.contentByLang === 'object') {
+              Object.keys(defaultConfig.contentByLang).forEach((k) => {
+                if (parsed.contentByLang[k]) {
+                  config.contentByLang[k] = Object.assign({}, defaultConfig.contentByLang[k], parsed.contentByLang[k]);
+                }
+              });
+            }
+          }
+        }
+      } catch (e) {
+        config = JSON.parse(JSON.stringify(defaultConfig));
+      }
+
+      function toEmbedUrl(url) {
+        if (!url) return '';
+        if (url.indexOf('embedded=true') !== -1) return url;
+        return url + (url.indexOf('?') !== -1 ? '&embedded=true' : '?embedded=true');
+      }
+
+      function setText(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text || '';
+      }
+
+      function renderPrograms(programs) {
+        const container = document.getElementById('tutoringList');
+        if (!container) return;
+        const list = Array.isArray(programs) ? programs : [];
+        container.innerHTML = list.map((item) =>
+          '<article class="tutoring-item">' +
+            '<h3 class="tutoring-item-title">' + (item.title || '') + '</h3>' +
+            '<p class="tutoring-item-desc">' + (item.desc || '') + '</p>' +
+          '</article>'
+        ).join('');
+      }
+
+      function renderEssays(essays) {
+        const container = document.getElementById('essayList');
+        if (!container) return;
+        const list = Array.isArray(essays) ? essays : [];
+        container.innerHTML = list.map((essay) =>
+          '<article class="essay-item">' +
+            '<h3 class="essay-item-title">' + (essay.title || '') + '</h3>' +
+            '<p class="essay-item-meta">' + (essay.date || '') + '</p>' +
+            '<p class="essay-item-body">' + (essay.body || '') + '</p>' +
+          '</article>'
+        ).join('');
+      }
+
+      function syncAdminInputs() {
+        const cur = config.contentByLang[currentLang] || config.contentByLang.ko;
+        const formEl = document.getElementById('admFormUrl');
+        const posterEl = document.getElementById('admPosterSrc');
+        const headlineEl = document.getElementById('admHeadline');
+        const quoteEl = document.getElementById('admQuote');
+        const bodyEl = document.getElementById('admBody');
+        const essaysEl = document.getElementById('admEssaysJson');
+
+        if (formEl) formEl.value = config.formUrl || '';
+        if (posterEl) posterEl.value = (config.posterByLang && config.posterByLang[currentLang]) || '';
+        if (headlineEl) headlineEl.value = cur.headline || '';
+        if (quoteEl) quoteEl.value = cur.quote || '';
+        if (bodyEl) bodyEl.value = cur.body || '';
+        if (essaysEl) essaysEl.value = JSON.stringify(cur.essays || [], null, 2);
+      }
+
+      function switchLanguage(lang) {
+        const target = config.contentByLang[lang] ? lang : 'ko';
+        currentLang = target;
+        const cur = config.contentByLang[currentLang];
+
+        document.documentElement.lang = currentLang;
+        setText('navTutoring', cur.navTutoring);
+        setText('navBrochure', cur.navBrochure);
+        setText('navEssay', cur.navEssay);
+        setText('navContact', cur.navContact);
+        setText('headerContactBtn', cur.headerContact);
+        setText('heroContactBtn', cur.heroContact);
+        setText('heroSecondaryBtn', cur.heroSecondary);
+        setText('tutoringHeading', cur.tutoringHeading);
+        setText('essayHeading', cur.essayHeading);
+        setText('contactHeading', cur.contactHeading);
+        setText('heroHeadline', cur.headline);
+        setText('heroBody', cur.body);
+        setText('featuredQuote', cur.quote);
+        setText('posterHeading', cur.heading);
+
+        renderPrograms(cur.programs);
+        renderEssays(cur.essays);
+
+        ['headerContactBtn', 'heroContactBtn'].forEach((id) => {
+          const link = document.getElementById(id);
+          if (link && config.formUrl) link.href = config.formUrl;
+        });
+
+        const iframe = document.getElementById('googleFormIframe');
+        if (iframe && config.formUrl) {
+          const embedSrc = toEmbedUrl(config.formUrl);
+          if (iframe.getAttribute('src') !== embedSrc) {
+            iframe.setAttribute('src', embedSrc);
+          }
+        }
+
+        const img = document.getElementById('posterImg');
+        if (img) {
+          const src = (config.posterByLang && config.posterByLang[currentLang]) || config.posterByLang.ko;
+          img.setAttribute('src', src);
+        }
+
+        const buttons = document.querySelectorAll('.lang-switch button[data-lang]');
+        buttons.forEach((btn) => {
+          if (btn.getAttribute('data-lang') === currentLang) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        syncAdminInputs();
+      }
+
+      // Bind language buttons directly
+      document.querySelectorAll('.lang-switch button[data-lang]').forEach((btn) => {
+        btn.addEventListener('click', function () {
+          const lang = this.getAttribute('data-lang');
+          switchLanguage(lang);
+        });
+      });
+
+      const panel = document.getElementById('adminPanel');
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('admin') && panel) {
+        panel.classList.add('open');
+      }
+
+      const toggleBtn = document.getElementById('toggleAdminBtn');
+      if (toggleBtn && panel) {
+        toggleBtn.addEventListener('click', function () {
+          panel.classList.toggle('open');
+          if (panel.classList.contains('open')) {
+            syncAdminInputs();
+          }
+        });
+      }
+
+      const closeBtn = document.getElementById('admCloseBtn');
+      if (closeBtn && panel) {
+        closeBtn.addEventListener('click', function () {
+          panel.classList.remove('open');
+        });
+      }
+
+      function saveFromAdminInputs() {
+        config.formUrl = (document.getElementById('admFormUrl').value || '').trim() || defaultConfig.formUrl;
+        config.posterByLang[currentLang] = (document.getElementById('admPosterSrc').value || '').trim() || defaultConfig.posterByLang[currentLang];
+        const cur = config.contentByLang[currentLang];
+        cur.headline = document.getElementById('admHeadline').value;
+        cur.quote = document.getElementById('admQuote').value;
+        cur.body = document.getElementById('admBody').value;
+
+        const rawEssays = (document.getElementById('admEssaysJson').value || '').trim();
+        if (rawEssays) {
+          const parsedEssays = JSON.parse(rawEssays);
+          if (!Array.isArray(parsedEssays)) {
+            throw new Error('에세이는 [...] 배열 형식이어야 합니다.');
+          }
+          cur.essays = parsedEssays;
+        } else {
+          cur.essays = [];
+        }
+      }
+
+      const applyBtn = document.getElementById('admApplyBtn');
+      if (applyBtn) {
+        applyBtn.addEventListener('click', function () {
+          try {
+            saveFromAdminInputs();
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(config)); } catch (e) {}
+            switchLanguage(currentLang);
+            setText('adminStatus', '적용 완료 (' + currentLang.toUpperCase() + '). GitHub 반영용 파일은 "index.html 다운로드"를 누르세요.');
+          } catch (err) {
+            setText('adminStatus', '입력 오류: ' + err.message);
+          }
+        });
+      }
+
+      const resetBtn = document.getElementById('admResetBtn');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function () {
+          try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+          config = JSON.parse(JSON.stringify(defaultConfig));
+          switchLanguage(currentLang);
+          setText('adminStatus', '기본값으로 복원했습니다.');
+        });
+      }
+
+      const downloadBtn = document.getElementById('admDownloadBtn');
+      if (downloadBtn) {
+        downloadBtn.addEventListener('click', function () {
+          try {
+            saveFromAdminInputs();
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(config)); } catch (e) {}
+
+            const clone = document.documentElement.cloneNode(true);
+            const dataScript = clone.querySelector('#siteConfigData');
+            if (dataScript) {
+              dataScript.textContent = JSON.stringify(config, null, 2);
+            }
+            const clonePanel = clone.querySelector('#adminPanel');
+            if (clonePanel) {
+              clonePanel.classList.remove('open');
+            }
+            const cloneIframe = clone.querySelector('#googleFormIframe');
+            if (cloneIframe && config.formUrl) {
+              cloneIframe.setAttribute('src', toEmbedUrl(config.formUrl));
+            }
+
+            const htmlContent = '<!DOCTYPE html>\n' + clone.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index.html';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+            setText('adminStatus', 'index.html 다운로드를 시작했습니다.');
+          } catch (err) {
+            setText('adminStatus', '다운로드 오류: ' + err.message);
+          }
+        });
+      }
+
+      switchLanguage('ko');
+    })();
+  </script>
+</body>
+</html>
