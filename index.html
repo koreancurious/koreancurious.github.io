@@ -102,6 +102,7 @@
       padding: 8px 14px;
       font-size: 13px;
       border: 1px solid var(--ink-black);
+      cursor: pointer;
     }
 
     .secondary-btn {
@@ -114,6 +115,7 @@
       padding: 8px 14px;
       font-size: 13px;
       border: 1px solid var(--ink-black);
+      cursor: pointer;
     }
 
     .lang-switch {
@@ -281,8 +283,65 @@
       color: var(--ink-muted);
     }
 
+    /* Local Admin Panel (?admin) */
+    #adminPanel {
+      display: none;
+      margin: 20px 0 0;
+      padding: 18px 20px;
+      border: 1px solid var(--ink-black);
+      background: #FFF6EE;
+    }
+
+    #adminPanel.open {
+      display: block;
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .admin-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .admin-field input,
+    .admin-field textarea {
+      width: 100%;
+      padding: 7px 9px;
+      border: 1px solid var(--ink-black);
+      background: #FFFFFF;
+      color: var(--ink-black);
+      font-family: inherit;
+      font-size: 13px;
+    }
+
+    .admin-field textarea {
+      min-height: 64px;
+      resize: vertical;
+    }
+
+    .admin-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+      align-items: center;
+    }
+
+    .admin-status {
+      font-size: 12px;
+      color: var(--ink-muted);
+    }
+
     @media (max-width: 860px) {
-      .mid-grid {
+      .mid-grid,
+      .admin-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -290,6 +349,42 @@
 </head>
 <body>
   <div class="page-shell">
+    <section id="adminPanel" aria-label="Admin Editor">
+      <strong>Local Admin Editor (?admin)</strong>
+      <div class="admin-status" id="adminStatus">현재 선택된 언어 탭의 문구와 사진 경로를 수정한 뒤, 아래 버튼으로 index.html을 내려받아 GitHub에 덮어쓰세요.</div>
+      <div class="admin-grid">
+        <div class="admin-field">
+          <label for="admFormUrl">Google Form 링크</label>
+          <input type="text" id="admFormUrl" />
+        </div>
+        <div class="admin-field">
+          <label for="admPosterSrc">현재 탭 브로슈어 이미지 파일명/경로</label>
+          <input type="text" id="admPosterSrc" />
+        </div>
+        <div class="admin-field">
+          <label for="admHeadline">헤드라인</label>
+          <input type="text" id="admHeadline" />
+        </div>
+        <div class="admin-field">
+          <label for="admQuote">인용구</label>
+          <input type="text" id="admQuote" />
+        </div>
+        <div class="admin-field">
+          <label for="admBody">본문 1</label>
+          <textarea id="admBody"></textarea>
+        </div>
+        <div class="admin-field">
+          <label for="admSecondary">본문 2</label>
+          <textarea id="admSecondary"></textarea>
+        </div>
+      </div>
+      <div class="admin-actions">
+        <button type="button" class="cta-btn" id="admApplyBtn">화면에 즉시 적용</button>
+        <button type="button" class="secondary-btn" id="admDownloadBtn">index.html 다운로드</button>
+        <button type="button" class="secondary-btn" id="admResetBtn">기본값 복원</button>
+      </div>
+    </section>
+
     <header class="site-header">
       <div class="brand-lockup">
         <h1 class="brand-name">HoonQ</h1>
@@ -362,89 +457,114 @@
     </footer>
   </div>
 
-  <script>
-    (function () {
-      const posterByLang = {
-        ko: './20260418_143409.jpg',
-        en: './20250717_092256_2.jpg',
-        es: './20260927_155715.jpg',
-        pt: './20260416_083119.jpg'
-      };
-
-      const contentByLang = {
-        ko: {
-          navTutoring: '소개 & 과외',
-          navBrochure: '브로슈어',
-          headerContact: '문의하기',
-          heroContact: '1:1 과외 및 특강 문의하기 ↗',
-          heroSecondary: '1:1 맞춤형 과외 및 코칭 안내',
-          tutoringHeading: '1:1 맞춤형 과외 및 코칭 안내',
-          heading: 'Program Brochure (KO)',
-          headline: '스스로 질문하고 논리적으로 풀어내는 힘',
-          body: '안녕하세요, HoonQ입니다. 학생과 성인을 대상으로 1:1 맞춤형 과외를 진행하며, 저의 배움과 일상의 단상을 칼럼과 사진으로 기록합니다. 획일화된 암기가 아닌, 스스로 질문하고 논리적으로 풀어내는 힘을 기릅니다.',
-          secondary: 'AI가 대체할 수 없는 교육이 무엇인가? 저의 생동감과 3개 문화권에서 자란 경험입니다. AI는 밝은 목소리를 흉내내고 경험이 있는 것처럼 꾸밀 뿐, <실제성>이 (아직은) 결여되어 있습니다. 저는 문화를 가지고 인간의 실제성을 탐구하고 재현합니다.',
-          quote: '"문화가 없는 삶은 야만이며, 활력이 없는 문화는 비잔틴주의다."',
-          programs: [
-            { title: '01. 대입·편입 논술 및 심층 면접 대비', desc: '고등학생·N수생 대상 | 제시문 독해 구조화, 개요 작성' },
-            { title: '02. 청소년 독서·비판적 글쓰기 클래스', desc: '중·고등학생 대상 | 텍스트 분석, 에세이 구성, 자기만의 관점 정립' },
-            { title: '03. 성인 인문 독서·에세이 워크숍', desc: '직장인·일반 대상 | 시사·철학 텍스트 강독, 단상 칼럼 집필' }
+  <script id="siteConfigData" type="application/json">
+    {
+      "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSe433JjqxLsH7xV-aWVX0wzbI-fZKngA6Lw9DokhvhPoJgTrg/viewform?usp=header",
+      "posterByLang": {
+        "ko": "./20260418_143409.jpg",
+        "en": "./20250717_092256_2.jpg",
+        "es": "./20260927_155715.jpg",
+        "pt": "./20260416_083119.jpg"
+      },
+      "contentByLang": {
+        "ko": {
+          "navTutoring": "소개 & 과외",
+          "navBrochure": "브로슈어",
+          "headerContact": "문의하기",
+          "heroContact": "1:1 과외 및 특강 문의하기 ↗",
+          "heroSecondary": "1:1 맞춤형 과외 및 코칭 안내",
+          "tutoringHeading": "1:1 맞춤형 과외 및 코칭 안내",
+          "heading": "Program Brochure (KO)",
+          "headline": "스스로 질문하고 논리적으로 풀어내는 힘",
+          "body": "안녕하세요, HoonQ입니다. 학생과 성인을 대상으로 1:1 맞춤형 과외를 진행하며, 저의 배움과 일상의 단상을 칼럼과 사진으로 기록합니다. 획일화된 암기가 아닌, 스스로 질문하고 논리적으로 풀어내는 힘을 기릅니다.",
+          "secondary": "AI가 대체할 수 없는 교육이 무엇인가? 저의 생동감과 3개 문화권에서 자란 경험입니다. AI는 밝은 목소리를 흉내내고 경험이 있는 것처럼 꾸밀 뿐, <실제성>이 (아직은) 결여되어 있습니다. 저는 문화를 가지고 인간의 실제성을 탐구하고 재현합니다.",
+          "quote": "\"문화가 없는 삶은 야만이며, 활력이 없는 문화는 비잔틴주의다.\"",
+          "programs": [
+            { "title": "01. 대입·편입 논술 및 심층 면접 대비", "desc": "고등학생·N수생 대상 | 제시문 독해 구조화, 개요 작성" },
+            { "title": "02. 청소년 독서·비판적 글쓰기 클래스", "desc": "중·고등학생 대상 | 텍스트 분석, 에세이 구성, 자기만의 관점 정립" },
+            { "title": "03. 성인 인문 독서·에세이 워크숍", "desc": "직장인·일반 대상 | 시사·철학 텍스트 강독, 단상 칼럼 집필" }
           ]
         },
-        en: {
-          navTutoring: 'About & Tutoring',
-          navBrochure: 'Brochure',
-          headerContact: 'Inquire',
-          heroContact: 'Inquire About 1:1 Tutoring & Lectures ↗',
-          heroSecondary: '1:1 Customized Tutoring & Coaching',
-          tutoringHeading: '1:1 Customized Tutoring & Coaching',
-          heading: 'Program Brochure (EN)',
-          headline: 'The Power to Question and Reason Independently',
-          body: 'Hello, I am HoonQ. I offer 1:1 customized tutoring for students and adults while recording reflections through columns and photography.',
-          secondary: 'What kind of education can AI not replace? My vitality and lived experience across three cultural spheres.',
-          quote: '"A life without culture is barbarism, and a culture without vitality is Byzantinism."',
-          programs: [
-            { title: '01. University Essay & In-Depth Interview Prep', desc: 'High school & exam candidates | Passage structuring, outline drafting' },
-            { title: '02. Youth Reading & Critical Writing Class', desc: 'Middle & high school students | Text analysis, essay structure, independent perspective' },
-            { title: '03. Adult Humanities Reading & Essay Workshop', desc: 'Professionals & general public | Current affairs & philosophy texts, column writing' }
+        "en": {
+          "navTutoring": "About & Tutoring",
+          "navBrochure": "Brochure",
+          "headerContact": "Inquire",
+          "heroContact": "Inquire About 1:1 Tutoring & Lectures ↗",
+          "heroSecondary": "1:1 Customized Tutoring & Coaching",
+          "tutoringHeading": "1:1 Customized Tutoring & Coaching",
+          "heading": "Program Brochure (EN)",
+          "headline": "The Power to Question and Reason Independently",
+          "body": "Hello, I am HoonQ. I offer 1:1 customized tutoring for students and adults while recording reflections through columns and photography.",
+          "secondary": "What kind of education can AI not replace? My vitality and lived experience across three cultural spheres.",
+          "quote": "\"A life without culture is barbarism, and a culture without vitality is Byzantinism.\"",
+          "programs": [
+            { "title": "01. University Essay & In-Depth Interview Prep", "desc": "High school & exam candidates | Passage structuring, outline drafting" },
+            { "title": "02. Youth Reading & Critical Writing Class", "desc": "Middle & high school students | Text analysis, essay structure, independent perspective" },
+            { "title": "03. Adult Humanities Reading & Essay Workshop", "desc": "Professionals & general public | Current affairs & philosophy texts, column writing" }
           ]
         },
-        es: {
-          navTutoring: 'Perfil y Clases',
-          navBrochure: 'Folleto',
-          headerContact: 'Contacto',
-          heroContact: 'Consultar Tutorías 1:1 y Conferencias ↗',
-          heroSecondary: 'Tutoría Personalizada 1:1 y Coaching',
-          tutoringHeading: 'Tutoría Personalizada 1:1 y Coaching',
-          heading: 'Program Brochure (ES)',
-          headline: 'La capacidad de cuestionar y razonar con lógica',
-          body: 'Hola, soy HoonQ. Ofrezco tutorías personalizadas 1:1 para estudiantes y adultos, además de ensayos y fotografía.',
-          secondary: '¿Qué educación no puede sustituir la IA? Mi vitalidad y experiencia vivida en tres ámbitos culturales.',
-          quote: '"Una vida sin cultura es barbarie, y una cultura sin vitalidad es bizantinismo."',
-          programs: [
-            { title: '01. Preparación de Ensayo y Entrevista Profunda', desc: 'Estudiantes universitarios y preuniversitarios | Estructuración de textos, esquemas' },
-            { title: '02. Lectura Juvenil y Escritura Crítica', desc: 'Secundaria y bachillerato | Análisis textual, estructura de ensayo, criterio propio' },
-            { title: '03. Taller de Lectura Humanística y Ensayo para Adultos', desc: 'Profesionales y público general | Textos de actualidad y filosofía, redacción de columnas' }
+        "es": {
+          "navTutoring": "Perfil y Clases",
+          "navBrochure": "Folleto",
+          "headerContact": "Contacto",
+          "heroContact": "Consultar Tutorías 1:1 y Conferencias ↗",
+          "heroSecondary": "Tutoría Personalizada 1:1 y Coaching",
+          "tutoringHeading": "Tutoría Personalizada 1:1 y Coaching",
+          "heading": "Program Brochure (ES)",
+          "headline": "La capacidad de cuestionar y razonar con lógica",
+          "body": "Hola, soy HoonQ. Ofrezco tutorías personalizadas 1:1 para estudiantes y adultos, además de ensayos y fotografía.",
+          "secondary": "¿Qué educación no puede sustituir la IA? Mi vitalidad y experiencia vivida en tres ámbitos culturales.",
+          "quote": "\"Una vida sin cultura es barbarie, y una cultura sin vitalidad es bizantinismo.\"",
+          "programs": [
+            { "title": "01. Preparación de Ensayo y Entrevista Profunda", "desc": "Estudiantes universitarios y preuniversitarios | Estructuración de textos, esquemas" },
+            { "title": "02. Lectura Juvenil y Escritura Crítica", "desc": "Secundaria y bachillerato | Análisis textual, estructura de ensayo, criterio propio" },
+            { "title": "03. Taller de Lectura Humanística y Ensayo para Adultos", "desc": "Profesionales y público general | Textos de actualidad y filosofía, redacción de columnas" }
           ]
         },
-        pt: {
-          navTutoring: 'Sobre e Aulas',
-          navBrochure: 'Brochura',
-          headerContact: 'Contato',
-          heroContact: 'Consultar Aulas 1:1 e Palestras ↗',
-          heroSecondary: 'Tutoria Personalizada 1:1 e Coaching',
-          tutoringHeading: 'Tutoria Personalizada 1:1 e Coaching',
-          heading: 'Program Brochure (PT)',
-          headline: 'A capacidade de questionar e raciocinar com lógica',
-          body: 'Olá, sou HoonQ. Ofereço aulas particulares 1:1 personalizadas para estudantes e adultos, além de colunas e fotografia.',
-          secondary: 'Que educação a IA não pode substituir? Minha vitalidade e vivência em três esferas culturais.',
-          quote: '"Uma vida sem cultura é barbárie, e uma cultura sem vitalidade é bizantinismo."',
-          programs: [
-            { title: '01. Preparação para Redação e Entrevista Aprofundada', desc: 'Vestibulandos e universitários | Estruturação de textos, esboços' },
-            { title: '02. Leitura Juvenil e Escrita Crítica', desc: 'Ensino fundamental II e médio | Análise de texto, estrutura de ensaio, ponto de vista próprio' },
-            { title: '03. Oficina de Leitura Humanística e Ensaio para Adultos', desc: 'Profissionais e público geral | Textos de atualidades e filosofia, escrita de colunas' }
+        "pt": {
+          "navTutoring": "Sobre e Aulas",
+          "navBrochure": "Brochura",
+          "headerContact": "Contato",
+          "heroContact": "Consultar Aulas 1:1 e Palestras ↗",
+          "heroSecondary": "Tutoria Personalizada 1:1 e Coaching",
+          "tutoringHeading": "Tutoria Personalizada 1:1 e Coaching",
+          "heading": "Program Brochure (PT)",
+          "headline": "A capacidade de questionar e raciocinar com lógica",
+          "body": "Olá, sou HoonQ. Ofereço aulas particulares 1:1 personalizadas para estudantes e adultos, além de colunas e fotografia.",
+          "secondary": "Que educação a IA não pode substituir? Minha vitalidade e vivência em três esferas culturais.",
+          "quote": "\"Uma vida sem cultura é barbárie, e uma cultura sem vitalidade é bizantinismo.\"",
+          "programs": [
+            { "title": "01. Preparação para Redação e Entrevista Aprofundada", "desc": "Vestibulandos e universitários | Estruturação de textos, esboços" },
+            { "title": "02. Leitura Juvenil e Escrita Crítica", "desc": "Ensino fundamental II e médio | Análise de texto, estrutura de ensaio, ponto de vista próprio" },
+            { "title": "03. Oficina de Leitura Humanística e Ensaio para Adultos", "desc": "Profissionais e público geral | Textos de atualidades e filosofia, escrita de colunas" }
           ]
         }
-      };
+      }
+    }
+  </script>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = 'hoonq_site_config_v1';
+      const defaultConfig = JSON.parse(document.getElementById('siteConfigData').textContent);
+
+      function loadConfig() {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (!saved) return JSON.parse(JSON.stringify(defaultConfig));
+          const parsed = JSON.parse(saved);
+          return {
+            formUrl: parsed.formUrl || defaultConfig.formUrl,
+            posterByLang: Object.assign({}, defaultConfig.posterByLang, parsed.posterByLang || {}),
+            contentByLang: Object.assign({}, defaultConfig.contentByLang, parsed.contentByLang || {})
+          };
+        } catch (e) {
+          return JSON.parse(JSON.stringify(defaultConfig));
+        }
+      }
+
+      let config = loadConfig();
+      let currentLang = 'ko';
 
       function setText(id, text) {
         const el = document.getElementById(id);
@@ -462,11 +582,21 @@
         `).join('');
       }
 
-      function applyLang(lang) {
-        const normalized = contentByLang[lang] ? lang : 'ko';
-        const cur = contentByLang[normalized];
+      function syncAdminInputs() {
+        const cur = config.contentByLang[currentLang] || config.contentByLang.ko;
+        document.getElementById('admFormUrl').value = config.formUrl;
+        document.getElementById('admPosterSrc').value = config.posterByLang[currentLang] || '';
+        document.getElementById('admHeadline').value = cur.headline || '';
+        document.getElementById('admQuote').value = cur.quote || '';
+        document.getElementById('admBody').value = cur.body || '';
+        document.getElementById('admSecondary').value = cur.secondary || '';
+      }
 
-        document.documentElement.lang = normalized;
+      function applyLang(lang) {
+        currentLang = config.contentByLang[lang] ? lang : 'ko';
+        const cur = config.contentByLang[currentLang];
+
+        document.documentElement.lang = currentLang;
         setText('navTutoring', cur.navTutoring);
         setText('navBrochure', cur.navBrochure);
         setText('headerContactBtn', cur.headerContact);
@@ -480,15 +610,88 @@
         setText('posterHeading', cur.heading);
         renderPrograms(cur.programs);
 
+        ['headerContactBtn', 'heroContactBtn'].forEach((id) => {
+          const link = document.getElementById(id);
+          if (link && config.formUrl) link.href = config.formUrl;
+        });
+
         const img = document.getElementById('posterImg');
         if (img) {
-          img.src = posterByLang[normalized];
+          img.src = config.posterByLang[currentLang] || config.posterByLang.ko;
         }
 
         document.querySelectorAll('.lang-switch button').forEach((btn) => {
-          btn.classList.toggle('active', btn.getAttribute('data-lang') === normalized);
+          btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLang);
         });
+
+        syncAdminInputs();
       }
+
+      // Check ?admin query parameter
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('admin')) {
+        document.getElementById('adminPanel').classList.add('open');
+      }
+
+      document.getElementById('admApplyBtn').addEventListener('click', function () {
+        config.formUrl = document.getElementById('admFormUrl').value.trim() || defaultConfig.formUrl;
+        config.posterByLang[currentLang] = document.getElementById('admPosterSrc').value.trim() || config.posterByLang[currentLang];
+        const cur = config.contentByLang[currentLang];
+        cur.headline = document.getElementById('admHeadline').value;
+        cur.quote = document.getElementById('admQuote').value;
+        cur.body = document.getElementById('admBody').value;
+        cur.secondary = document.getElementById('admSecondary').value;
+
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+        } catch (e) {}
+
+        applyLang(currentLang);
+        setText('adminStatus', '적용 완료 (' + currentLang.toUpperCase() + '). GitHub 반영용 파일은 "index.html 다운로드"를 누르세요.');
+      });
+
+      document.getElementById('admResetBtn').addEventListener('click', function () {
+        localStorage.removeItem(STORAGE_KEY);
+        config = JSON.parse(JSON.stringify(defaultConfig));
+        applyLang(currentLang);
+        setText('adminStatus', '기본값으로 복원했습니다.');
+      });
+
+      document.getElementById('admDownloadBtn').addEventListener('click', function () {
+        try {
+          config.formUrl = document.getElementById('admFormUrl').value.trim() || config.formUrl;
+          config.posterByLang[currentLang] = document.getElementById('admPosterSrc').value.trim() || config.posterByLang[currentLang];
+          const cur = config.contentByLang[currentLang];
+          cur.headline = document.getElementById('admHeadline').value;
+          cur.quote = document.getElementById('admQuote').value;
+          cur.body = document.getElementById('admBody').value;
+          cur.secondary = document.getElementById('admSecondary').value;
+
+          const clone = document.documentElement.cloneNode(true);
+          const dataScript = clone.querySelector('#siteConfigData');
+          if (dataScript) {
+            dataScript.textContent = JSON.stringify(config, null, 2);
+          }
+          const panel = clone.querySelector('#adminPanel');
+          if (panel) {
+            panel.classList.remove('open');
+          }
+
+          const htmlContent = '<!DOCTYPE html>\n' + clone.outerHTML;
+          const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'index.html';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          setText('adminStatus', 'index.html 다운로드를 시작했습니다.');
+        } catch (err) {
+          setText('adminStatus', '다운로드 중 오류가 발생했습니다: ' + err.message);
+        }
+      });
 
       document.addEventListener('click', function (event) {
         const btn = event.target.closest('.lang-switch button[data-lang]');
